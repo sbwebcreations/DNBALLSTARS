@@ -81,9 +81,13 @@ document.addEventListener('DOMContentLoaded', () => {
     handleSectionFocus();
 
     // ================================
-    // ANIMATED NUMBER COUNTERS
+    // ANIMATED NUMBER COUNTERS (Premium Animation)
     // ================================
     const counters = document.querySelectorAll('[data-count]');
+
+    // Custom easing: slow start, fast middle, elegant deceleration at end
+    const easeOutExpo = (t) => t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
+
     const counterObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting && !entry.target.classList.contains('counted')) {
@@ -91,16 +95,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 const countTo = parseInt(target.dataset.count);
                 const suffix = target.dataset.suffix || '';
                 const prefix = target.dataset.prefix || '';
-                const duration = 2000;
+                const duration = 1800;
                 const startTime = performance.now();
 
-                target.classList.add('counted');
+                target.classList.add('counted', 'counting');
 
                 const updateCounter = (currentTime) => {
                     const elapsed = currentTime - startTime;
                     const progress = Math.min(elapsed / duration, 1);
-                    const easeOut = 1 - Math.pow(1 - progress, 3);
-                    const currentCount = Math.floor(easeOut * countTo);
+                    const easedProgress = easeOutExpo(progress);
+                    const currentCount = Math.floor(easedProgress * countTo);
 
                     target.textContent = prefix + currentCount + suffix;
 
@@ -108,13 +112,15 @@ document.addEventListener('DOMContentLoaded', () => {
                         requestAnimationFrame(updateCounter);
                     } else {
                         target.textContent = prefix + countTo + suffix;
+                        target.classList.remove('counting');
+                        target.classList.add('count-complete');
                     }
                 };
 
                 requestAnimationFrame(updateCounter);
             }
         });
-    }, { threshold: 0.5 });
+    }, { threshold: 0.6 });
 
     counters.forEach(counter => counterObserver.observe(counter));
 
@@ -215,8 +221,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const heroCtaBtn = document.querySelector('.hero__cta .btn--hero');
     const scrollIndicatorLine = document.querySelector('.scroll-indicator__line');
 
+    const header = document.querySelector('.header');
     const headerHeight = 70;
     const scrollRange = 150;
+    let previousBgType = 'dark'; // Track previous background type for contrast detection
+
+    // Set initial state for hero (dark background)
+    if (header) {
+        header.classList.add('on-dark');
+    }
 
     const handleWipeScroll = () => {
         const scrollY = window.scrollY;
@@ -231,6 +244,97 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         if (headerDefaultLayer) {
             headerDefaultLayer.style.clipPath = headerClipPath;
+        }
+
+        // Add/remove scrolled class for burger and ticket color changes
+        if (header) {
+            if (progress >= 1) {
+                header.classList.add('is-scrolled');
+            } else {
+                header.classList.remove('is-scrolled');
+            }
+        }
+
+        // Detect background color under header and update header colors
+        if (header) {
+            const headerBottom = headerHeight + 10; // Check point just below header
+            const elementsAtPoint = document.elementsFromPoint(window.innerWidth / 2, headerBottom);
+
+            // Remove all background state classes
+            header.classList.remove('on-yellow', 'on-dark', 'on-light');
+
+            let isDark = false;
+
+            // Find the first section element
+            for (const el of elementsAtPoint) {
+                if (el.classList.contains('section') || el.classList.contains('hero')) {
+                    // Check if it's the hero (dark)
+                    if (el.classList.contains('hero')) {
+                        header.classList.add('on-dark');
+                        isDark = true;
+                        break;
+                    }
+
+                    // Check section classes for background type
+                    if (el.classList.contains('about') || el.classList.contains('lineup') || el.classList.contains('faq')) {
+                        header.classList.add('on-yellow');
+                        break;
+                    } else if (el.classList.contains('numbers') || el.classList.contains('experience') || el.classList.contains('newsletter') || el.classList.contains('partners')) {
+                        header.classList.add('on-dark');
+                        isDark = true;
+                        break;
+                    } else if (el.classList.contains('accommodation')) {
+                        header.classList.add('on-light');
+                        break;
+                    }
+
+                    break;
+                }
+            }
+
+            // Determine current background type
+            const currentBgType = isDark ? 'dark' : 'light';
+
+            // Update button fill based on scroll position - only on contrast change
+            const ticketBtns = header.querySelectorAll('.btn--tickets, .btn--tickets-orange');
+
+            // Find the current section and calculate fill based on position
+            for (const el of elementsAtPoint) {
+                if (el.classList.contains('section') || el.classList.contains('hero')) {
+                    const rect = el.getBoundingClientRect();
+                    const sectionTop = rect.top;
+                    const transitionZone = 60; // pixels over which to transition
+
+                    // Calculate how far into the section we've scrolled
+                    const distanceIntoSection = headerHeight - sectionTop;
+                    const fillProgress = Math.min(Math.max(distanceIntoSection / transitionZone, 0), 1);
+
+                    // Only animate fill when transitioning between contrast colors (dark ↔ light)
+                    const isContrastChange = previousBgType !== currentBgType;
+
+                    ticketBtns.forEach(btn => {
+                        if (isContrastChange || fillProgress < 1) {
+                            if (isDark) {
+                                // Going to dark: fill with yellow from top
+                                const fillPercent = fillProgress * 100;
+                                btn.style.setProperty('--btn-fill', `${fillPercent}%`);
+                                btn.style.color = fillPercent > 50 ? 'var(--color-bg-dark)' : '#ffffff';
+                            } else {
+                                // Going to light: drain yellow from top (reverse)
+                                const fillPercent = (1 - fillProgress) * 100;
+                                btn.style.setProperty('--btn-fill', `${fillPercent}%`);
+                                btn.style.color = fillPercent > 50 ? 'var(--color-bg-dark)' : '#ffffff';
+                            }
+                        }
+                    });
+
+                    // Update previous type when fully transitioned
+                    if (fillProgress >= 1) {
+                        previousBgType = currentBgType;
+                    }
+                    break;
+                }
+            }
         }
 
         // Scroll indicator line - scroll-based animation
@@ -291,6 +395,51 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
     };
+
+    // ================================
+    // SCROLL PROGRESS BAR
+    // ================================
+    const scrollProgress = document.getElementById('scrollProgress');
+
+    const updateScrollProgress = () => {
+        if (scrollProgress) {
+            const scrollTop = window.scrollY;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const scrollPercent = (scrollTop / docHeight) * 100;
+            scrollProgress.style.height = `${scrollPercent}%`;
+
+            // Calculate where the bottom of the progress bar is on the page
+            const progressBarBottom = scrollPercent / 100 * window.innerHeight;
+            const elementsAtProgress = document.elementsFromPoint(10, progressBarBottom);
+
+            // Remove previous color classes
+            scrollProgress.classList.remove('on-yellow', 'on-dark');
+
+            // Find section at progress bar tip and set color
+            for (const el of elementsAtProgress) {
+                if (el.classList.contains('section') || el.classList.contains('hero')) {
+                    if (el.classList.contains('hero')) {
+                        scrollProgress.classList.add('on-dark');
+                        break;
+                    }
+                    if (el.classList.contains('about') || el.classList.contains('lineup') || el.classList.contains('faq')) {
+                        scrollProgress.classList.add('on-yellow');
+                        break;
+                    } else if (el.classList.contains('numbers') || el.classList.contains('experience') || el.classList.contains('newsletter') || el.classList.contains('partners')) {
+                        scrollProgress.classList.add('on-dark');
+                        break;
+                    } else if (el.classList.contains('accommodation')) {
+                        scrollProgress.classList.add('on-yellow');
+                        break;
+                    }
+                    break;
+                }
+            }
+        }
+    };
+
+    window.addEventListener('scroll', updateScrollProgress);
+    updateScrollProgress();
 
     window.addEventListener('scroll', handleWipeScroll);
     handleWipeScroll();
