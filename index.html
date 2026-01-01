@@ -12,29 +12,53 @@
 </head>
 <body>
 
-    <!-- Header -->
+    <!-- Header with Wipe Effect -->
     <header class="header">
-        <div class="container header__container">
-            <!-- Left Spacer for Balance -->
-            <div class="header__left"></div>
+        <!-- Orange background that wipes away -->
+        <div class="header__bg"></div>
 
-            <!-- Centered Logo -->
-            <a href="index.html" class="logo">
-                <img src="assets/img/logo.png" alt="DnB Allstars: Thailand 2026">
-            </a>
-            
-            <!-- Right Actions: Button + Burger -->
-            <div class="header__right">
-                <a href="https://fixr.co/event/dnb-allstars-thailand-tickets-927680847" target="_blank" class="btn btn--white header__cta desktop-only">BUY TICKETS</a>
-
-                <button class="burger" aria-label="Menu">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>
+        <!-- Bottom layer: Orange elements (visible when bg is gone) -->
+        <div class="header__elements header__elements--scrolled">
+            <div class="header__container">
+                <div class="header__left">
+                    <div class="burger-placeholder" aria-hidden="true">
+                        <svg width="24" height="18" viewBox="0 0 24 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M0 1H24" stroke="#cf350e" stroke-width="2"/>
+                            <path d="M0 9H24" stroke="#cf350e" stroke-width="2"/>
+                            <path d="M0 17H24" stroke="#cf350e" stroke-width="2"/>
+                        </svg>
+                    </div>
+                </div>
+                <a href="index.html" class="logo">
+                    <img src="assets/img/logo.png" alt="DnB Allstars: Thailand 2026">
+                </a>
+                <div class="header__right">
+                    <span class="btn btn--tickets btn--tickets-orange">TICKETS</span>
+                </div>
             </div>
         </div>
-        
+
+        <!-- Top layer: White elements on orange (clips away with bg) -->
+        <div class="header__elements header__elements--default">
+            <div class="header__container">
+                <div class="header__left">
+                    <button class="burger" aria-label="Menu" aria-expanded="false">
+                        <svg width="24" height="18" viewBox="0 0 24 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M0 1H24" stroke="white" stroke-width="2"/>
+                            <path d="M0 9H24" stroke="white" stroke-width="2"/>
+                            <path d="M0 17H24" stroke="white" stroke-width="2"/>
+                        </svg>
+                    </button>
+                </div>
+                <a href="index.html" class="logo">
+                    <img src="assets/img/logo.png" alt="DnB Allstars: Thailand 2026">
+                </a>
+                <div class="header__right">
+                    <a href="https://fixr.co/event/dnb-allstars-thailand-tickets-927680847" target="_blank" class="btn btn--tickets">TICKETS</a>
+                </div>
+            </div>
+        </div>
+
         <!-- Mobile Menu Overlay -->
         <div class="mobile-menu">
             <nav class="mobile-menu__nav">
@@ -50,61 +74,85 @@
     <!-- Hero Section -->
     <section class="hero">
         <div class="hero__background">
-            <!-- Video Placeholder: Uncomment below when video is available -->
-            <!-- <video autoplay muted loop playsinline class="hero__video">
-                <source src="path/to/video.mp4" type="video/mp4">
-            </video> -->
             <img src="assets/img/hero-bg.jpg" alt="DnB Allstars Thailand" class="hero__image">
             <div class="hero__overlay"></div>
         </div>
-        
-        <div class="hero__content container">
-            <!-- Countdown Timer -->
+
+        <div class="hero__content">
+            <!-- Countdown Timer positioned at bottom -->
             <div class="countdown" id="countdown">
                 <div class="countdown__item">
                     <span class="countdown__number" id="days">00</span>
                     <span class="countdown__label">Days</span>
                 </div>
+                <div class="countdown__separator">:</div>
                 <div class="countdown__item">
                     <span class="countdown__number" id="hours">00</span>
                     <span class="countdown__label">Hours</span>
                 </div>
+                <div class="countdown__separator">:</div>
                 <div class="countdown__item">
                     <span class="countdown__number" id="minutes">00</span>
                     <span class="countdown__label">Mins</span>
                 </div>
+                <div class="countdown__separator">:</div>
+                <div class="countdown__item">
+                    <span class="countdown__number" id="seconds">00</span>
+                    <span class="countdown__label">Secs</span>
+                </div>
             </div>
-
-            <a href="https://fixr.co/event/dnb-allstars-thailand-tickets-927680847" target="_blank" class="btn btn--white btn--large hero__btn">
-                CLICK HERE FOR TICKETS
-            </a>
         </div>
     </section>
 
     <main>
-        <!-- Hype Section (New) -->
+        <!-- The Ultimate DNB Holiday Section -->
         <section class="section hype">
             <div class="container">
                 <h2 class="section__title">THE ULTIMATE DNB HOLIDAY</h2>
                 <div class="hype__content">
-                    <p class="hype__text">Join us in Thailand for the biggest drum and bass experience of 2026. Sun, sea, and heavy basslines.</p>
+                    <p class="hype__text">Join us in Thailand for the biggest drum and bass experience of 2026. Sun, sea, and heavy basslines await you at this unmissable festival destination.</p>
                 </div>
 
-                <div class="grid hype__gallery">
-                    <div class="card">
-                        <div class="card__image">
-                            <img src="assets/img/hivetel.jpg" alt="DnB Allstars Thailand Atmosphere">
+                <!-- Desktop Grid / Mobile Carousel -->
+                <div class="carousel" id="hypeCarousel">
+                    <div class="carousel__track-container">
+                        <div class="carousel__track">
+                            <div class="carousel__slide">
+                                <div class="card">
+                                    <div class="card__image">
+                                        <img src="assets/img/hivetel.jpg" alt="DnB Allstars Thailand Atmosphere">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="carousel__slide">
+                                <div class="card">
+                                    <div class="card__image">
+                                        <img src="assets/img/ibis.jpg" alt="DnB Allstars Thailand Crowd">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="carousel__slide">
+                                <div class="card">
+                                    <div class="card__image">
+                                        <img src="assets/img/novotel.jpg" alt="DnB Allstars Thailand Production">
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="card">
-                        <div class="card__image">
-                            <img src="assets/img/ibis.jpg" alt="DnB Allstars Thailand Crowd">
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="card__image">
-                            <img src="assets/img/novotel.jpg" alt="DnB Allstars Thailand Production">
-                        </div>
+
+                    <!-- Right Arrow Only (Mobile) -->
+                    <button class="carousel__arrow carousel__arrow--right" aria-label="Next slide">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M9 18L15 12L9 6" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+
+                    <!-- Dot Indicators -->
+                    <div class="carousel__dots">
+                        <button class="carousel__dot active" aria-label="Slide 1"></button>
+                        <button class="carousel__dot" aria-label="Slide 2"></button>
+                        <button class="carousel__dot" aria-label="Slide 3"></button>
                     </div>
                 </div>
             </div>
@@ -112,89 +160,130 @@
 
         <!-- Accommodation Section -->
         <section class="section accommodation" id="accommodation">
-            <div class="section__bg-image">
-                <img src="assets/img/section-bg.jpg" alt="">
-            </div>
             <div class="container">
-                <h2 class="section__title">accommodation</h2>
-                <hr class="divider">
-                
-                <div class="grid">
+                <h2 class="section__title">ACCOMMODATION</h2>
+
+                <div class="accommodation__grid">
                     <!-- Hivetel -->
-                    <div class="card">
-                        <div class="card__image">
+                    <div class="accommodation-card">
+                        <div class="accommodation-card__image">
                             <img src="assets/img/hivetel.jpg" alt="Hivetel">
-                            <div class="card__overlay">
-                                <a href="accommodation/hivetel.html" class="btn btn--secondary">VIEW</a>
+                            <div class="accommodation-card__overlay">
+                                <a href="accommodation/hivetel.html" class="btn btn--view">VIEW</a>
                             </div>
                         </div>
-                        <div class="card__content">
-                            <h3 class="card__title">Hivetel</h3>
-                            <p class="card__subtitle">3★ Hotel – 1 Min Walk</p>
+                        <div class="accommodation-card__content">
+                            <h3 class="accommodation-card__title">Hivetel</h3>
+                            <p class="accommodation-card__subtitle">3★ Hotel – 1 Min Walk</p>
                         </div>
                     </div>
 
                     <!-- Ibis Styles -->
-                    <div class="card">
-                        <div class="card__image">
+                    <div class="accommodation-card">
+                        <div class="accommodation-card__image">
                             <img src="assets/img/ibis.jpg" alt="ibis Styles Phuket City">
-                            <div class="card__overlay">
-                                <a href="accommodation/ibis-styles.html" class="btn btn--secondary">VIEW</a>
+                            <div class="accommodation-card__overlay">
+                                <a href="accommodation/ibis-styles.html" class="btn btn--view">VIEW</a>
                             </div>
                         </div>
-                        <div class="card__content">
-                            <h3 class="card__title">ibis Styles Phuket City</h3>
-                            <p class="card__subtitle">3★ Hotel – 15 Min Drive</p>
+                        <div class="accommodation-card__content">
+                            <h3 class="accommodation-card__title">ibis Styles Phuket City</h3>
+                            <p class="accommodation-card__subtitle">3★ Hotel – 15 Min Drive</p>
                         </div>
                     </div>
 
                     <!-- Novotel -->
-                    <div class="card">
-                        <div class="card__image">
+                    <div class="accommodation-card">
+                        <div class="accommodation-card__image">
                             <img src="assets/img/novotel.jpg" alt="Novotel Phuket City Phokeethra">
-                            <div class="card__overlay">
-                                <a href="accommodation/novotel.html" class="btn btn--secondary">VIEW</a>
+                            <div class="accommodation-card__overlay">
+                                <a href="accommodation/novotel.html" class="btn btn--view">VIEW</a>
                             </div>
                         </div>
-                        <div class="card__content">
-                            <h3 class="card__title">Novotel Phuket City Phokeethra</h3>
-                            <p class="card__subtitle">5★ Hotel – 25 Min Drive</p>
+                        <div class="accommodation-card__content">
+                            <h3 class="accommodation-card__title">Novotel Phuket City Phokeethra</h3>
+                            <p class="accommodation-card__subtitle">5★ Hotel – 25 Min Drive</p>
                         </div>
                     </div>
                 </div>
 
-                <div class="section__actions">
-                    <a href="accommodation.html" class="btn btn--primary">CLICK HERE TO VIEW ALL</a>
+                <div class="accommodation__actions">
+                    <a href="accommodation.html" class="btn btn--primary">VIEW ALL ACCOMMODATION</a>
                 </div>
             </div>
         </section>
 
-        <!-- Headliners Section (New) -->
+        <!-- Headliners Section -->
         <section class="section headliners">
             <div class="container">
                 <h2 class="section__title">THE HEADLINERS</h2>
-                <div class="grid headliners__grid">
-                    <div class="card placeholder-card">
-                        <div class="placeholder-image"></div>
-                        <h3 class="card__title">HEADLINER NAME</h3>
+
+                <div class="carousel carousel--headliners" id="headlinersCarousel">
+                    <div class="carousel__track-container">
+                        <div class="carousel__track">
+                            <div class="carousel__slide">
+                                <div class="headliner-card">
+                                    <div class="headliner-card__image"></div>
+                                    <h3 class="headliner-card__name">HEADLINER NAME</h3>
+                                </div>
+                            </div>
+                            <div class="carousel__slide">
+                                <div class="headliner-card">
+                                    <div class="headliner-card__image"></div>
+                                    <h3 class="headliner-card__name">HEADLINER NAME</h3>
+                                </div>
+                            </div>
+                            <div class="carousel__slide">
+                                <div class="headliner-card">
+                                    <div class="headliner-card__image"></div>
+                                    <h3 class="headliner-card__name">HEADLINER NAME</h3>
+                                </div>
+                            </div>
+                            <div class="carousel__slide">
+                                <div class="headliner-card">
+                                    <div class="headliner-card__image"></div>
+                                    <h3 class="headliner-card__name">HEADLINER NAME</h3>
+                                </div>
+                            </div>
+                            <div class="carousel__slide">
+                                <div class="headliner-card">
+                                    <div class="headliner-card__image"></div>
+                                    <h3 class="headliner-card__name">HEADLINER NAME</h3>
+                                </div>
+                            </div>
+                            <div class="carousel__slide">
+                                <div class="headliner-card">
+                                    <div class="headliner-card__image"></div>
+                                    <h3 class="headliner-card__name">HEADLINER NAME</h3>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="card placeholder-card">
-                        <div class="placeholder-image"></div>
-                        <h3 class="card__title">HEADLINER NAME</h3>
-                    </div>
-                    <div class="card placeholder-card">
-                        <div class="placeholder-image"></div>
-                        <h3 class="card__title">HEADLINER NAME</h3>
-                    </div>
-                    <div class="card placeholder-card">
-                        <div class="placeholder-image"></div>
-                        <h3 class="card__title">HEADLINER NAME</h3>
+
+                    <!-- Left & Right Arrows -->
+                    <button class="carousel__arrow carousel__arrow--left" aria-label="Previous slide">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                    <button class="carousel__arrow carousel__arrow--right" aria-label="Next slide">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+
+                    <!-- Dot Indicators -->
+                    <div class="carousel__dots">
+                        <button class="carousel__dot active" aria-label="Slide 1"></button>
+                        <button class="carousel__dot" aria-label="Slide 2"></button>
+                        <button class="carousel__dot" aria-label="Slide 3"></button>
+                        <button class="carousel__dot" aria-label="Slide 4"></button>
+                        <button class="carousel__dot" aria-label="Slide 5"></button>
+                        <button class="carousel__dot" aria-label="Slide 6"></button>
                     </div>
                 </div>
             </div>
         </section>
-
-        <!-- FAQ Section Removed as requested -->
     </main>
 
     <!-- Footer -->
@@ -208,11 +297,12 @@
         </div>
     </footer>
 
-    <!-- Mobile Sticky Button -->
-    <div class="mobile-cta">
-        <a href="https://fixr.co/event/dnb-allstars-thailand-tickets-927680847" target="_blank" class="btn btn--primary btn--large mobile-cta__btn">
-            BUY TICKETS
-        </a>
+    <!-- Sticky Footer CTA with Wipe Effect -->
+    <div class="sticky-footer" id="stickyFooter">
+        <div class="sticky-footer__bg"></div>
+        <div class="sticky-footer__content">
+            <a href="https://fixr.co/event/dnb-allstars-thailand-tickets-927680847" target="_blank" class="sticky-footer__btn">BUY TICKETS</a>
+        </div>
     </div>
 
     <script src="assets/js/script.js"></script>
