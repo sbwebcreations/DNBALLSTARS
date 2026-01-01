@@ -19,6 +19,106 @@ document.addEventListener('DOMContentLoaded', () => {
     revealOnScroll(); // Run on load
 
     // ================================
+    // SECTION FOCUS FADE EFFECT
+    // ================================
+    const headerOffset = 70;
+
+    const handleSectionFocus = () => {
+        const viewportHeight = window.innerHeight;
+
+        sections.forEach((section, index) => {
+            const rect = section.getBoundingClientRect();
+            const sectionHeight = rect.height;
+
+            // How far has the section TOP scrolled past the header?
+            const topPastHeader = headerOffset - rect.top;
+
+            // What percentage of the section has scrolled past the header?
+            const percentPastHeader = topPastHeader / sectionHeight;
+
+            let orangeGlow = 0;
+            let blackFade = 0;
+
+            // Section must be visible in viewport
+            if (rect.top < viewportHeight && rect.bottom > headerOffset) {
+
+                if (rect.top > headerOffset) {
+                    // Section top is BELOW header (section entering from bottom)
+                    // Fade orange IN smoothly as it approaches the header
+                    const distanceToHeader = rect.top - headerOffset;
+                    const fadeInZone = viewportHeight * 0.4; // Start fading in when 40% of viewport away
+                    const fadeInProgress = 1 - Math.min(distanceToHeader / fadeInZone, 1);
+                    orangeGlow = fadeInProgress * 0.15;
+                    blackFade = 0;
+
+                } else if (percentPastHeader < 0.50) {
+                    // Section top is AT or PAST header, but less than 50% scrolled past
+                    // Orange is fully ON, no black fade yet
+                    orangeGlow = 0.15;
+                    blackFade = 0;
+
+                } else {
+                    // More than 50% of section has scrolled past header
+                    // Fade orange OUT smoothly and fade black IN
+                    const fadeOutProgress = Math.min((percentPastHeader - 0.50) / 0.50, 1); // 0 to 1 over remaining 50%
+                    orangeGlow = 0.15 * (1 - fadeOutProgress);
+                    blackFade = fadeOutProgress * 0.7;
+                }
+            }
+
+            section.style.setProperty('--focus-glow', orangeGlow);
+            section.style.setProperty('--fade-out', blackFade);
+
+            if (orangeGlow > 0.05) {
+                section.classList.add('is-focused');
+            } else {
+                section.classList.remove('is-focused');
+            }
+        });
+    };
+
+    window.addEventListener('scroll', handleSectionFocus);
+    handleSectionFocus();
+
+    // ================================
+    // ANIMATED NUMBER COUNTERS
+    // ================================
+    const counters = document.querySelectorAll('[data-count]');
+    const counterObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting && !entry.target.classList.contains('counted')) {
+                const target = entry.target;
+                const countTo = parseInt(target.dataset.count);
+                const suffix = target.dataset.suffix || '';
+                const prefix = target.dataset.prefix || '';
+                const duration = 2000;
+                const startTime = performance.now();
+
+                target.classList.add('counted');
+
+                const updateCounter = (currentTime) => {
+                    const elapsed = currentTime - startTime;
+                    const progress = Math.min(elapsed / duration, 1);
+                    const easeOut = 1 - Math.pow(1 - progress, 3);
+                    const currentCount = Math.floor(easeOut * countTo);
+
+                    target.textContent = prefix + currentCount + suffix;
+
+                    if (progress < 1) {
+                        requestAnimationFrame(updateCounter);
+                    } else {
+                        target.textContent = prefix + countTo + suffix;
+                    }
+                };
+
+                requestAnimationFrame(updateCounter);
+            }
+        });
+    }, { threshold: 0.5 });
+
+    counters.forEach(counter => counterObserver.observe(counter));
+
+    // ================================
     // BACK TO TOP BUTTON
     // ================================
     const backToTop = document.getElementById('backToTop');
@@ -77,7 +177,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const categoryTitle = category.querySelector('.faq__category-title');
         if (categoryTitle) {
             categoryTitle.addEventListener('click', () => {
-                // Toggle current category
                 category.classList.toggle('is-open');
             });
         }
@@ -92,7 +191,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const question = item.querySelector('.faq__question');
         if (question) {
             question.addEventListener('click', () => {
-                // Close other items within the same category
                 const parentCategory = item.closest('.faq__category');
                 const siblingItems = parentCategory ? parentCategory.querySelectorAll('.faq__item') : faqItems;
 
@@ -101,35 +199,30 @@ document.addEventListener('DOMContentLoaded', () => {
                         other.classList.remove('is-open');
                     }
                 });
-                // Toggle current item
                 item.classList.toggle('is-open');
             });
         }
     });
 
     // ================================
-    // HEADER & FOOTER WIPE EFFECT
+    // HEADER & FOOTER WIPE + CTA TRANSITION
     // ================================
     const headerBg = document.querySelector('.header__bg');
     const headerDefaultLayer = document.querySelector('.header__elements--default');
     const stickyFooter = document.getElementById('stickyFooter');
     const stickyFooterBg = document.querySelector('.sticky-footer__bg');
-
-    // Configuration
-    const headerHeight = 70;
-    const footerHeight = 60;
-    const scrollRange = 150; // How many pixels of scroll to complete the wipe
-
-    // Get hero CTA button for footer visibility trigger
     const heroCta = document.querySelector('.hero__cta');
+    const heroCtaBtn = document.querySelector('.hero__cta .btn--hero');
+    const scrollIndicatorLine = document.querySelector('.scroll-indicator__line');
+
+    const headerHeight = 70;
+    const scrollRange = 150;
 
     const handleWipeScroll = () => {
         const scrollY = window.scrollY;
 
-        // Calculate wipe progress (0 to 1)
+        // Header wipe progress
         const progress = Math.min(scrollY / scrollRange, 1);
-
-        // Header wipe: clips from bottom up (revealing transparent underneath)
         const headerClipBottom = progress * 100;
         const headerClipPath = `inset(0 0 ${headerClipBottom}% 0)`;
 
@@ -140,26 +233,55 @@ document.addEventListener('DOMContentLoaded', () => {
             headerDefaultLayer.style.clipPath = headerClipPath;
         }
 
-        // Footer: Show when hero CTA reaches the header area
+        // Scroll indicator line - scroll-based animation
+        if (scrollIndicatorLine) {
+            const scrollLineProgress = Math.min(scrollY / 200, 1);
+            const linePosition = scrollLineProgress * 100;
+            scrollIndicatorLine.style.setProperty('--line-progress', `${linePosition}%`);
+        }
+
+        // Footer & Hero CTA Transition - footer appears AS hero button disappears
         if (heroCta) {
             const heroCtaRect = heroCta.getBoundingClientRect();
-            const triggerPoint = 100; // Start when CTA is near the header (around 100px from top)
+            const triggerPoint = 100; // When hero CTA is 100px from top
+            const transitionRange = 60; // Complete transition over 60px of scroll
 
             if (heroCtaRect.top < triggerPoint) {
-                // Calculate footer wipe progress based on CTA position
-                const footerProgress = Math.min(Math.max(0, (triggerPoint - heroCtaRect.top) / scrollRange), 1);
-                const footerClipTop = (1 - footerProgress) * 100;
+                // Calculate transition progress (0 to 1)
+                const transitionProgress = Math.min(Math.max(0, (triggerPoint - heroCtaRect.top) / transitionRange), 1);
+
+                // Fade out hero CTA button
+                if (heroCtaBtn) {
+                    heroCtaBtn.style.opacity = 1 - transitionProgress;
+                    heroCtaBtn.style.transform = `translateY(${transitionProgress * -15}px) scale(${1 - transitionProgress * 0.05})`;
+                    heroCtaBtn.style.pointerEvents = transitionProgress > 0.5 ? 'none' : 'auto';
+                }
+
+                // Footer button fades IN as hero button fades OUT (synced)
+                const footerClipTop = (1 - transitionProgress) * 100;
                 const footerClipPath = `inset(${footerClipTop}% 0 0 0)`;
 
                 if (stickyFooterBg) {
                     stickyFooterBg.style.clipPath = footerClipPath;
                 }
 
-                if (stickyFooter && footerProgress > 0.1) {
-                    stickyFooter.classList.add('is-visible');
+                // Show footer content when transition is past halfway
+                if (stickyFooter) {
+                    if (transitionProgress > 0.5) {
+                        stickyFooter.classList.add('is-visible');
+                    } else {
+                        stickyFooter.classList.remove('is-visible');
+                    }
                 }
             } else {
-                // Hide footer completely
+                // Reset hero CTA
+                if (heroCtaBtn) {
+                    heroCtaBtn.style.opacity = 1;
+                    heroCtaBtn.style.transform = 'translateY(0) scale(1)';
+                    heroCtaBtn.style.pointerEvents = 'auto';
+                }
+
+                // Hide footer
                 if (stickyFooterBg) {
                     stickyFooterBg.style.clipPath = 'inset(100% 0 0 0)';
                 }
@@ -171,7 +293,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     window.addEventListener('scroll', handleWipeScroll);
-    handleWipeScroll(); // Run on load
+    handleWipeScroll();
 
     // ================================
     // MOBILE MENU
@@ -197,7 +319,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        // Close menu when a link is clicked
         mobileLinks.forEach(link => {
             link.addEventListener('click', () => {
                 mobileMenu.classList.remove('is-active');
@@ -258,10 +379,50 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    // Run countdown every second if countdown elements exist
     if (document.getElementById('days')) {
         setInterval(countdown, 1000);
-        countdown(); // Run immediately on load
+        countdown();
+    }
+
+    // ================================
+    // COOKIE CONSENT
+    // ================================
+    const cookieBanner = document.getElementById('cookieConsent');
+    const cookieAccept = document.getElementById('cookieAccept');
+
+    if (cookieBanner && !localStorage.getItem('cookieConsent')) {
+        setTimeout(() => {
+            cookieBanner.classList.add('is-visible');
+        }, 2000);
+    }
+
+    if (cookieAccept) {
+        cookieAccept.addEventListener('click', () => {
+            localStorage.setItem('cookieConsent', 'accepted');
+            cookieBanner.classList.remove('is-visible');
+        });
+    }
+
+    // ================================
+    // NEWSLETTER FORM
+    // ================================
+    const newsletterForm = document.getElementById('newsletterForm');
+    if (newsletterForm) {
+        newsletterForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = newsletterForm.querySelector('input[type="email"]').value;
+            const btn = newsletterForm.querySelector('button');
+            const originalText = btn.textContent;
+
+            btn.textContent = 'SUBSCRIBED!';
+            btn.disabled = true;
+
+            setTimeout(() => {
+                btn.textContent = originalText;
+                btn.disabled = false;
+                newsletterForm.reset();
+            }, 3000);
+        });
     }
 
     // ================================
@@ -313,7 +474,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 this.startAutoplay();
             }
 
-            // Handle resize
             window.addEventListener('resize', () => {
                 this.slidesToShow = this.getSlidesToShow();
                 this.maxIndex = Math.max(0, this.totalSlides - this.slidesToShow);
@@ -338,7 +498,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 dot.addEventListener('click', () => this.goToSlide(index));
             });
 
-            // Touch/Swipe support
             let startX = 0;
             let endX = 0;
 
@@ -387,12 +546,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         updateDots() {
-            // Calculate which dots to show based on slides to show
             const dotsNeeded = this.maxIndex + 1;
 
             this.dots.forEach((dot, index) => {
                 dot.classList.remove('active');
-                // Hide extra dots if we have more dots than needed
                 if (index < dotsNeeded) {
                     dot.style.display = '';
                     if (index === this.currentIndex) {
@@ -420,8 +577,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // ================================
     // INITIALIZE CAROUSELS
     // ================================
-
-    // Lineup Carousel (formerly Headliners)
     const headlinersCarousel = document.getElementById('headlinersCarousel');
     if (headlinersCarousel) {
         new Carousel(headlinersCarousel, {
@@ -429,6 +584,19 @@ document.addEventListener('DOMContentLoaded', () => {
             slidesToShowTablet: 2,
             slidesToShowMobile: 1,
             loop: true
+        });
+    }
+
+    // Accommodation Carousel (single slide with dots)
+    const accommodationCarousel = document.getElementById('accommodationCarousel');
+    if (accommodationCarousel) {
+        new Carousel(accommodationCarousel, {
+            slidesToShow: 1,
+            slidesToShowTablet: 1,
+            slidesToShowMobile: 1,
+            loop: true,
+            autoplay: true,
+            autoplaySpeed: 5000
         });
     }
 });
