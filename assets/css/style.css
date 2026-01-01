@@ -108,6 +108,17 @@ img {
     color: var(--color-text);
 }
 
+.btn--white {
+    background-color: #ffffff;
+    color: #000000;
+    border-color: #ffffff;
+}
+
+.btn--white:hover {
+    background-color: transparent;
+    color: #ffffff;
+}
+
 .btn--large {
     padding: 16px 32px;
     font-size: 1.2rem;
@@ -318,34 +329,32 @@ img {
 /* Countdown */
 .countdown {
     display: flex;
-    gap: var(--spacing-md);
-    margin-bottom: var(--spacing-sm);
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-md);
 }
 
 .countdown__item {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background: rgba(0, 0, 0, 0.6);
-    backdrop-filter: blur(5px);
-    padding: 15px 25px;
-    border-radius: var(--border-radius);
     color: #ffffff;
-    min-width: 100px;
-    border: 1px solid rgba(255,255,255,0.2);
+    /* Clean look: removed background, border, blur */
 }
 
 .countdown__number {
     font-family: var(--font-heading);
-    font-size: 2.5rem;
+    font-size: 4rem; /* Large floating numbers */
     line-height: 1;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.5); /* Added shadow for readability */
 }
 
 .countdown__label {
-    font-size: 0.8rem;
+    font-size: 1rem;
     text-transform: uppercase;
-    opacity: 0.8;
+    opacity: 0.9;
     margin-top: 5px;
+    letter-spacing: 2px;
+    text-shadow: 0 2px 5px rgba(0,0,0,0.5);
 }
 
 /* Hype Section */
@@ -371,6 +380,32 @@ img {
 
 .hype__gallery .card__image {
     aspect-ratio: 16/9;
+}
+
+/* Headliners Section */
+.headliners {
+    background-color: var(--color-bg);
+}
+
+.headliners__grid {
+    grid-template-columns: repeat(4, 1fr);
+}
+
+.placeholder-card {
+    background-color: #f0f0f0;
+    text-align: center;
+}
+
+.placeholder-image {
+    width: 100%;
+    aspect-ratio: 1;
+    background-color: #cccccc;
+    margin-bottom: var(--spacing-sm);
+}
+
+.headliners .card__title {
+    font-size: 1rem;
+    padding: 0 10px 20px;
 }
 
 /* Sections General */
@@ -531,7 +566,7 @@ img {
         display: flex;
     }
     
-    .grid {
+    .grid, .headliners__grid {
         grid-template-columns: 1fr;
     }
     
