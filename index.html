@@ -26,9 +26,9 @@
                 <div class="header__left">
                     <div class="burger-placeholder" aria-hidden="true">
                         <svg width="24" height="18" viewBox="0 0 24 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M0 1H24" stroke="#f6c25e" stroke-width="2"/>
-                            <path d="M0 9H24" stroke="#f6c25e" stroke-width="2"/>
-                            <path d="M0 17H24" stroke="#f6c25e" stroke-width="2"/>
+                            <path d="M0 1H24" stroke="currentColor" stroke-width="2"/>
+                            <path d="M0 9H24" stroke="currentColor" stroke-width="2"/>
+                            <path d="M0 17H24" stroke="currentColor" stroke-width="2"/>
                         </svg>
                     </div>
                 </div>
@@ -36,7 +36,7 @@
                     <img src="assets/img/logo.png" alt="DnB Allstars: Thailand 2026">
                 </a>
                 <div class="header__right">
-                    <span class="btn btn--tickets btn--tickets-orange">TICKETS</span>
+                    <span class="btn btn--tickets btn--tickets-orange"><span class="btn-text-full">TICKETS</span><span class="btn-text-short">BUY</span></span>
                 </div>
             </div>
         </div>
@@ -57,7 +57,7 @@
                     <img src="assets/img/logo.png" alt="DnB Allstars: Thailand 2026">
                 </a>
                 <div class="header__right">
-                    <a href="https://fixr.co/event/dnb-allstars-thailand-tickets-927680847" target="_blank" class="btn btn--tickets">TICKETS</a>
+                    <a href="https://fixr.co/event/dnb-allstars-thailand-tickets-927680847" target="_blank" class="btn btn--tickets"><span class="btn-text-full">TICKETS</span><span class="btn-text-short">BUY</span></a>
                 </div>
             </div>
         </div>
@@ -66,15 +66,17 @@
         <div class="mobile-menu">
             <nav class="mobile-menu__nav">
                 <ul class="mobile-menu__list">
-                    <li><a href="index.html" class="mobile-menu__link active">HOME</a></li>
-                    <li><a href="#lineup" class="mobile-menu__link">LINEUP</a></li>
-                    <li><a href="#accommodation" class="mobile-menu__link">ACCOMMODATION</a></li>
-                    <li><a href="#faq" class="mobile-menu__link">FAQ</a></li>
+                    <li><a href="index.html" class="mobile-menu__link active" data-en="HOME" data-th="หน้าแรก" data-ru="ГЛАВНАЯ">HOME</a></li>
+                    <li><a href="#lineup" class="mobile-menu__link" data-en="LINEUP" data-th="ไลน์อัพ" data-ru="ЛАЙНАП">LINEUP</a></li>
+                    <li><a href="#accommodation" class="mobile-menu__link" data-en="ACCOMMODATION" data-th="ที่พัก" data-ru="ПРОЖИВАНИЕ">ACCOMMODATION</a></li>
+                    <li><a href="#faq" class="mobile-menu__link" data-en="FAQ" data-th="คำถามที่พบบ่อย" data-ru="ВОПРОСЫ">FAQ</a></li>
                 </ul>
                 <div class="mobile-menu__lang">
                     <button class="lang-btn active" data-lang="en">EN</button>
                     <span class="lang-divider">|</span>
                     <button class="lang-btn" data-lang="th">TH</button>
+                    <span class="lang-divider">|</span>
+                    <button class="lang-btn" data-lang="ru">RU</button>
                 </div>
             </nav>
         </div>
@@ -92,103 +94,133 @@
             <div class="countdown" id="countdown">
                 <div class="countdown__item">
                     <span class="countdown__number" id="days">00</span>
-                    <span class="countdown__label">Days</span>
+                    <span class="countdown__label" data-en="Days" data-th="วัน" data-ru="Дней">Days</span>
                 </div>
                 <div class="countdown__separator">:</div>
                 <div class="countdown__item">
                     <span class="countdown__number" id="hours">00</span>
-                    <span class="countdown__label">Hours</span>
+                    <span class="countdown__label" data-en="Hours" data-th="ชม." data-ru="Часов">Hours</span>
                 </div>
                 <div class="countdown__separator">:</div>
                 <div class="countdown__item">
                     <span class="countdown__number" id="minutes">00</span>
-                    <span class="countdown__label">Mins</span>
+                    <span class="countdown__label" data-en="Mins" data-th="นาที" data-ru="Мин">Mins</span>
                 </div>
                 <div class="countdown__separator">:</div>
                 <div class="countdown__item">
                     <span class="countdown__number" id="seconds">00</span>
-                    <span class="countdown__label">Secs</span>
+                    <span class="countdown__label" data-en="Secs" data-th="วิ" data-ru="Сек">Secs</span>
                 </div>
             </div>
 
             <div class="hero__cta">
-                <a href="https://fixr.co/event/dnb-allstars-thailand-tickets-927680847" target="_blank" class="btn btn--hero" data-en="BUY FINAL RELEASE TICKETS" data-th="ซื้อตั๋วรอบสุดท้าย">BUY FINAL RELEASE TICKETS</a>
-                <span class="hero__urgency" data-en="RUNNING LOW" data-th="ใกล้หมด">RUNNING LOW</span>
+                <a href="https://fixr.co/event/dnb-allstars-thailand-tickets-927680847" target="_blank" class="btn btn--hero" data-en="BUY FINAL RELEASE TICKETS" data-th="ซื้อตั๋วรอบสุดท้าย" data-ru="КУПИТЬ БИЛЕТЫ">BUY FINAL RELEASE TICKETS</a>
+                <span class="hero__urgency" data-en="RUNNING LOW" data-th="ใกล้หมด" data-ru="ОСТАЛОСЬ МАЛО">RUNNING LOW</span>
             </div>
+        </div>
+
+        <!-- Floating Language Selector -->
+        <div class="floating-lang" id="floatingLang">
+            <button class="floating-lang__btn active" data-lang="en">EN</button>
+            <button class="floating-lang__btn" data-lang="th">TH</button>
+            <button class="floating-lang__btn" data-lang="ru">RU</button>
         </div>
 
         <!-- Scroll Indicator -->
         <div class="scroll-indicator">
-            <span class="scroll-indicator__text">SCROLL</span>
+            <span class="scroll-indicator__text" data-en="SCROLL" data-th="เลื่อน" data-ru="ЛИСТАЙ">SCROLL</span>
             <div class="scroll-indicator__line"></div>
         </div>
     </section>
 
     <main>
-        <!-- About Section -->
-        <section class="section about">
+        <!-- About & Lineup Combined Section -->
+        <section class="section about-lineup" id="lineup">
             <div class="container">
+                <!-- About Content -->
                 <div class="about__content">
-                    <p data-en="For the very first time in South East Asia, we land in Phuket with full festival vibes. Get ready for three days of high-energy drum & bass, stunning beachside views, and an unforgettable party in paradise." data-th="เป็นครั้งแรกในเอเชียตะวันออกเฉียงใต้ เราลงจอดที่ภูเก็ตพร้อมบรรยากาศเทศกาลเต็มรูปแบบ เตรียมพร้อมสำหรับสามวันของดรัมแอนด์เบสพลังสูง วิวทะเลสวยงาม และปาร์ตี้ที่ไม่มีวันลืมในสวรรค์">For the very first time in South East Asia, we land in Phuket with full festival vibes. Get ready for three days of high-energy drum & bass, stunning beachside views, and an unforgettable party in paradise.</p>
+                    <p data-en="For the very first time in South East Asia, we land in Phuket with full festival vibes. Get ready for three days of high-energy drum & bass, stunning beachside views, and an unforgettable party in paradise." data-th="เป็นครั้งแรกในเอเชียตะวันออกเฉียงใต้ เราลงจอดที่ภูเก็ตพร้อมบรรยากาศเทศกาลเต็มรูปแบบ เตรียมพร้อมสำหรับสามวันของดรัมแอนด์เบสพลังสูง วิวทะเลสวยงาม และปาร์ตี้ที่ไม่มีวันลืมในสวรรค์" data-ru="Впервые в Юго-Восточной Азии мы приземляемся на Пхукете с настоящей фестивальной атмосферой. Приготовьтесь к трём дням энергичного драм-н-бейса, потрясающим видам на море и незабываемой вечеринке в раю.">For the very first time in South East Asia, we land in Phuket with full festival vibes. Get ready for three days of high-energy drum & bass, stunning beachside views, and an unforgettable party in paradise.</p>
                 </div>
-            </div>
-        </section>
 
-        <!-- The Numbers Section -->
-        <section class="section numbers">
-            <div class="container">
-                <h2 class="section__title" data-en="THE NUMBERS" data-th="ตัวเลข">THE NUMBERS</h2>
-                <div class="numbers__grid">
-                    <div class="numbers__item">
-                        <div class="numbers__icon">
-                            <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <rect x="6" y="10" width="36" height="28" rx="2" stroke="currentColor" stroke-width="2"/>
-                                <path d="M6 18H42" stroke="currentColor" stroke-width="2"/>
-                                <path d="M14 10V6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                                <path d="M34 10V6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                                <path d="M16 26H20" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                                <path d="M28 26H32" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                                <path d="M16 32H20" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                            </svg>
-                        </div>
-                        <span class="numbers__value" data-count="3" data-suffix=" DAYS">3 DAYS</span>
-                        <span class="numbers__label">OF DNB</span>
+                <!-- Scroll Arrow -->
+                <div class="section-scroll-indicator">
+                    <div class="section-scroll-indicator__arrow">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
                     </div>
-                    <div class="numbers__item">
-                        <div class="numbers__icon">
-                            <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <circle cx="24" cy="14" r="6" stroke="currentColor" stroke-width="2"/>
-                                <path d="M12 40V36C12 32 16 28 24 28C32 28 36 32 36 36V40" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                                <circle cx="38" cy="16" r="4" stroke="currentColor" stroke-width="2"/>
-                                <path d="M42 32V30C42 28 40 26 38 26" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                                <circle cx="10" cy="16" r="4" stroke="currentColor" stroke-width="2"/>
-                                <path d="M6 32V30C6 28 8 26 10 26" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                            </svg>
+                </div>
+
+                <!-- Lineup Content -->
+                <h2 class="section__title" data-en="THE LINEUP" data-th="ไลน์อัพ" data-ru="ЛАЙНАП">THE LINEUP</h2>
+
+                <div class="carousel carousel--headliners" id="headlinersCarousel">
+                    <div class="carousel__track-container">
+                        <div class="carousel__track">
+                            <div class="carousel__slide">
+                                <div class="headliner-card">
+                                    <div class="headliner-card__image"></div>
+                                    <h3 class="headliner-card__name">ARTIST NAME</h3>
+                                </div>
+                            </div>
+                            <div class="carousel__slide">
+                                <div class="headliner-card">
+                                    <div class="headliner-card__image"></div>
+                                    <h3 class="headliner-card__name">ARTIST NAME</h3>
+                                </div>
+                            </div>
+                            <div class="carousel__slide">
+                                <div class="headliner-card">
+                                    <div class="headliner-card__image"></div>
+                                    <h3 class="headliner-card__name">ARTIST NAME</h3>
+                                </div>
+                            </div>
+                            <div class="carousel__slide">
+                                <div class="headliner-card">
+                                    <div class="headliner-card__image"></div>
+                                    <h3 class="headliner-card__name">ARTIST NAME</h3>
+                                </div>
+                            </div>
+                            <div class="carousel__slide">
+                                <div class="headliner-card">
+                                    <div class="headliner-card__image"></div>
+                                    <h3 class="headliner-card__name">ARTIST NAME</h3>
+                                </div>
+                            </div>
+                            <div class="carousel__slide">
+                                <div class="headliner-card">
+                                    <div class="headliner-card__image"></div>
+                                    <h3 class="headliner-card__name">ARTIST NAME</h3>
+                                </div>
+                            </div>
                         </div>
-                        <span class="numbers__value" data-count="50" data-suffix="+">50+</span>
-                        <span class="numbers__label">INTERNATIONAL ARTISTS</span>
                     </div>
-                    <div class="numbers__item">
-                        <div class="numbers__icon">
-                            <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M8 40L24 8L40 40H8Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
-                                <path d="M14 40L24 20L34 40" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
-                                <path d="M4 40H44" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                            </svg>
-                        </div>
-                        <span class="numbers__value" data-count="2" data-suffix=" STAGES">2 STAGES</span>
-                        <span class="numbers__label">WORLD-CLASS PRODUCTION</span>
+
+                    <!-- Left & Right Arrows -->
+                    <button class="carousel__arrow carousel__arrow--left" aria-label="Previous slide">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                    <button class="carousel__arrow carousel__arrow--right" aria-label="Next slide">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+
+                    <!-- Dot Indicators -->
+                    <div class="carousel__dots">
+                        <button class="carousel__dot active" aria-label="Slide 1"></button>
+                        <button class="carousel__dot" aria-label="Slide 2"></button>
+                        <button class="carousel__dot" aria-label="Slide 3"></button>
+                        <button class="carousel__dot" aria-label="Slide 4"></button>
+                        <button class="carousel__dot" aria-label="Slide 5"></button>
+                        <button class="carousel__dot" aria-label="Slide 6"></button>
                     </div>
-                    <div class="numbers__item">
-                        <div class="numbers__icon">
-                            <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <circle cx="24" cy="24" r="18" stroke="currentColor" stroke-width="2"/>
-                                <path d="M24 12V24L32 32" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                            </svg>
-                        </div>
-                        <span class="numbers__value" data-count="72" data-suffix=" HRS">72 HRS</span>
-                        <span class="numbers__label">NON-STOP MUSIC</span>
-                    </div>
+                </div>
+
+                <div class="lineup__actions">
+                    <a href="#" class="btn btn--outline" data-en="VIEW FULL LINEUP POSTER" data-th="ดูโปสเตอร์ไลน์อัพเต็ม" data-ru="СМОТРЕТЬ ПОСТЕР ЛАЙНАПА">VIEW FULL LINEUP POSTER</a>
                 </div>
             </div>
         </section>
@@ -196,8 +228,8 @@
         <!-- Accommodation Section -->
         <section class="section accommodation" id="accommodation">
             <div class="container">
-                <h2 class="section__title" data-en="LAST ROOMS REMAINING" data-th="ห้องพักที่เหลืออยู่">LAST ROOMS REMAINING</h2>
-                <div class="urgency-badge" data-en="⚠ 90% SOLD OUT" data-th="⚠ ขายแล้ว 90%">⚠ 90% SOLD OUT</div>
+                <h2 class="section__title" data-en="LAST ROOMS REMAINING" data-th="ห้องพักที่เหลืออยู่" data-ru="ПОСЛЕДНИЕ НОМЕРА">LAST ROOMS REMAINING</h2>
+                <div class="urgency-badge" data-en="⚠ 90% SOLD OUT" data-th="⚠ ขายแล้ว 90%" data-ru="⚠ 90% ПРОДАНО">⚠ 90% SOLD OUT</div>
 
                 <div class="carousel carousel--accommodation" id="accommodationCarousel">
                     <div class="carousel__track-container">
@@ -273,83 +305,66 @@
                 </div>
 
                 <div class="accommodation__actions">
-                    <a href="accommodation.html" class="btn btn--primary">VIEW ALL ACCOMMODATION</a>
+                    <a href="accommodation.html" class="btn btn--primary" data-en="VIEW ALL ACCOMMODATION" data-th="ดูที่พักทั้งหมด" data-ru="ВСЕ ВАРИАНТЫ ПРОЖИВАНИЯ">VIEW ALL ACCOMMODATION</a>
                 </div>
             </div>
         </section>
 
-        <!-- Lineup Section -->
-        <section class="section lineup" id="lineup">
+        <!-- The Numbers Section -->
+        <section class="section numbers">
             <div class="container">
-                <h2 class="section__title" data-en="THE LINEUP" data-th="ไลน์อัพ">THE LINEUP</h2>
-
-                <div class="carousel carousel--headliners" id="headlinersCarousel">
-                    <div class="carousel__track-container">
-                        <div class="carousel__track">
-                            <div class="carousel__slide">
-                                <div class="headliner-card">
-                                    <div class="headliner-card__image"></div>
-                                    <h3 class="headliner-card__name">ARTIST NAME</h3>
-                                </div>
-                            </div>
-                            <div class="carousel__slide">
-                                <div class="headliner-card">
-                                    <div class="headliner-card__image"></div>
-                                    <h3 class="headliner-card__name">ARTIST NAME</h3>
-                                </div>
-                            </div>
-                            <div class="carousel__slide">
-                                <div class="headliner-card">
-                                    <div class="headliner-card__image"></div>
-                                    <h3 class="headliner-card__name">ARTIST NAME</h3>
-                                </div>
-                            </div>
-                            <div class="carousel__slide">
-                                <div class="headliner-card">
-                                    <div class="headliner-card__image"></div>
-                                    <h3 class="headliner-card__name">ARTIST NAME</h3>
-                                </div>
-                            </div>
-                            <div class="carousel__slide">
-                                <div class="headliner-card">
-                                    <div class="headliner-card__image"></div>
-                                    <h3 class="headliner-card__name">ARTIST NAME</h3>
-                                </div>
-                            </div>
-                            <div class="carousel__slide">
-                                <div class="headliner-card">
-                                    <div class="headliner-card__image"></div>
-                                    <h3 class="headliner-card__name">ARTIST NAME</h3>
-                                </div>
-                            </div>
+                <h2 class="section__title" data-en="THE NUMBERS" data-th="ตัวเลข" data-ru="ЦИФРЫ">THE NUMBERS</h2>
+                <div class="numbers__grid">
+                    <div class="numbers__item">
+                        <div class="numbers__icon">
+                            <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect x="6" y="10" width="36" height="28" rx="2" stroke="currentColor" stroke-width="2"/>
+                                <path d="M6 18H42" stroke="currentColor" stroke-width="2"/>
+                                <path d="M14 10V6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                <path d="M34 10V6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                <path d="M16 26H20" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                <path d="M28 26H32" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                <path d="M16 32H20" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                            </svg>
                         </div>
+                        <span class="numbers__value" data-count="3" data-suffix=" DAYS">3 DAYS</span>
+                        <span class="numbers__label" data-en="OF DNB" data-th="ของ DNB" data-ru="ДРАМ-Н-БЕЙСА">OF DNB</span>
                     </div>
-
-                    <!-- Left & Right Arrows -->
-                    <button class="carousel__arrow carousel__arrow--left" aria-label="Previous slide">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                    </button>
-                    <button class="carousel__arrow carousel__arrow--right" aria-label="Next slide">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                    </button>
-
-                    <!-- Dot Indicators -->
-                    <div class="carousel__dots">
-                        <button class="carousel__dot active" aria-label="Slide 1"></button>
-                        <button class="carousel__dot" aria-label="Slide 2"></button>
-                        <button class="carousel__dot" aria-label="Slide 3"></button>
-                        <button class="carousel__dot" aria-label="Slide 4"></button>
-                        <button class="carousel__dot" aria-label="Slide 5"></button>
-                        <button class="carousel__dot" aria-label="Slide 6"></button>
+                    <div class="numbers__item">
+                        <div class="numbers__icon">
+                            <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="24" cy="14" r="6" stroke="currentColor" stroke-width="2"/>
+                                <path d="M12 40V36C12 32 16 28 24 28C32 28 36 32 36 36V40" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                <circle cx="38" cy="16" r="4" stroke="currentColor" stroke-width="2"/>
+                                <path d="M42 32V30C42 28 40 26 38 26" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                <circle cx="10" cy="16" r="4" stroke="currentColor" stroke-width="2"/>
+                                <path d="M6 32V30C6 28 8 26 10 26" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                            </svg>
+                        </div>
+                        <span class="numbers__value" data-count="50" data-suffix="+">50+</span>
+                        <span class="numbers__label" data-en="INTERNATIONAL ARTISTS" data-th="ศิลปินต่างประเทศ" data-ru="АРТИСТОВ СО ВСЕГО МИРА">INTERNATIONAL ARTISTS</span>
                     </div>
-                </div>
-
-                <div class="lineup__actions">
-                    <a href="#" class="btn btn--outline">VIEW FULL LINEUP POSTER</a>
+                    <div class="numbers__item">
+                        <div class="numbers__icon">
+                            <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M8 40L24 8L40 40H8Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                                <path d="M14 40L24 20L34 40" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                                <path d="M4 40H44" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                            </svg>
+                        </div>
+                        <span class="numbers__value" data-count="2" data-suffix=" STAGES">2 STAGES</span>
+                        <span class="numbers__label" data-en="WORLD-CLASS PRODUCTION" data-th="การผลิตระดับโลก" data-ru="МИРОВОЙ УРОВЕНЬ">WORLD-CLASS PRODUCTION</span>
+                    </div>
+                    <div class="numbers__item">
+                        <div class="numbers__icon">
+                            <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="24" cy="24" r="18" stroke="currentColor" stroke-width="2"/>
+                                <path d="M24 12V24L32 32" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                            </svg>
+                        </div>
+                        <span class="numbers__value" data-count="72" data-suffix=" HRS">72 HRS</span>
+                        <span class="numbers__label" data-en="NON-STOP MUSIC" data-th="เพลงไม่หยุด" data-ru="МУЗЫКИ БЕЗ ОСТАНОВКИ">NON-STOP MUSIC</span>
+                    </div>
                 </div>
             </div>
         </section>
@@ -357,8 +372,8 @@
         <!-- Experience Section -->
         <section class="section experience">
             <div class="container">
-                <h2 class="section__title">THE EXPERIENCE</h2>
-                <p class="experience__subtitle">Three days of world-class drum & bass in tropical paradise</p>
+                <h2 class="section__title" data-en="THE EXPERIENCE" data-th="ประสบการณ์" data-ru="ВПЕЧАТЛЕНИЯ">THE EXPERIENCE</h2>
+                <p class="experience__subtitle" data-en="Three days of world-class drum & bass in tropical paradise" data-th="สามวันของดรัมแอนด์เบสระดับโลกในสวรรค์เขตร้อน" data-ru="Три дня драм-н-бейса мирового класса в тропическом раю">Three days of world-class drum & bass in tropical paradise</p>
                 <div class="experience__video">
                     <div class="experience__video-placeholder">
                         <div class="experience__play-btn">
@@ -367,7 +382,7 @@
                                 <path d="M24 20L44 30L24 40V20Z" fill="white"/>
                             </svg>
                         </div>
-                        <span class="experience__video-text">PROMO VIDEO COMING SOON</span>
+                        <span class="experience__video-text" data-en="PROMO VIDEO COMING SOON" data-th="วิดีโอโปรโมทเร็วๆ นี้" data-ru="ПРОМО ВИДЕО СКОРО">PROMO VIDEO COMING SOON</span>
                     </div>
                 </div>
                 <div class="experience__features">
@@ -379,7 +394,7 @@
                             </svg>
                         </div>
                         <h4>3PM - 3AM</h4>
-                        <p>Daily Schedule</p>
+                        <p data-en="Daily Schedule" data-th="ตารางประจำวัน" data-ru="Ежедневно">Daily Schedule</p>
                     </div>
                     <div class="experience__feature">
                         <div class="experience__feature-icon">
@@ -387,8 +402,8 @@
                                 <path d="M20 4L24 12H32L26 18L30 26L20 20L10 26L14 18L8 12H16L20 4Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
                             </svg>
                         </div>
-                        <h4>VIP AREAS</h4>
-                        <p>Premium Experience</p>
+                        <h4 data-en="VIP AREAS" data-th="พื้นที่ VIP" data-ru="VIP ЗОНЫ">VIP AREAS</h4>
+                        <p data-en="Premium Experience" data-th="ประสบการณ์พรีเมียม" data-ru="Премиум сервис">Premium Experience</p>
                     </div>
                     <div class="experience__feature">
                         <div class="experience__feature-icon">
@@ -398,8 +413,8 @@
                                 <path d="M12 26H20" stroke="currentColor" stroke-width="2"/>
                             </svg>
                         </div>
-                        <h4>CASHLESS</h4>
-                        <p>Card Payments Only</p>
+                        <h4 data-en="CASHLESS" data-th="ไร้เงินสด" data-ru="БЕЗНАЛИЧНЫЙ">CASHLESS</h4>
+                        <p data-en="Card Payments Only" data-th="ชำระด้วยบัตรเท่านั้น" data-ru="Только карты">Card Payments Only</p>
                     </div>
                     <div class="experience__feature">
                         <div class="experience__feature-icon">
@@ -408,8 +423,8 @@
                                 <circle cx="20" cy="18" r="4" stroke="currentColor" stroke-width="2"/>
                             </svg>
                         </div>
-                        <h4>PHUKET</h4>
-                        <p>Thailand</p>
+                        <h4 data-en="PHUKET" data-th="ภูเก็ต" data-ru="ПХУКЕТ">PHUKET</h4>
+                        <p data-en="Thailand" data-th="ประเทศไทย" data-ru="Таиланд">Thailand</p>
                     </div>
                 </div>
             </div>
@@ -418,7 +433,7 @@
     <!-- FAQ Section -->
         <section class="section faq" id="faq">
             <div class="container">
-                <h2 class="section__title" data-en="FREQUENTLY ASKED QUESTIONS" data-th="คำถามที่พบบ่อย">FREQUENTLY ASKED QUESTIONS</h2>
+                <h2 class="section__title" data-en="FREQUENTLY ASKED QUESTIONS" data-th="คำถามที่พบบ่อย" data-ru="ЧАСТО ЗАДАВАЕМЫЕ ВОПРОСЫ">FREQUENTLY ASKED QUESTIONS</h2>
 
                 <!-- General -->
                 <div class="faq__category">
@@ -743,7 +758,7 @@
         <!-- Partners Section -->
         <section class="section partners">
             <div class="container">
-                <h2 class="section__title">OFFICIAL PARTNERS</h2>
+                <h2 class="section__title" data-en="OFFICIAL PARTNERS" data-th="พันธมิตรอย่างเป็นทางการ" data-ru="ОФИЦИАЛЬНЫЕ ПАРТНЕРЫ">OFFICIAL PARTNERS</h2>
                 <div class="partners__grid">
                     <div class="partner-logo">
                         <span>FIXR</span>
@@ -771,11 +786,11 @@
         <section class="section newsletter">
             <div class="container">
                 <div class="newsletter__content">
-                    <h2 class="newsletter__title">STAY IN THE LOOP</h2>
-                    <p class="newsletter__text">Get exclusive updates, artist announcements, and early access to tickets.</p>
+                    <h2 class="newsletter__title" data-en="STAY IN THE LOOP" data-th="ติดตามข่าวสาร" data-ru="БУДЬТЕ В КУРСЕ">STAY IN THE LOOP</h2>
+                    <p class="newsletter__text" data-en="Get exclusive updates, artist announcements, and early access to tickets." data-th="รับข่าวสารพิเศษ ประกาศศิลปิน และสิทธิ์ซื้อตั๋วก่อนใคร" data-ru="Получайте эксклюзивные новости, анонсы артистов и ранний доступ к билетам.">Get exclusive updates, artist announcements, and early access to tickets.</p>
                     <form class="newsletter__form" id="newsletterForm">
-                        <input type="email" placeholder="Enter your email" required>
-                        <button type="submit" class="btn btn--primary">SUBSCRIBE</button>
+                        <input type="email" placeholder="Enter your email" data-placeholder-en="Enter your email" data-placeholder-th="กรอกอีเมลของคุณ" data-placeholder-ru="Введите email" required>
+                        <button type="submit" class="btn btn--primary" data-en="SUBSCRIBE" data-th="สมัคร" data-ru="ПОДПИСАТЬСЯ">SUBSCRIBE</button>
                     </form>
                 </div>
             </div>
@@ -848,13 +863,13 @@
             </div>
 
             <div class="footer__links">
-                <a href="https://fixr.co/event/dnb-allstars-thailand-local-resident-tickets-938277701" target="_blank">Resident Tickets</a>
-                <a href="#faq">FAQs</a>
-                <a href="#" class="footer__legal">Terms & Conditions</a>
-                <a href="#" class="footer__legal">Privacy Policy</a>
-                <a href="#" class="footer__legal">Refund Policy</a>
+                <a href="https://fixr.co/event/dnb-allstars-thailand-local-resident-tickets-938277701" target="_blank" data-en="Resident Tickets" data-th="ตั๋วผู้พักอาศัย" data-ru="Билеты для резидентов">Resident Tickets</a>
+                <a href="#faq" data-en="FAQs" data-th="คำถามที่พบบ่อย" data-ru="Вопросы">FAQs</a>
+                <a href="#" class="footer__legal" data-en="Terms & Conditions" data-th="ข้อกำหนดและเงื่อนไข" data-ru="Условия">Terms & Conditions</a>
+                <a href="#" class="footer__legal" data-en="Privacy Policy" data-th="นโยบายความเป็นส่วนตัว" data-ru="Конфиденциальность">Privacy Policy</a>
+                <a href="#" class="footer__legal" data-en="Refund Policy" data-th="นโยบายการคืนเงิน" data-ru="Возврат">Refund Policy</a>
             </div>
-            <p class="copyright">&copy; 2026 DnB Allstars. All rights reserved.</p>
+            <p class="copyright" data-en="© 2026 DnB Allstars. All rights reserved." data-th="© 2026 DnB Allstars สงวนลิขสิทธิ์" data-ru="© 2026 DnB Allstars. Все права защищены.">&copy; 2026 DnB Allstars. All rights reserved.</p>
         </div>
     </footer>
 
@@ -862,7 +877,7 @@
     <div class="sticky-footer" id="stickyFooter">
         <div class="sticky-footer__bg"></div>
         <div class="sticky-footer__content">
-            <a href="https://fixr.co/event/dnb-allstars-thailand-tickets-927680847" target="_blank" class="sticky-footer__btn">BUY TICKETS</a>
+            <a href="https://fixr.co/event/dnb-allstars-thailand-tickets-927680847" target="_blank" class="sticky-footer__btn" data-en="BUY TICKETS" data-th="ซื้อตั๋ว" data-ru="КУПИТЬ БИЛЕТЫ">BUY TICKETS</a>
         </div>
     </div>
 
@@ -876,10 +891,10 @@
     <!-- Cookie Consent Banner -->
     <div class="cookie-consent" id="cookieConsent">
         <div class="cookie-consent__content">
-            <p>We use cookies to enhance your experience. By continuing to visit this site you agree to our use of cookies.</p>
+            <p data-en="We use cookies to enhance your experience. By continuing to visit this site you agree to our use of cookies." data-th="เราใช้คุกกี้เพื่อปรับปรุงประสบการณ์ของคุณ การเข้าชมเว็บไซต์นี้ต่อไปถือว่าคุณยอมรับการใช้คุกกี้ของเรา" data-ru="Мы используем файлы cookie для улучшения вашего опыта. Продолжая посещать этот сайт, вы соглашаетесь с использованием файлов cookie.">We use cookies to enhance your experience. By continuing to visit this site you agree to our use of cookies.</p>
             <div class="cookie-consent__actions">
-                <button class="btn btn--primary" id="cookieAccept">ACCEPT</button>
-                <a href="#" class="cookie-consent__link">Learn More</a>
+                <button class="btn btn--primary" id="cookieAccept" data-en="ACCEPT" data-th="ยอมรับ" data-ru="ПРИНЯТЬ">ACCEPT</button>
+                <a href="#" class="cookie-consent__link" data-en="Learn More" data-th="เรียนรู้เพิ่มเติม" data-ru="Подробнее">Learn More</a>
             </div>
         </div>
     </div>

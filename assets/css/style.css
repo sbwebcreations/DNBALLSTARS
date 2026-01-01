@@ -94,7 +94,7 @@ body {
     position: fixed;
     left: 0;
     top: 0;
-    width: 3px;
+    width: 6px;
     height: 0%;
     background: var(--gradient-accent);
     z-index: 9998;
@@ -137,6 +137,8 @@ body::before {
     opacity: 0;
     transform: translateY(40px);
     transition: opacity 0.8s ease, transform 0.8s ease;
+    will-change: opacity, transform;
+    contain: layout style;
 }
 
 .section.is-visible {
@@ -213,17 +215,26 @@ img {
 
 /* Primary CTA - Wipe fill effect on scroll */
 .btn--tickets {
-    --btn-fill: 100%;
+    --btn-fill: 0%;
     background: var(--gradient-primary);
-    color: var(--color-bg-dark);
+    color: #ffffff;
     font-weight: 700;
     padding: 14px 32px;
-    box-shadow: 0 4px 20px var(--color-accent-glow);
+    box-shadow: 0 4px 20px rgba(79, 132, 122, 0.3);
     border: none;
-    transition: transform var(--transition), box-shadow var(--transition);
+    transition: transform var(--transition), box-shadow var(--transition), color 0.15s ease;
     position: relative;
     overflow: hidden;
     z-index: 1;
+}
+
+/* Default: show full text, hide short text */
+.btn--tickets .btn-text-full {
+    display: inline;
+}
+
+.btn--tickets .btn-text-short {
+    display: none;
 }
 
 .btn--tickets::after {
@@ -245,11 +256,11 @@ img {
 
 /* Scrolled layer button */
 .btn--tickets-orange {
-    --btn-fill: 100%;
+    --btn-fill: 0%;
     background: var(--gradient-primary);
-    color: var(--color-bg-dark);
+    color: #ffffff;
     cursor: default;
-    box-shadow: 0 4px 15px var(--color-accent-glow);
+    box-shadow: 0 4px 15px rgba(79, 132, 122, 0.3);
     position: relative;
     overflow: hidden;
     z-index: 1;
@@ -320,6 +331,7 @@ img {
     z-index: 1000;
     display: flex;
     align-items: center;
+    contain: layout;
 }
 
 .header__bg {
@@ -380,22 +392,20 @@ img {
     width: 44px;
     height: 44px;
     padding: 10px;
+    color: var(--color-accent);
+    transition: color 0.15s ease;
 }
 
-.burger-placeholder svg path {
-    transition: stroke var(--transition);
+.header.on-yellow .burger-placeholder,
+.header.on-light .burger-placeholder {
+    color: var(--color-primary-dark);
 }
 
-.header.on-yellow .burger-placeholder svg path,
-.header.on-light .burger-placeholder svg path {
-    stroke: var(--color-primary-dark);
+.header.on-dark .burger-placeholder {
+    color: var(--color-accent);
 }
 
-.header.on-dark .burger-placeholder svg path {
-    stroke: var(--color-accent);
-}
-
-/* Burger Menu */
+/* Burger Menu - Starts green (on yellow header bg) */
 .burger {
     display: flex;
     align-items: center;
@@ -405,10 +415,11 @@ img {
     background: none;
     border: none;
     cursor: pointer;
-    z-index: 1002;
+    z-index: 1003;
     padding: 10px;
-    transition: transform var(--transition), color var(--transition);
-    color: var(--color-accent);
+    transition: transform var(--transition), color 0.5s ease;
+    color: var(--color-primary-dark);
+    position: relative;
 }
 
 .burger:hover {
@@ -418,6 +429,7 @@ img {
 .burger svg path {
     stroke: currentColor;
     transition: all var(--transition);
+    transform-origin: center;
 }
 
 /* Header color states based on background */
@@ -428,6 +440,28 @@ img {
 
 .header.on-dark .burger {
     color: var(--color-accent);
+}
+
+/* Button color states - simple fade after initial wipe */
+.header.is-scrolled .btn--tickets {
+    transition: background 0.5s ease, color 0.5s ease, box-shadow 0.5s ease;
+}
+
+.header.is-scrolled .btn--tickets::after {
+    display: none; /* Hide the fill pseudo-element after initial wipe */
+}
+
+.header.is-scrolled.on-dark .btn--tickets {
+    background: var(--gradient-accent);
+    color: var(--color-bg-dark);
+    box-shadow: 0 4px 20px var(--color-accent-glow);
+}
+
+.header.is-scrolled.on-yellow .btn--tickets,
+.header.is-scrolled.on-light .btn--tickets {
+    background: var(--gradient-primary);
+    color: #ffffff;
+    box-shadow: 0 4px 20px rgba(79, 132, 122, 0.3);
 }
 
 /* Logo */
@@ -468,6 +502,26 @@ img {
 .mobile-menu.is-active {
     opacity: 1;
     pointer-events: auto;
+}
+
+/* Burger button styling when menu is open */
+.burger.is-active {
+    color: var(--color-accent) !important;
+    position: fixed;
+    top: 13px;
+    left: var(--spacing-md);
+}
+
+.burger.is-active svg path:first-child {
+    transform: translateY(8px) rotate(45deg);
+}
+
+.burger.is-active svg path:nth-child(2) {
+    opacity: 0;
+}
+
+.burger.is-active svg path:last-child {
+    transform: translateY(-8px) rotate(-45deg);
 }
 
 .mobile-menu__nav {
@@ -548,6 +602,50 @@ img {
 .lang-divider {
     color: rgba(255, 255, 255, 0.2);
     font-size: 1.25rem;
+}
+
+/* Floating Language Selector */
+.floating-lang {
+    position: fixed;
+    top: 90px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 8px;
+    z-index: 999;
+    opacity: 1;
+    transition: opacity 0.3s ease;
+}
+
+.floating-lang.is-hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.floating-lang__btn {
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    font-family: var(--font-heading);
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.7);
+    cursor: pointer;
+    padding: 8px 14px;
+    border-radius: 20px;
+    transition: all var(--transition);
+    letter-spacing: 1px;
+}
+
+.floating-lang__btn:hover {
+    background: rgba(255, 255, 255, 0.15);
+    color: #ffffff;
+    border-color: rgba(255, 255, 255, 0.4);
+}
+
+.floating-lang__btn.active {
+    background: var(--gradient-accent);
+    color: var(--color-bg-dark);
+    border-color: var(--color-accent);
 }
 
 /* ================================
@@ -683,6 +781,7 @@ img {
     flex-direction: column;
     align-items: center;
     gap: 0;
+    margin-bottom: 30px;
 }
 
 /* Hero CTA - Maximum Impact Golden Button */
@@ -845,6 +944,7 @@ img {
         rgba(0, 0, 0, calc(var(--fade-out) * 0.5)) 100%
     );
     pointer-events: none;
+    will-change: opacity;
     z-index: 10;
     transition: background 0.15s ease-out;
 }
@@ -900,21 +1000,21 @@ img {
 }
 
 /* ================================
-   ABOUT SECTION - Golden yellow bg with black text
+   ABOUT & LINEUP COMBINED SECTION - Golden yellow bg
    ================================ */
-.about {
+.about-lineup {
     background-color: var(--color-accent);
     padding: var(--spacing-lg) 0;
-    padding-bottom: var(--spacing-lg);
 }
 
-.about .section__title {
+.about-lineup .section__title {
     color: var(--color-bg-dark);
-    font-size: 2.5rem;
+    margin-bottom: var(--spacing-lg);
 }
 
-.about .section__title::after {
-    display: none;
+.about-lineup .section__title::after {
+    background: var(--gradient-primary);
+    box-shadow: 0 2px 15px rgba(79, 132, 122, 0.3);
 }
 
 .about__content {
@@ -931,6 +1031,34 @@ img {
     opacity: 0.95;
     letter-spacing: 0.5px;
     text-transform: uppercase;
+}
+
+/* Section Scroll Indicator */
+.section-scroll-indicator {
+    display: flex;
+    justify-content: center;
+    padding: var(--spacing-lg) 0;
+}
+
+.section-scroll-indicator__arrow {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-bg-dark);
+    opacity: 0.6;
+    animation: bounceDown 2s ease-in-out infinite;
+}
+
+.section-scroll-indicator__arrow svg {
+    width: 32px;
+    height: 32px;
+}
+
+@keyframes bounceDown {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(8px); }
 }
 
 /* ================================
@@ -1070,7 +1198,7 @@ img {
 }
 
 .accommodation .section__title {
-    color: #d4a84b;
+    color: var(--color-primary-dark);
     margin-bottom: var(--spacing-xs);
 }
 
@@ -1217,34 +1345,7 @@ img {
     margin-top: var(--spacing-md);
 }
 
-/* ================================
-   LINEUP SECTION - Full yellow background with dark text
-   ================================ */
-.lineup {
-    background: var(--color-accent);
-    position: relative;
-}
-
-.lineup::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(79, 132, 122, 0.2), transparent);
-}
-
-.lineup .section__title {
-    color: var(--color-bg-dark);
-    margin-bottom: var(--spacing-lg);
-}
-
-.lineup .section__title::after {
-    background: var(--gradient-primary);
-    box-shadow: 0 2px 15px rgba(79, 132, 122, 0.3);
-}
-
+/* Lineup Actions */
 .lineup__actions {
     text-align: center;
     margin-top: var(--spacing-lg);
@@ -1298,13 +1399,13 @@ img {
     color: var(--color-bg-dark);
 }
 
-/* Lineup outline button on yellow bg */
-.lineup .btn--outline {
+/* Outline button on yellow bg */
+.about-lineup .btn--outline {
     color: var(--color-bg-dark);
     border-color: var(--color-bg-dark);
 }
 
-.lineup .btn--outline:hover {
+.about-lineup .btn--outline:hover {
     background-color: var(--color-bg-dark);
     color: var(--color-accent);
     border-color: var(--color-bg-dark);
@@ -2032,6 +2133,7 @@ img {
     width: 100%;
     height: 100%;
     background: var(--gradient-accent);
+    transition: background 0.5s ease;
     clip-path: inset(100% 0 0 0);
 }
 
@@ -2064,12 +2166,42 @@ img {
     border: none;
     border-radius: 50px;
     cursor: pointer;
-    transition: all var(--transition);
+    transition: background 0.5s ease, color 0.5s ease, box-shadow 0.5s ease, transform var(--transition);
     box-shadow: 0 4px 25px rgba(79, 132, 122, 0.4);
 }
 
 .sticky-footer__btn:hover {
     transform: scale(1.05);
+    box-shadow: 0 8px 40px rgba(79, 132, 122, 0.5);
+}
+
+/* Sticky footer on light background - green footer with yellow button */
+.sticky-footer.on-light .sticky-footer__bg {
+    background: var(--gradient-primary);
+}
+
+.sticky-footer.on-light .sticky-footer__btn {
+    background: var(--gradient-accent);
+    color: var(--color-bg-dark);
+    box-shadow: 0 4px 25px var(--color-accent-glow);
+}
+
+.sticky-footer.on-light .sticky-footer__btn:hover {
+    box-shadow: 0 8px 40px var(--color-accent-glow);
+}
+
+/* Sticky footer on dark background - yellow footer with dark button */
+.sticky-footer.on-dark .sticky-footer__bg {
+    background: var(--gradient-accent);
+}
+
+.sticky-footer.on-dark .sticky-footer__btn {
+    background: var(--gradient-primary);
+    color: #ffffff;
+    box-shadow: 0 4px 25px rgba(79, 132, 122, 0.4);
+}
+
+.sticky-footer.on-dark .sticky-footer__btn:hover {
     box-shadow: 0 8px 40px rgba(79, 132, 122, 0.5);
 }
 
@@ -2278,8 +2410,18 @@ img {
     }
 
     .btn--tickets {
-        padding: 10px 18px;
-        font-size: 0.85rem;
+        padding: 8px 14px;
+        font-size: 0.75rem;
+        letter-spacing: 1px;
+    }
+
+    /* Hide full text, show short text on mobile */
+    .btn--tickets .btn-text-full {
+        display: none;
+    }
+
+    .btn--tickets .btn-text-short {
+        display: inline;
     }
 
     .section__title {

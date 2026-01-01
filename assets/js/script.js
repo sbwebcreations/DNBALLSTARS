@@ -1,66 +1,68 @@
 document.addEventListener('DOMContentLoaded', () => {
     // ================================
+    // PERFORMANCE: THROTTLED SCROLL
+    // ================================
+    let ticking = false;
+    const scrollCallbacks = [];
+
+    const onScroll = () => {
+        if (!ticking) {
+            requestAnimationFrame(() => {
+                scrollCallbacks.forEach(cb => cb());
+                ticking = false;
+            });
+            ticking = true;
+        }
+    };
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+
+    // ================================
     // SCROLL REVEAL ANIMATIONS
     // ================================
     const sections = document.querySelectorAll('.section');
 
     const revealOnScroll = () => {
+        const windowHeight = window.innerHeight;
         sections.forEach(section => {
-            const sectionTop = section.getBoundingClientRect().top;
-            const windowHeight = window.innerHeight;
-
-            if (sectionTop < windowHeight * 0.85) {
-                section.classList.add('is-visible');
+            if (!section.classList.contains('is-visible')) {
+                const sectionTop = section.getBoundingClientRect().top;
+                if (sectionTop < windowHeight * 0.85) {
+                    section.classList.add('is-visible');
+                }
             }
         });
     };
 
-    window.addEventListener('scroll', revealOnScroll);
+    scrollCallbacks.push(revealOnScroll);
     revealOnScroll(); // Run on load
 
     // ================================
     // SECTION FOCUS FADE EFFECT
     // ================================
     const headerOffset = 70;
+    const viewportHeight = window.innerHeight;
 
     const handleSectionFocus = () => {
-        const viewportHeight = window.innerHeight;
-
-        sections.forEach((section, index) => {
+        sections.forEach((section) => {
             const rect = section.getBoundingClientRect();
             const sectionHeight = rect.height;
-
-            // How far has the section TOP scrolled past the header?
             const topPastHeader = headerOffset - rect.top;
-
-            // What percentage of the section has scrolled past the header?
             const percentPastHeader = topPastHeader / sectionHeight;
 
             let orangeGlow = 0;
             let blackFade = 0;
 
-            // Section must be visible in viewport
             if (rect.top < viewportHeight && rect.bottom > headerOffset) {
-
                 if (rect.top > headerOffset) {
-                    // Section top is BELOW header (section entering from bottom)
-                    // Fade orange IN smoothly as it approaches the header
                     const distanceToHeader = rect.top - headerOffset;
-                    const fadeInZone = viewportHeight * 0.4; // Start fading in when 40% of viewport away
+                    const fadeInZone = viewportHeight * 0.4;
                     const fadeInProgress = 1 - Math.min(distanceToHeader / fadeInZone, 1);
                     orangeGlow = fadeInProgress * 0.15;
-                    blackFade = 0;
-
                 } else if (percentPastHeader < 0.50) {
-                    // Section top is AT or PAST header, but less than 50% scrolled past
-                    // Orange is fully ON, no black fade yet
                     orangeGlow = 0.15;
-                    blackFade = 0;
-
                 } else {
-                    // More than 50% of section has scrolled past header
-                    // Fade orange OUT smoothly and fade black IN
-                    const fadeOutProgress = Math.min((percentPastHeader - 0.50) / 0.50, 1); // 0 to 1 over remaining 50%
+                    const fadeOutProgress = Math.min((percentPastHeader - 0.50) / 0.50, 1);
                     orangeGlow = 0.15 * (1 - fadeOutProgress);
                     blackFade = fadeOutProgress * 0.7;
                 }
@@ -68,16 +70,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
             section.style.setProperty('--focus-glow', orangeGlow);
             section.style.setProperty('--fade-out', blackFade);
-
-            if (orangeGlow > 0.05) {
-                section.classList.add('is-focused');
-            } else {
-                section.classList.remove('is-focused');
-            }
+            section.classList.toggle('is-focused', orangeGlow > 0.05);
         });
     };
 
-    window.addEventListener('scroll', handleSectionFocus);
+    scrollCallbacks.push(handleSectionFocus);
     handleSectionFocus();
 
     // ================================
@@ -138,7 +135,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     if (backToTop) {
-        window.addEventListener('scroll', toggleBackToTop);
+        scrollCallbacks.push(toggleBackToTop);
 
         backToTop.addEventListener('click', () => {
             window.scrollTo({
@@ -151,28 +148,64 @@ document.addEventListener('DOMContentLoaded', () => {
     // ================================
     // LANGUAGE TOGGLE
     // ================================
-    const langBtns = document.querySelectorAll('.lang-btn');
+    const allLangBtns = document.querySelectorAll('.lang-btn, .floating-lang__btn');
     let currentLang = 'en';
 
     const switchLanguage = (lang) => {
         currentLang = lang;
 
-        // Update button states
-        langBtns.forEach(btn => {
+        // Update all button states (mobile menu and floating)
+        allLangBtns.forEach(btn => {
             btn.classList.toggle('active', btn.dataset.lang === lang);
         });
 
-        // Update all translatable elements
-        document.querySelectorAll('[data-en][data-th]').forEach(el => {
-            el.textContent = el.dataset[lang];
+        // Update all translatable elements (supports en, th, ru)
+        document.querySelectorAll('[data-en]').forEach(el => {
+            const translation = el.dataset[lang];
+            if (translation) {
+                el.textContent = translation;
+            }
+        });
+
+        // Update placeholder translations
+        document.querySelectorAll('[data-placeholder-en]').forEach(el => {
+            const placeholderKey = `placeholder${lang.charAt(0).toUpperCase() + lang.slice(1)}`;
+            const placeholder = el.dataset[placeholderKey];
+            if (placeholder) {
+                el.placeholder = placeholder;
+            }
         });
     };
 
-    langBtns.forEach(btn => {
+    // Add click handlers to all language buttons
+    allLangBtns.forEach(btn => {
         btn.addEventListener('click', () => {
             switchLanguage(btn.dataset.lang);
         });
     });
+
+    // ================================
+    // FLOATING LANGUAGE SELECTOR VISIBILITY
+    // ================================
+    const floatingLang = document.getElementById('floatingLang');
+    const heroSection = document.querySelector('.hero');
+
+    const handleFloatingLangVisibility = () => {
+        if (floatingLang && heroSection) {
+            const heroRect = heroSection.getBoundingClientRect();
+            const heroBottom = heroRect.bottom;
+
+            // Hide floating language selector when hero is scrolled past
+            if (heroBottom < 150) {
+                floatingLang.classList.add('is-hidden');
+            } else {
+                floatingLang.classList.remove('is-hidden');
+            }
+        }
+    };
+
+    scrollCallbacks.push(handleFloatingLangVisibility);
+    handleFloatingLangVisibility();
 
     // ================================
     // FAQ CATEGORY DROPDOWN
@@ -224,12 +257,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const header = document.querySelector('.header');
     const headerHeight = 70;
     const scrollRange = 150;
-    let previousBgType = 'dark'; // Track previous background type for contrast detection
-
-    // Set initial state for hero (dark background)
-    if (header) {
-        header.classList.add('on-dark');
-    }
+    let previousBgType = 'light'; // Start as light because header bg is yellow initially
+    let headerWipeComplete = false; // Track if header wipe animation is done
+    let lastScrollY = 0; // Track scroll direction
+    let currentHeaderColorState = 'light'; // Lock in the current header color state
+    let initialWipeJustCompleted = false; // Track if we just finished the wipe
 
     const handleWipeScroll = () => {
         const scrollY = window.scrollY;
@@ -246,102 +278,164 @@ document.addEventListener('DOMContentLoaded', () => {
             headerDefaultLayer.style.clipPath = headerClipPath;
         }
 
-        // Add/remove scrolled class for burger and ticket color changes
+        // Track header wipe state
         if (header) {
             if (progress >= 1) {
                 header.classList.add('is-scrolled');
+                if (!headerWipeComplete) {
+                    // Just completed wipe - set to dark (now over hero)
+                    headerWipeComplete = true;
+                    currentHeaderColorState = 'dark';
+                    header.classList.add('on-dark');
+                }
             } else {
                 header.classList.remove('is-scrolled');
+                header.classList.remove('on-dark', 'on-yellow', 'on-light');
+                headerWipeComplete = false;
+                currentHeaderColorState = 'light';
             }
         }
 
-        // Detect background color under header and update header colors
-        if (header) {
-            const headerBottom = headerHeight + 10; // Check point just below header
-            const elementsAtPoint = document.elementsFromPoint(window.innerWidth / 2, headerBottom);
+        // Get all ticket buttons
+        const ticketBtns = header ? header.querySelectorAll('.btn--tickets, .btn--tickets-orange') : [];
 
-            // Remove all background state classes
+        // PHASE 1: Header wipe transition (scroll 0 to scrollRange)
+        // During this phase, transition from green (yellow header) to yellow (dark hero behind)
+        if (!headerWipeComplete && header) {
+            // Remove section-based classes during wipe
             header.classList.remove('on-yellow', 'on-dark', 'on-light');
 
-            let isDark = false;
+            // Fill button with yellow as header wipes away (revealing dark hero)
+            const fillPercent = progress * 100;
+            ticketBtns.forEach(btn => {
+                btn.style.setProperty('--btn-fill', `${fillPercent}%`);
+                btn.style.color = fillPercent > 50 ? 'var(--color-bg-dark)' : '#ffffff';
+            });
 
-            // Find the first section element
-            for (const el of elementsAtPoint) {
-                if (el.classList.contains('section') || el.classList.contains('hero')) {
-                    // Check if it's the hero (dark)
-                    if (el.classList.contains('hero')) {
-                        header.classList.add('on-dark');
-                        isDark = true;
-                        break;
-                    }
-
-                    // Check section classes for background type
-                    if (el.classList.contains('about') || el.classList.contains('lineup') || el.classList.contains('faq')) {
-                        header.classList.add('on-yellow');
-                        break;
-                    } else if (el.classList.contains('numbers') || el.classList.contains('experience') || el.classList.contains('newsletter') || el.classList.contains('partners')) {
-                        header.classList.add('on-dark');
-                        isDark = true;
-                        break;
-                    } else if (el.classList.contains('accommodation')) {
-                        header.classList.add('on-light');
-                        break;
-                    }
-
-                    break;
+            // Transition burger color during wipe
+            const burger = header.querySelector('.burger');
+            if (burger) {
+                if (progress > 0.5) {
+                    burger.style.color = 'var(--color-accent)';
+                } else {
+                    burger.style.color = 'var(--color-primary-dark)';
                 }
             }
 
-            // Determine current background type
-            const currentBgType = isDark ? 'dark' : 'light';
+            // Set previous type based on what we're transitioning to
+            if (progress >= 1) {
+                previousBgType = 'dark';
+            }
+            // Continue to process scroll indicator and footer (don't return)
+        }
 
-            // Update button fill based on scroll position - only on contrast change
-            const ticketBtns = header.querySelectorAll('.btn--tickets, .btn--tickets-orange');
+        // PHASE 2: Section-based color changes (after header wipe complete)
+        // Simple opacity fade - no wipe animation
+        else if (header && headerWipeComplete) {
+            const scrollingDown = scrollY > lastScrollY;
+            const headerBottom = headerHeight + 10;
 
-            // Find the current section and calculate fill based on position
-            for (const el of elementsAtPoint) {
-                if (el.classList.contains('section') || el.classList.contains('hero')) {
-                    const rect = el.getBoundingClientRect();
-                    const sectionTop = rect.top;
-                    const transitionZone = 60; // pixels over which to transition
+            // Determine the background type of a section
+            const getSectionBgType = (section) => {
+                if (!section) return null;
+                if (section.classList.contains('hero') || section.classList.contains('numbers') || section.classList.contains('experience') || section.classList.contains('newsletter') || section.classList.contains('partners')) {
+                    return 'dark';
+                } else if (section.classList.contains('about') || section.classList.contains('about-lineup') || section.classList.contains('lineup') || section.classList.contains('faq') || section.classList.contains('accommodation')) {
+                    return 'light';
+                }
+                return null;
+            };
 
-                    // Calculate how far into the section we've scrolled
-                    const distanceIntoSection = headerHeight - sectionTop;
-                    const fillProgress = Math.min(Math.max(distanceIntoSection / transitionZone, 0), 1);
+            // Only check when scrolling DOWN
+            if (scrollingDown) {
+                // Find section entering from below
+                const allSections = document.querySelectorAll('.section, .hero');
+                let enteringSection = null;
 
-                    // Only animate fill when transitioning between contrast colors (dark ↔ light)
-                    const isContrastChange = previousBgType !== currentBgType;
-
-                    ticketBtns.forEach(btn => {
-                        if (isContrastChange || fillProgress < 1) {
-                            if (isDark) {
-                                // Going to dark: fill with yellow from top
-                                const fillPercent = fillProgress * 100;
-                                btn.style.setProperty('--btn-fill', `${fillPercent}%`);
-                                btn.style.color = fillPercent > 50 ? 'var(--color-bg-dark)' : '#ffffff';
-                            } else {
-                                // Going to light: drain yellow from top (reverse)
-                                const fillPercent = (1 - fillProgress) * 100;
-                                btn.style.setProperty('--btn-fill', `${fillPercent}%`);
-                                btn.style.color = fillPercent > 50 ? 'var(--color-bg-dark)' : '#ffffff';
-                            }
-                        }
-                    });
-
-                    // Update previous type when fully transitioned
-                    if (fillProgress >= 1) {
-                        previousBgType = currentBgType;
+                allSections.forEach(section => {
+                    const rect = section.getBoundingClientRect();
+                    if (rect.top > 0 && rect.top < headerHeight + 40) {
+                        enteringSection = section;
                     }
-                    break;
+                });
+
+                if (enteringSection) {
+                    const newBgType = getSectionBgType(enteringSection);
+
+                    if (newBgType && newBgType !== currentHeaderColorState) {
+                        header.classList.remove('on-yellow', 'on-dark', 'on-light');
+
+                        if (newBgType === 'dark') {
+                            header.classList.add('on-dark');
+                        } else if (enteringSection.classList.contains('accommodation')) {
+                            header.classList.add('on-light');
+                        } else {
+                            header.classList.add('on-yellow');
+                        }
+
+                        currentHeaderColorState = newBgType;
+                    }
+                }
+            }
+            // Scrolling UP - snap to correct state
+            else {
+                const elementsAtPoint = document.elementsFromPoint(window.innerWidth / 2, headerBottom);
+
+                for (const el of elementsAtPoint) {
+                    if (el.classList.contains('section') || el.classList.contains('hero')) {
+                        const bgType = getSectionBgType(el);
+
+                        if (bgType && bgType !== currentHeaderColorState) {
+                            header.classList.remove('on-yellow', 'on-dark', 'on-light');
+
+                            if (bgType === 'dark') {
+                                header.classList.add('on-dark');
+                            } else if (el.classList.contains('accommodation')) {
+                                header.classList.add('on-light');
+                            } else {
+                                header.classList.add('on-yellow');
+                            }
+
+                            currentHeaderColorState = bgType;
+                        }
+                        break;
+                    }
                 }
             }
         }
+
+        // Update last scroll position
+        lastScrollY = scrollY;
 
         // Scroll indicator line - scroll-based animation
         if (scrollIndicatorLine) {
             const scrollLineProgress = Math.min(scrollY / 200, 1);
             const linePosition = scrollLineProgress * 100;
             scrollIndicatorLine.style.setProperty('--line-progress', `${linePosition}%`);
+        }
+
+        // Sticky footer background detection
+        if (stickyFooter) {
+            const footerTop = window.innerHeight - 80; // Top of sticky footer
+            const elementsAtFooter = document.elementsFromPoint(window.innerWidth / 2, footerTop);
+
+            stickyFooter.classList.remove('on-light', 'on-dark');
+
+            for (const el of elementsAtFooter) {
+                if (el.classList.contains('section') || el.classList.contains('hero') || el.classList.contains('footer')) {
+                    // Light backgrounds: about-lineup, accommodation, faq
+                    if (el.classList.contains('about-lineup') || el.classList.contains('accommodation') || el.classList.contains('faq')) {
+                        stickyFooter.classList.add('on-light');
+                        break;
+                    }
+                    // Dark backgrounds: hero, numbers, experience, newsletter, partners, footer
+                    else if (el.classList.contains('hero') || el.classList.contains('numbers') || el.classList.contains('experience') || el.classList.contains('newsletter') || el.classList.contains('partners') || el.classList.contains('footer')) {
+                        stickyFooter.classList.add('on-dark');
+                        break;
+                    }
+                    break;
+                }
+            }
         }
 
         // Footer & Hero CTA Transition - footer appears AS hero button disappears
@@ -422,7 +516,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         scrollProgress.classList.add('on-dark');
                         break;
                     }
-                    if (el.classList.contains('about') || el.classList.contains('lineup') || el.classList.contains('faq')) {
+                    if (el.classList.contains('about') || el.classList.contains('about-lineup') || el.classList.contains('lineup') || el.classList.contains('faq')) {
                         scrollProgress.classList.add('on-yellow');
                         break;
                     } else if (el.classList.contains('numbers') || el.classList.contains('experience') || el.classList.contains('newsletter') || el.classList.contains('partners')) {
@@ -438,10 +532,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    window.addEventListener('scroll', updateScrollProgress);
+    scrollCallbacks.push(updateScrollProgress);
     updateScrollProgress();
 
-    window.addEventListener('scroll', handleWipeScroll);
+    scrollCallbacks.push(handleWipeScroll);
     handleWipeScroll();
 
     // ================================
