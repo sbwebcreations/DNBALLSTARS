@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DnB Allstars: Thailand 2026</title>
     <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Teko:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
@@ -12,25 +15,24 @@
     <!-- Header -->
     <header class="header">
         <div class="container header__container">
+            <!-- Left Spacer for Balance -->
+            <div class="header__left"></div>
+
+            <!-- Centered Logo -->
             <a href="index.html" class="logo">
                 <img src="assets/img/logo.png" alt="DnB Allstars: Thailand 2026">
             </a>
             
-            <nav class="nav">
-                <ul class="nav__list">
-                    <li class="nav__item"><a href="index.html" class="nav__link active">HOME</a></li>
-                    <li class="nav__item"><a href="accommodation.html" class="nav__link">ACCOMMODATION</a></li>
-                    <li class="nav__item"><a href="faqs.html" class="nav__link">FREQUENTLY ASKED QUESTIONS</a></li>
-                </ul>
-            </nav>
+            <!-- Right Actions: Button + Burger -->
+            <div class="header__right">
+                <a href="https://fixr.co/event/dnb-allstars-thailand-tickets-927680847" target="_blank" class="btn btn--white header__cta desktop-only">BUY TICKETS</a>
 
-            <a href="https://fixr.co/event/dnb-allstars-thailand-tickets-927680847" target="_blank" class="btn btn--primary header__cta desktop-only">BUY TICKETS</a>
-
-            <button class="burger" aria-label="Menu">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
+                <button class="burger" aria-label="Menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
         </div>
         
         <!-- Mobile Menu Overlay -->
@@ -73,7 +75,7 @@
                 </div>
             </div>
 
-            <a href="https://fixr.co/event/dnb-allstars-thailand-tickets-927680847" target="_blank" class="btn btn--primary btn--large hero__btn">
+            <a href="https://fixr.co/event/dnb-allstars-thailand-tickets-927680847" target="_blank" class="btn btn--white btn--large hero__btn">
                 CLICK HERE FOR TICKETS
             </a>
         </div>
@@ -83,9 +85,9 @@
         <!-- Hype Section (New) -->
         <section class="section hype">
             <div class="container">
-                <h2 class="section__title">PARADISE AWAITS</h2>
+                <h2 class="section__title">THE ULTIMATE DNB HOLIDAY</h2>
                 <div class="hype__content">
-                    <p class="hype__text">The UK’s biggest Drum & Bass brand touches down in Thailand. Experience 3 days of world-class music, culture, and adventure in the heart of Phuket. Do not miss the destination event of the year.</p>
+                    <p class="hype__text">Join us in Thailand for the biggest drum and bass experience of 2026. Sun, sea, and heavy basslines.</p>
                 </div>
 
                 <div class="grid hype__gallery">
@@ -163,6 +165,31 @@
 
                 <div class="section__actions">
                     <a href="accommodation.html" class="btn btn--primary">CLICK HERE TO VIEW ALL</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Headliners Section (New) -->
+        <section class="section headliners">
+            <div class="container">
+                <h2 class="section__title">THE HEADLINERS</h2>
+                <div class="grid headliners__grid">
+                    <div class="card placeholder-card">
+                        <div class="placeholder-image"></div>
+                        <h3 class="card__title">HEADLINER NAME</h3>
+                    </div>
+                    <div class="card placeholder-card">
+                        <div class="placeholder-image"></div>
+                        <h3 class="card__title">HEADLINER NAME</h3>
+                    </div>
+                    <div class="card placeholder-card">
+                        <div class="placeholder-image"></div>
+                        <h3 class="card__title">HEADLINER NAME</h3>
+                    </div>
+                    <div class="card placeholder-card">
+                        <div class="placeholder-image"></div>
+                        <h3 class="card__title">HEADLINER NAME</h3>
+                    </div>
                 </div>
             </div>
         </section>

@@ -6,8 +6,8 @@
     --color-card-bg: #f8f8f8;
     --color-overlay: rgba(0, 0, 0, 0.4);
     
-    --font-heading: 'Archivo Black', sans-serif;
-    --font-body: 'Space Grotesk', sans-serif;
+    --font-heading: 'Teko', sans-serif;
+    --font-body: 'Inter', sans-serif;
     
     --spacing-sm: 1rem;
     --spacing-md: 2rem;
@@ -108,6 +108,17 @@ img {
     color: var(--color-text);
 }
 
+.btn--white {
+    background-color: #ffffff;
+    color: #000000;
+    border-color: #ffffff;
+}
+
+.btn--white:hover {
+    background-color: transparent;
+    color: #ffffff;
+}
+
 .btn--large {
     padding: 16px 32px;
     font-size: 1.2rem;
@@ -128,23 +139,32 @@ img {
     left: 0;
     width: 100%;
     height: var(--header-height);
-    background-color: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(10px);
+    background-color: transparent; /* Initially transparent */
     z-index: 1000;
     display: flex;
     align-items: center;
-    border-bottom: 1px solid rgba(0,0,0,0.05);
+    border-bottom: none;
+    transition: background-color var(--transition);
+}
+
+.header.header--scrolled {
+    background-color: #000000;
 }
 
 .header__container {
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr; /* Empty Left - Center Logo - Right Actions */
     align-items: center;
     width: 100%;
 }
 
+.header__left {
+    /* Spacer */
+}
+
 .logo {
-    flex: 1;
+    display: flex;
+    justify-content: center;
 }
 
 .logo img {
@@ -152,63 +172,27 @@ img {
     width: auto;
 }
 
-.nav {
-    flex: 2;
+.header__right {
     display: flex;
-    justify-content: center;
-}
-
-.nav__list {
-    display: flex;
-    gap: var(--spacing-md);
-}
-
-.nav__link {
-    font-family: var(--font-heading);
-    font-size: 0.9rem;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    position: relative;
-    padding: 5px 0;
-}
-
-.nav__link::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 0;
-    height: 2px;
-    background-color: var(--color-accent);
-    transition: width var(--transition);
-}
-
-.nav__link:hover::after,
-.nav__link.active::after {
-    width: 100%;
+    justify-content: flex-end;
+    align-items: center;
+    gap: var(--spacing-sm);
 }
 
 .header__cta {
     background-color: #ffffff;
     color: #000000;
-    border: 2px solid #000000; /* Added border for contrast on white header */
+    border: none;
 }
 
-.header__cta.btn--primary {
-    background-color: #ffffff;
-    color: #000000;
-    border-color: #000000;
-}
-
-.header__cta.btn--primary:hover {
-    background-color: #000000;
+.header__cta:hover {
+    background-color: var(--color-accent);
     color: #ffffff;
 }
 
-
-/* Mobile Menu */
+/* Burger */
 .burger {
-    display: none;
+    display: flex; /* Always visible now for desktop too as we removed nav links */
     flex-direction: column;
     justify-content: space-between;
     width: 30px;
@@ -223,7 +207,7 @@ img {
     display: block;
     width: 100%;
     height: 2px;
-    background-color: var(--color-text);
+    background-color: #ffffff; /* White burger icons against dark/transparent header */
     transition: var(--transition);
 }
 
@@ -308,54 +292,62 @@ img {
 }
 
 .hero__btn {
-    font-size: 1.5rem;
-    padding: 20px 40px;
-    border-width: 3px;
+    font-size: 1.2rem;
+    padding: 15px 30px;
+    border: 2px solid #ffffff;
     font-weight: 700;
-    letter-spacing: 2px;
+    letter-spacing: 1px;
+    background-color: transparent;
+    color: #ffffff;
+    margin-top: var(--spacing-md); /* Spacing between countdown and button */
+}
+
+.hero__btn:hover {
+    background-color: #ffffff;
+    color: #000000;
 }
 
 /* Countdown */
 .countdown {
     display: flex;
-    gap: var(--spacing-md);
-    margin-bottom: var(--spacing-sm);
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-md);
 }
 
 .countdown__item {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background: rgba(0, 0, 0, 0.6);
-    backdrop-filter: blur(5px);
-    padding: 15px 25px;
-    border-radius: var(--border-radius);
     color: #ffffff;
-    min-width: 100px;
-    border: 1px solid rgba(255,255,255,0.2);
+    /* Clean look: removed background, border, blur */
 }
 
 .countdown__number {
     font-family: var(--font-heading);
-    font-size: 2.5rem;
+    font-size: 4rem; /* Large floating numbers */
     line-height: 1;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.5); /* Added shadow for readability */
 }
 
 .countdown__label {
-    font-size: 0.8rem;
+    font-size: 1rem;
     text-transform: uppercase;
-    opacity: 0.8;
+    opacity: 0.9;
     margin-top: 5px;
+    letter-spacing: 2px;
+    text-shadow: 0 2px 5px rgba(0,0,0,0.5);
 }
 
 /* Hype Section */
 .hype {
-    background-color: var(--color-bg);
+    background-color: #111111;
+    color: #ffffff;
 }
 
 .hype .section__title {
-    font-size: 3.5rem;
+    font-size: 4rem;
     margin-bottom: var(--spacing-sm);
+    color: var(--color-accent); /* Orange/Brand color */
 }
 
 .hype__content {
@@ -365,12 +357,39 @@ img {
 }
 
 .hype__text {
-    font-size: 1.2rem;
-    line-height: 1.8;
+    font-size: 1.4rem;
+    line-height: 1.6;
+    color: #ffffff;
 }
 
 .hype__gallery .card__image {
     aspect-ratio: 16/9;
+}
+
+/* Headliners Section */
+.headliners {
+    background-color: var(--color-bg);
+}
+
+.headliners__grid {
+    grid-template-columns: repeat(4, 1fr);
+}
+
+.placeholder-card {
+    background-color: #f0f0f0;
+    text-align: center;
+}
+
+.placeholder-image {
+    width: 100%;
+    aspect-ratio: 1;
+    background-color: #cccccc;
+    margin-bottom: var(--spacing-sm);
+}
+
+.headliners .card__title {
+    font-size: 1rem;
+    padding: 0 10px 20px;
 }
 
 /* Sections General */
@@ -531,7 +550,7 @@ img {
         display: flex;
     }
     
-    .grid {
+    .grid, .headliners__grid {
         grid-template-columns: 1fr;
     }
     
@@ -550,8 +569,9 @@ img {
         bottom: 0;
         left: 0;
         width: 100%;
-        padding: 15px;
-        background: #ffffff;
+        padding: 10px; /* Reduced padding */
+        background: rgba(255, 255, 255, 0.8);
+        backdrop-filter: blur(10px); /* Blur effect */
         z-index: 1000;
         border-top: 1px solid rgba(0,0,0,0.1);
         justify-content: center;
@@ -560,7 +580,8 @@ img {
 
     .mobile-cta__btn {
         width: 100%;
-        font-size: 1.1rem;
+        font-size: 1rem; /* Slightly smaller */
+        padding: 10px 20px;
     }
 
     /* Adjust footer to not be hidden by sticky button */
