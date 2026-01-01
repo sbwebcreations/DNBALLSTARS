@@ -143,9 +143,19 @@ img {
     width: 100%;
 }
 
+.logo {
+    flex: 1;
+}
+
 .logo img {
     height: 50px;
     width: auto;
+}
+
+.nav {
+    flex: 2;
+    display: flex;
+    justify-content: center;
 }
 
 .nav__list {
@@ -177,6 +187,24 @@ img {
 .nav__link.active::after {
     width: 100%;
 }
+
+.header__cta {
+    background-color: #ffffff;
+    color: #000000;
+    border: 2px solid #000000; /* Added border for contrast on white header */
+}
+
+.header__cta.btn--primary {
+    background-color: #ffffff;
+    color: #000000;
+    border-color: #000000;
+}
+
+.header__cta.btn--primary:hover {
+    background-color: #000000;
+    color: #ffffff;
+}
+
 
 /* Mobile Menu */
 .burger {
@@ -273,6 +301,76 @@ img {
     position: relative;
     z-index: 1;
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-md);
+}
+
+.hero__btn {
+    font-size: 1.5rem;
+    padding: 20px 40px;
+    border-width: 3px;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+
+/* Countdown */
+.countdown {
+    display: flex;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-sm);
+}
+
+.countdown__item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(5px);
+    padding: 15px 25px;
+    border-radius: var(--border-radius);
+    color: #ffffff;
+    min-width: 100px;
+    border: 1px solid rgba(255,255,255,0.2);
+}
+
+.countdown__number {
+    font-family: var(--font-heading);
+    font-size: 2.5rem;
+    line-height: 1;
+}
+
+.countdown__label {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    opacity: 0.8;
+    margin-top: 5px;
+}
+
+/* Hype Section */
+.hype {
+    background-color: var(--color-bg);
+}
+
+.hype .section__title {
+    font-size: 3.5rem;
+    margin-bottom: var(--spacing-sm);
+}
+
+.hype__content {
+    max-width: 800px;
+    margin: 0 auto var(--spacing-lg);
+    text-align: center;
+}
+
+.hype__text {
+    font-size: 1.2rem;
+    line-height: 1.8;
+}
+
+.hype__gallery .card__image {
+    aspect-ratio: 16/9;
 }
 
 /* Sections General */
@@ -414,12 +512,21 @@ img {
     opacity: 0.6;
 }
 
+/* Mobile Sticky Button */
+.mobile-cta {
+    display: none; /* Hidden by default (desktop) */
+}
+
 /* Responsive */
 @media (max-width: 900px) {
     .nav {
         display: none;
     }
     
+    .desktop-only {
+        display: none !important;
+    }
+
     .burger {
         display: flex;
     }
@@ -430,6 +537,53 @@ img {
     
     .section__title {
         font-size: 2rem;
+    }
+
+    .logo {
+        flex: 0; /* Let it shrink/grow naturally or unset flex expansion */
+    }
+
+    /* Mobile Sticky Button logic */
+    .mobile-cta {
+        display: flex;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        padding: 15px;
+        background: #ffffff;
+        z-index: 1000;
+        border-top: 1px solid rgba(0,0,0,0.1);
+        justify-content: center;
+        box-shadow: 0 -5px 20px rgba(0,0,0,0.1);
+    }
+
+    .mobile-cta__btn {
+        width: 100%;
+        font-size: 1.1rem;
+    }
+
+    /* Adjust footer to not be hidden by sticky button */
+    .footer {
+        padding-bottom: 90px;
+    }
+
+    /* Countdown mobile adjustments */
+    .countdown {
+        gap: 10px;
+    }
+
+    .countdown__item {
+        padding: 10px 15px;
+        min-width: 70px;
+    }
+
+    .countdown__number {
+        font-size: 1.5rem;
+    }
+
+    .hype .section__title {
+        font-size: 2.2rem;
     }
 }
 

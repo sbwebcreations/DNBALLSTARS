@@ -24,6 +24,8 @@
                 </ul>
             </nav>
 
+            <a href="https://fixr.co/event/dnb-allstars-thailand-tickets-927680847" target="_blank" class="btn btn--primary header__cta desktop-only">BUY TICKETS</a>
+
             <button class="burger" aria-label="Menu">
                 <span></span>
                 <span></span>
@@ -55,13 +57,57 @@
         </div>
         
         <div class="hero__content container">
-            <a href="https://fixr.co/event/dnb-allstars-thailand-tickets-927680847" target="_blank" class="btn btn--primary btn--large">
+            <!-- Countdown Timer -->
+            <div class="countdown" id="countdown">
+                <div class="countdown__item">
+                    <span class="countdown__number" id="days">00</span>
+                    <span class="countdown__label">Days</span>
+                </div>
+                <div class="countdown__item">
+                    <span class="countdown__number" id="hours">00</span>
+                    <span class="countdown__label">Hours</span>
+                </div>
+                <div class="countdown__item">
+                    <span class="countdown__number" id="minutes">00</span>
+                    <span class="countdown__label">Mins</span>
+                </div>
+            </div>
+
+            <a href="https://fixr.co/event/dnb-allstars-thailand-tickets-927680847" target="_blank" class="btn btn--primary btn--large hero__btn">
                 CLICK HERE FOR TICKETS
             </a>
         </div>
     </section>
 
     <main>
+        <!-- Hype Section (New) -->
+        <section class="section hype">
+            <div class="container">
+                <h2 class="section__title">PARADISE AWAITS</h2>
+                <div class="hype__content">
+                    <p class="hype__text">The UK’s biggest Drum & Bass brand touches down in Thailand. Experience 3 days of world-class music, culture, and adventure in the heart of Phuket. Do not miss the destination event of the year.</p>
+                </div>
+
+                <div class="grid hype__gallery">
+                    <div class="card">
+                        <div class="card__image">
+                            <img src="assets/img/hivetel.jpg" alt="DnB Allstars Thailand Atmosphere">
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card__image">
+                            <img src="assets/img/ibis.jpg" alt="DnB Allstars Thailand Crowd">
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card__image">
+                            <img src="assets/img/novotel.jpg" alt="DnB Allstars Thailand Production">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- Accommodation Section -->
         <section class="section accommodation" id="accommodation">
             <div class="section__bg-image">
@@ -121,17 +167,7 @@
             </div>
         </section>
 
-        <!-- FAQ Section -->
-        <section class="section faq">
-            <div class="container">
-                <hr class="divider">
-                <div class="faq__content">
-                    <h2 class="section__title">GOT A QUESTION?</h2>
-                    <a href="faqs.html" class="btn btn--primary btn--large">FREQUENTLY ASKED QUESTIONS</a>
-                </div>
-                <hr class="divider">
-            </div>
-        </section>
+        <!-- FAQ Section Removed as requested -->
     </main>
 
     <!-- Footer -->
@@ -144,6 +180,13 @@
             <p class="copyright">&copy; 2026 DnB Allstars</p>
         </div>
     </footer>
+
+    <!-- Mobile Sticky Button -->
+    <div class="mobile-cta">
+        <a href="https://fixr.co/event/dnb-allstars-thailand-tickets-927680847" target="_blank" class="btn btn--primary btn--large mobile-cta__btn">
+            BUY TICKETS
+        </a>
+    </div>
 
     <script src="assets/js/script.js"></script>
 </body>
