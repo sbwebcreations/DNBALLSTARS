@@ -1,5 +1,113 @@
 document.addEventListener('DOMContentLoaded', () => {
     // ================================
+    // SCROLL REVEAL ANIMATIONS
+    // ================================
+    const sections = document.querySelectorAll('.section');
+
+    const revealOnScroll = () => {
+        sections.forEach(section => {
+            const sectionTop = section.getBoundingClientRect().top;
+            const windowHeight = window.innerHeight;
+
+            if (sectionTop < windowHeight * 0.85) {
+                section.classList.add('is-visible');
+            }
+        });
+    };
+
+    window.addEventListener('scroll', revealOnScroll);
+    revealOnScroll(); // Run on load
+
+    // ================================
+    // BACK TO TOP BUTTON
+    // ================================
+    const backToTop = document.getElementById('backToTop');
+
+    const toggleBackToTop = () => {
+        if (window.scrollY > 500) {
+            backToTop.classList.add('is-visible');
+        } else {
+            backToTop.classList.remove('is-visible');
+        }
+    };
+
+    if (backToTop) {
+        window.addEventListener('scroll', toggleBackToTop);
+
+        backToTop.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+    }
+
+    // ================================
+    // LANGUAGE TOGGLE
+    // ================================
+    const langBtns = document.querySelectorAll('.lang-btn');
+    let currentLang = 'en';
+
+    const switchLanguage = (lang) => {
+        currentLang = lang;
+
+        // Update button states
+        langBtns.forEach(btn => {
+            btn.classList.toggle('active', btn.dataset.lang === lang);
+        });
+
+        // Update all translatable elements
+        document.querySelectorAll('[data-en][data-th]').forEach(el => {
+            el.textContent = el.dataset[lang];
+        });
+    };
+
+    langBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            switchLanguage(btn.dataset.lang);
+        });
+    });
+
+    // ================================
+    // FAQ CATEGORY DROPDOWN
+    // ================================
+    const faqCategories = document.querySelectorAll('.faq__category');
+
+    faqCategories.forEach(category => {
+        const categoryTitle = category.querySelector('.faq__category-title');
+        if (categoryTitle) {
+            categoryTitle.addEventListener('click', () => {
+                // Toggle current category
+                category.classList.toggle('is-open');
+            });
+        }
+    });
+
+    // ================================
+    // FAQ ACCORDION (Individual Questions)
+    // ================================
+    const faqItems = document.querySelectorAll('.faq__item');
+
+    faqItems.forEach(item => {
+        const question = item.querySelector('.faq__question');
+        if (question) {
+            question.addEventListener('click', () => {
+                // Close other items within the same category
+                const parentCategory = item.closest('.faq__category');
+                const siblingItems = parentCategory ? parentCategory.querySelectorAll('.faq__item') : faqItems;
+
+                siblingItems.forEach(other => {
+                    if (other !== item) {
+                        other.classList.remove('is-open');
+                    }
+                });
+                // Toggle current item
+                item.classList.toggle('is-open');
+            });
+        }
+    });
+
+    // ================================
     // HEADER & FOOTER WIPE EFFECT
     // ================================
     const headerBg = document.querySelector('.header__bg');
@@ -11,6 +119,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const headerHeight = 70;
     const footerHeight = 60;
     const scrollRange = 150; // How many pixels of scroll to complete the wipe
+
+    // Get hero CTA button for footer visibility trigger
+    const heroCta = document.querySelector('.hero__cta');
 
     const handleWipeScroll = () => {
         const scrollY = window.scrollY;
@@ -29,21 +140,32 @@ document.addEventListener('DOMContentLoaded', () => {
             headerDefaultLayer.style.clipPath = headerClipPath;
         }
 
-        // Footer wipe: clips from top down (revealing the orange)
-        // Mirror effect - as header disappears, footer appears
-        const footerClipTop = (1 - progress) * 100;
-        const footerClipPath = `inset(${footerClipTop}% 0 0 0)`;
+        // Footer: Show when hero CTA reaches the header area
+        if (heroCta) {
+            const heroCtaRect = heroCta.getBoundingClientRect();
+            const triggerPoint = 100; // Start when CTA is near the header (around 100px from top)
 
-        if (stickyFooterBg) {
-            stickyFooterBg.style.clipPath = footerClipPath;
-        }
+            if (heroCtaRect.top < triggerPoint) {
+                // Calculate footer wipe progress based on CTA position
+                const footerProgress = Math.min(Math.max(0, (triggerPoint - heroCtaRect.top) / scrollRange), 1);
+                const footerClipTop = (1 - footerProgress) * 100;
+                const footerClipPath = `inset(${footerClipTop}% 0 0 0)`;
 
-        // Show/hide footer content based on progress
-        if (stickyFooter) {
-            if (progress > 0.1) {
-                stickyFooter.classList.add('is-visible');
+                if (stickyFooterBg) {
+                    stickyFooterBg.style.clipPath = footerClipPath;
+                }
+
+                if (stickyFooter && footerProgress > 0.1) {
+                    stickyFooter.classList.add('is-visible');
+                }
             } else {
-                stickyFooter.classList.remove('is-visible');
+                // Hide footer completely
+                if (stickyFooterBg) {
+                    stickyFooterBg.style.clipPath = 'inset(100% 0 0 0)';
+                }
+                if (stickyFooter) {
+                    stickyFooter.classList.remove('is-visible');
+                }
             }
         }
     };
@@ -87,8 +209,22 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ================================
-    // COUNTDOWN TIMER
+    // COUNTDOWN TIMER WITH FLIP ANIMATION
     // ================================
+    let prevValues = { days: '', hours: '', minutes: '', seconds: '' };
+
+    const updateWithFlip = (el, newValue, key) => {
+        if (el && prevValues[key] !== newValue) {
+            el.classList.add('flip');
+            el.innerText = newValue;
+            prevValues[key] = newValue;
+
+            setTimeout(() => {
+                el.classList.remove('flip');
+            }, 600);
+        }
+    };
+
     const countdown = () => {
         const countDate = new Date('January 23, 2026 15:00:00').getTime();
         const now = new Date().getTime();
@@ -110,10 +246,15 @@ document.addEventListener('DOMContentLoaded', () => {
             const minEl = document.getElementById('minutes');
             const secEl = document.getElementById('seconds');
 
-            if (dayEl) dayEl.innerText = textDay < 10 ? '0' + textDay : textDay;
-            if (hourEl) hourEl.innerText = textHour < 10 ? '0' + textHour : textHour;
-            if (minEl) minEl.innerText = textMinute < 10 ? '0' + textMinute : textMinute;
-            if (secEl) secEl.innerText = textSecond < 10 ? '0' + textSecond : textSecond;
+            const dayStr = textDay < 10 ? '0' + textDay : String(textDay);
+            const hourStr = textHour < 10 ? '0' + textHour : String(textHour);
+            const minStr = textMinute < 10 ? '0' + textMinute : String(textMinute);
+            const secStr = textSecond < 10 ? '0' + textSecond : String(textSecond);
+
+            updateWithFlip(dayEl, dayStr, 'days');
+            updateWithFlip(hourEl, hourStr, 'hours');
+            updateWithFlip(minEl, minStr, 'minutes');
+            updateWithFlip(secEl, secStr, 'seconds');
         }
     };
 
@@ -280,18 +421,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // INITIALIZE CAROUSELS
     // ================================
 
-    // Hype Carousel (The Ultimate DNB Holiday)
-    const hypeCarousel = document.getElementById('hypeCarousel');
-    if (hypeCarousel) {
-        new Carousel(hypeCarousel, {
-            slidesToShow: 3,
-            slidesToShowTablet: 2,
-            slidesToShowMobile: 1,
-            loop: true
-        });
-    }
-
-    // Headliners Carousel
+    // Lineup Carousel (formerly Headliners)
     const headlinersCarousel = document.getElementById('headlinersCarousel');
     if (headlinersCarousel) {
         new Carousel(headlinersCarousel, {
