@@ -1,4 +1,17 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // Header Scroll Effect
+    const header = document.querySelector('.header');
+
+    const handleScroll = () => {
+        if (window.scrollY > 50) {
+            header.classList.add('header--scrolled');
+        } else {
+            header.classList.remove('header--scrolled');
+        }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
     // Mobile Menu
     const burger = document.querySelector('.burger');
     const mobileMenu = document.querySelector('.mobile-menu');
