@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accommodation — DnB Allstars: Thailand 2026</title>
+    <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <style>
+        /* Accommodation Page Specific Styles */
+        .accommodation-page {
+            padding-top: var(--header-height);
+            min-height: 100vh;
+        }
+
+        .accommodation-header {
+            padding: var(--spacing-xl) var(--spacing-md) var(--spacing-lg);
+            text-align: center;
+            background: var(--gradient-dark);
+        }
+
+        .accommodation-header__title {
+            font-family: var(--font-heading);
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            text-transform: uppercase;
+            letter-spacing: 0.02em;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .accommodation-header__subtitle {
+            color: var(--color-text-muted);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .hotels-container {
+            padding: var(--spacing-lg) var(--spacing-md);
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Hotel Card */
+        .hotel-card {
+            background: var(--color-bg-card);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: var(--border-radius-lg);
+            overflow: hidden;
+            margin-bottom: var(--spacing-md);
+            transition: var(--transition);
+        }
+
+        .hotel-card:hover {
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+
+        .hotel-card.is-expanded {
+            border-color: var(--color-accent);
+            box-shadow: 0 0 30px rgba(246, 194, 94, 0.1);
+        }
+
+        /* Hotel Card Header (Always Visible) */
+        .hotel-card__header {
+            display: grid;
+            grid-template-columns: 200px 1fr auto;
+            gap: var(--spacing-md);
+            padding: var(--spacing-md);
+            cursor: pointer;
+            align-items: center;
+            transition: var(--transition);
+        }
+
+        @media (max-width: 768px) {
+            .hotel-card__header {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+        }
+
+        .hotel-card__header:hover {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .hotel-card__image {
+            width: 200px;
+            height: 140px;
+            object-fit: cover;
+            border-radius: var(--border-radius);
+        }
+
+        @media (max-width: 768px) {
+            .hotel-card__image {
+                width: 100%;
+                height: 200px;
+            }
+        }
+
+        .hotel-card__info {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .hotel-card__badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--color-accent);
+            color: var(--color-bg-dark);
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            width: fit-content;
+        }
+
+        @media (max-width: 768px) {
+            .hotel-card__badge {
+                margin: 0 auto;
+            }
+        }
+
+        .hotel-card__name {
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.02em;
+        }
+
+        .hotel-card__meta {
+            display: flex;
+            gap: var(--spacing-md);
+            color: var(--color-text-muted);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .hotel-card__meta {
+                flex-direction: column;
+                gap: 0.25rem;
+            }
+        }
+
+        .hotel-card__meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .hotel-card__meta-item {
+                justify-content: center;
+            }
+        }
+
+        .hotel-card__meta-item svg {
+            width: 16px;
+            height: 16px;
+            stroke: var(--color-accent);
+        }
+
+        .hotel-card__price {
+            text-align: right;
+        }
+
+        @media (max-width: 768px) {
+            .hotel-card__price {
+                text-align: center;
+            }
+        }
+
+        .hotel-card__price-label {
+            font-size: 0.75rem;
+            color: var(--color-text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .hotel-card__price-value {
+            font-family: var(--font-heading);
+            font-size: 1.75rem;
+            color: var(--color-accent);
+        }
+
+        .hotel-card__expand-icon {
+            width: 32px;
+            height: 32px;
+            stroke: var(--color-text-muted);
+            transition: var(--transition);
+            flex-shrink: 0;
+        }
+
+        .hotel-card.is-expanded .hotel-card__expand-icon {
+            transform: rotate(180deg);
+            stroke: var(--color-accent);
+        }
+
+        /* Hotel Card Body (Expandable) */
+        .hotel-card__body {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .hotel-card.is-expanded .hotel-card__body {
+            max-height: 2000px;
+        }
+
+        .hotel-card__content {
+            padding: 0 var(--spacing-md) var(--spacing-md);
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        /* Hotel Description */
+        .hotel-card__description {
+            padding: var(--spacing-md) 0;
+            color: var(--color-text-muted);
+            line-height: 1.8;
+        }
+
+        /* Amenities */
+        .hotel-card__amenities {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--spacing-sm);
+            padding: var(--spacing-md) 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .amenity-tag {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(79, 132, 122, 0.15);
+            color: var(--color-primary-light);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+        }
+
+        .amenity-tag svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        /* Room Types */
+        .hotel-card__rooms {
+            padding: var(--spacing-md) 0;
+        }
+
+        .hotel-card__rooms-title {
+            font-family: var(--font-heading);
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: var(--spacing-md);
+            color: var(--color-accent);
+        }
+
+        .room-type {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: var(--border-radius);
+            padding: var(--spacing-md);
+            margin-bottom: var(--spacing-sm);
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: var(--spacing-md);
+            align-items: center;
+        }
+
+        @media (max-width: 600px) {
+            .room-type {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+        }
+
+        .room-type__name {
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .room-type__details {
+            color: var(--color-text-muted);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .room-type__occupancy {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+            color: var(--color-primary-light);
+            font-size: 0.85rem;
+            margin-top: 0.5rem;
+        }
+
+        .room-type__occupancy svg {
+            width: 14px;
+            height: 14px;
+        }
+
+        .room-type__price {
+            text-align: right;
+        }
+
+        @media (max-width: 600px) {
+            .room-type__price {
+                text-align: center;
+            }
+        }
+
+        .room-type__price-value {
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            color: var(--color-text);
+        }
+
+        .room-type__price-note {
+            font-size: 0.75rem;
+            color: var(--color-text-muted);
+        }
+
+        /* Book Now CTA */
+        .hotel-card__cta {
+            padding: var(--spacing-md) 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            display: flex;
+            justify-content: center;
+            gap: var(--spacing-sm);
+            flex-wrap: wrap;
+        }
+
+        .btn--book {
+            background: var(--gradient-accent);
+            color: var(--color-bg-dark);
+            padding: 1rem 2.5rem;
+            font-family: var(--font-heading);
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            border-radius: 50px;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn--book:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px var(--color-accent-glow);
+        }
+
+        .btn--book svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        /* Additional Info Banner */
+        .info-banner {
+            background: rgba(79, 132, 122, 0.15);
+            border: 1px solid var(--color-primary);
+            border-radius: var(--border-radius);
+            padding: var(--spacing-md);
+            margin-bottom: var(--spacing-lg);
+            display: flex;
+            align-items: flex-start;
+            gap: var(--spacing-sm);
+        }
+
+        .info-banner svg {
+            width: 24px;
+            height: 24px;
+            stroke: var(--color-primary-light);
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .info-banner__content {
+            color: var(--color-text-muted);
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        .info-banner__content strong {
+            color: var(--color-text);
+        }
+
+        /* Back Link */
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--color-text-muted);
+            text-decoration: none;
+            padding: var(--spacing-sm) var(--spacing-md);
+            transition: var(--transition);
+        }
+
+        .back-link:hover {
+            color: var(--color-accent);
+        }
+
+        .back-link svg {
+            width: 20px;
+            height: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Scroll Progress Bar -->
+    <div class="scroll-progress" id="scrollProgress"></div>
+
+    <!-- Header with Wipe Effect -->
+    <header class="header">
+        <div class="header__bg"></div>
+
+        <div class="header__elements header__elements--scrolled">
+            <div class="header__container">
+                <div class="header__left">
+                    <div class="burger-placeholder" aria-hidden="true">
+                        <svg width="24" height="18" viewBox="0 0 24 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M0 1H24" stroke="currentColor" stroke-width="2"/>
+                            <path d="M0 9H24" stroke="currentColor" stroke-width="2"/>
+                            <path d="M0 17H24" stroke="currentColor" stroke-width="2"/>
+                        </svg>
+                    </div>
+                </div>
+                <a href="index.html" class="logo">
+                    <img src="assets/img/logo.png" alt="DnB Allstars: Thailand 2026">
+                </a>
+                <div class="header__right">
+                    <span class="btn btn--tickets btn--tickets-orange">BUY</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="header__elements header__elements--default">
+            <div class="header__container">
+                <div class="header__left">
+                    <button class="burger" aria-label="Menu" aria-expanded="false">
+                        <svg width="32" height="20" viewBox="0 0 32 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M0 1H32" stroke="currentColor" stroke-width="2"/>
+                            <path d="M0 10H32" stroke="currentColor" stroke-width="2"/>
+                            <path d="M0 19H32" stroke="currentColor" stroke-width="2"/>
+                        </svg>
+                    </button>
+                </div>
+                <a href="index.html" class="logo">
+                    <img src="assets/img/logo.png" alt="DnB Allstars: Thailand 2026">
+                </a>
+                <div class="header__right">
+                    <a href="https://fixr.co/event/dnb-allstars-thailand-tickets-927680847" target="_blank" class="btn btn--tickets">BUY</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Overlay -->
+        <div class="mobile-menu">
+            <nav class="mobile-menu__nav">
+                <ul class="mobile-menu__list">
+                    <li><a href="index.html" class="mobile-menu__link" data-en="HOME" data-th="หน้าแรก" data-ru="ГЛАВНАЯ">HOME</a></li>
+                    <li><a href="index.html#lineup" class="mobile-menu__link" data-en="LINEUP" data-th="ไลน์อัพ" data-ru="ЛАЙНАП">LINEUP</a></li>
+                    <li><a href="accommodation.html" class="mobile-menu__link active" data-en="ACCOMMODATION" data-th="ที่พัก" data-ru="ПРОЖИВАНИЕ">ACCOMMODATION</a></li>
+                    <li><a href="index.html#faq" class="mobile-menu__link" data-en="FAQ" data-th="คำถามที่พบบ่อย" data-ru="ВОПРОСЫ">FAQ</a></li>
+                </ul>
+                <div class="mobile-menu__lang">
+                    <button class="lang-btn active" data-lang="en">EN</button>
+                    <span class="lang-divider">|</span>
+                    <button class="lang-btn" data-lang="th">TH</button>
+                    <span class="lang-divider">|</span>
+                    <button class="lang-btn" data-lang="ru">RU</button>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main class="accommodation-page">
+        <!-- Back Link -->
+        <a href="index.html" class="back-link">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M19 12H5M5 12L12 19M5 12L12 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Back to Home
+        </a>
+
+        <!-- Page Header -->
+        <section class="accommodation-header">
+            <h1 class="accommodation-header__title" data-en="Official Accommodation" data-th="ที่พักอย่างเป็นทางการ" data-ru="Официальное размещение">Official Accommodation</h1>
+            <p class="accommodation-header__subtitle" data-en="Book your stay at one of our partner hotels. All packages include shuttle transfers to and from the venue." data-th="จองที่พักกับโรงแรมพันธมิตรของเรา ทุกแพ็คเกจรวมรถรับส่งไป-กลับสถานที่จัดงาน" data-ru="Забронируйте проживание в одном из наших партнерских отелей. Все пакеты включают трансфер до площадки и обратно.">Book your stay at one of our partner hotels. All packages include shuttle transfers to and from the venue.</p>
+        </section>
+
+        <!-- Hotels Container -->
+        <div class="hotels-container">
+            <!-- Info Banner -->
+            <div class="info-banner">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                    <path d="M12 16V12M12 8H12.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+                <div class="info-banner__content">
+                    <strong>All prices shown are for 3 nights</strong> (Thu 22nd – Sun 25th January 2026) and include buffet breakfast, 10% service charge & 7% VAT. Shuttle transfers included with all bookings.
+                </div>
+            </div>
+
+            <!-- Hotel 1: Hivetel -->
+            <article class="hotel-card" id="hivetel">
+                <div class="hotel-card__header" onclick="toggleHotel(this)">
+                    <img src="assets/img/hivetel.jpg" alt="Hivetel Phuket" class="hotel-card__image">
+                    <div class="hotel-card__info">
+                        <span class="hotel-card__badge">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>
+                            3★ Hotel
+                        </span>
+                        <h2 class="hotel-card__name">Hivetel Phuket</h2>
+                        <div class="hotel-card__meta">
+                            <span class="hotel-card__meta-item">
+                                <svg viewBox="0 0 24 24" fill="none"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="10" r="3" stroke="currentColor" stroke-width="2"/></svg>
+                                1 min walk from venue
+                            </span>
+                            <span class="hotel-card__meta-item">
+                                <svg viewBox="0 0 24 24" fill="none"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z" stroke="currentColor" stroke-width="2"/><path d="M12 6v6l4 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                                Shuttle included
+                            </span>
+                        </div>
+                    </div>
+                    <div class="hotel-card__price">
+                        <div class="hotel-card__price-label">From</div>
+                        <div class="hotel-card__price-value">£265</div>
+                        <svg class="hotel-card__expand-icon" viewBox="0 0 24 24" fill="none"><path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </div>
+                </div>
+                <div class="hotel-card__body">
+                    <div class="hotel-card__content">
+                        <p class="hotel-card__description">
+                            The closest accommodation to the festival venue! Hivetel is a modern boutique hotel perfect for festival-goers who want to be right in the heart of the action. Roll out of bed and be at the venue in under a minute.
+                        </p>
+
+                        <div class="hotel-card__amenities">
+                            <span class="amenity-tag">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/><path d="M8 12l2 2 4-4"/></svg>
+                                Free WiFi
+                            </span>
+                            <span class="amenity-tag">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg>
+                                Smart TV
+                            </span>
+                            <span class="amenity-tag">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v18M5.5 8.5L12 3l6.5 5.5M5.5 15.5L12 21l6.5-5.5"/></svg>
+                                Air Conditioning
+                            </span>
+                            <span class="amenity-tag">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4z"/><path d="M12 4v16M4 12h16"/></svg>
+                                Rain Shower
+                            </span>
+                            <span class="amenity-tag">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8h1a4 4 0 010 8h-1M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8zM6 1v3M10 1v3M14 1v3"/></svg>
+                                Breakfast Included
+                            </span>
+                        </div>
+
+                        <div class="hotel-card__rooms">
+                            <h3 class="hotel-card__rooms-title">Room Types</h3>
+
+                            <div class="room-type">
+                                <div class="room-type__info">
+                                    <div class="room-type__name">Standard Double Room</div>
+                                    <div class="room-type__details">Modern room with queen bed, 32" smart TV, rain shower, minibar & writing desk.</div>
+                                    <div class="room-type__occupancy">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                                        Max 2 guests
+                                    </div>
+                                </div>
+                                <div class="room-type__price">
+                                    <div class="room-type__price-value">£265</div>
+                                    <div class="room-type__price-note">+ booking fee</div>
+                                </div>
+                            </div>
+
+                            <div class="room-type">
+                                <div class="room-type__info">
+                                    <div class="room-type__name">Standard Twin Room</div>
+                                    <div class="room-type__details">Comfortable room with two single beds, smart TV, air conditioning & ensuite with rain shower.</div>
+                                    <div class="room-type__occupancy">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                                        Max 2 guests
+                                    </div>
+                                </div>
+                                <div class="room-type__price">
+                                    <div class="room-type__price-value">£307</div>
+                                    <div class="room-type__price-note">+ booking fee</div>
+                                </div>
+                            </div>
+
+                            <div class="room-type">
+                                <div class="room-type__info">
+                                    <div class="room-type__name">Dormitory Room</div>
+                                    <div class="room-type__details">Perfect for groups! Three separate single beds with personal space, USB charging ports at each bed.</div>
+                                    <div class="room-type__occupancy">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                                        Max 3 guests
+                                    </div>
+                                </div>
+                                <div class="room-type__price">
+                                    <div class="room-type__price-value">£339</div>
+                                    <div class="room-type__price-note">+ booking fee</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="hotel-card__cta">
+                            <a href="#" class="btn--book" data-hotel="hivetel">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3h18v18H3zM3 9h18M9 21V9"/></svg>
+                                Book Now
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Hotel 2: ibis Styles -->
+            <article class="hotel-card" id="ibis-styles">
+                <div class="hotel-card__header" onclick="toggleHotel(this)">
+                    <img src="assets/img/ibis.jpg" alt="ibis Styles Phuket City" class="hotel-card__image">
+                    <div class="hotel-card__info">
+                        <span class="hotel-card__badge">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>
+                            3★ Hotel • Best Value
+                        </span>
+                        <h2 class="hotel-card__name">ibis Styles Phuket City</h2>
+                        <div class="hotel-card__meta">
+                            <span class="hotel-card__meta-item">
+                                <svg viewBox="0 0 24 24" fill="none"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="10" r="3" stroke="currentColor" stroke-width="2"/></svg>
+                                15 min drive from venue
+                            </span>
+                            <span class="hotel-card__meta-item">
+                                <svg viewBox="0 0 24 24" fill="none"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z" stroke="currentColor" stroke-width="2"/><path d="M12 6v6l4 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                                Shuttle included
+                            </span>
+                        </div>
+                    </div>
+                    <div class="hotel-card__price">
+                        <div class="hotel-card__price-label">From</div>
+                        <div class="hotel-card__price-value">£178</div>
+                        <svg class="hotel-card__expand-icon" viewBox="0 0 24 24" fill="none"><path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </div>
+                </div>
+                <div class="hotel-card__body">
+                    <div class="hotel-card__content">
+                        <p class="hotel-card__description">
+                            The most affordable official accommodation option! ibis Styles offers modern, comfortable rooms in Phuket City with easy access to local restaurants and nightlife. Shuttle transfers included to get you to and from the venue.
+                        </p>
+
+                        <div class="hotel-card__amenities">
+                            <span class="amenity-tag">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/><path d="M8 12l2 2 4-4"/></svg>
+                                Free WiFi
+                            </span>
+                            <span class="amenity-tag">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v18M5.5 8.5L12 3l6.5 5.5M5.5 15.5L12 21l6.5-5.5"/></svg>
+                                Air Conditioning
+                            </span>
+                            <span class="amenity-tag">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8h1a4 4 0 010 8h-1M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8zM6 1v3M10 1v3M14 1v3"/></svg>
+                                Breakfast Included
+                            </span>
+                            <span class="amenity-tag">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+                                24hr Reception
+                            </span>
+                        </div>
+
+                        <div class="hotel-card__rooms">
+                            <h3 class="hotel-card__rooms-title">Room Types</h3>
+
+                            <div class="room-type">
+                                <div class="room-type__info">
+                                    <div class="room-type__name">Standard Room – Double Bed</div>
+                                    <div class="room-type__details">Cosy 20 sqm room with queen bed, separate shower & toilet areas with frosted glass doors.</div>
+                                    <div class="room-type__occupancy">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                                        Max 2 guests
+                                    </div>
+                                </div>
+                                <div class="room-type__price">
+                                    <div class="room-type__price-value">£178</div>
+                                    <div class="room-type__price-note">+ booking fee</div>
+                                </div>
+                            </div>
+
+                            <div class="room-type">
+                                <div class="room-type__info">
+                                    <div class="room-type__name">Standard Room – Twin Beds</div>
+                                    <div class="room-type__details">Cosy 20 sqm room with two single beds, separate shower & toilet areas with frosted glass doors.</div>
+                                    <div class="room-type__occupancy">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                                        Max 2 guests
+                                    </div>
+                                </div>
+                                <div class="room-type__price">
+                                    <div class="room-type__price-value">£178</div>
+                                    <div class="room-type__price-note">+ booking fee</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="hotel-card__cta">
+                            <a href="#" class="btn--book" data-hotel="ibis-styles">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3h18v18H3zM3 9h18M9 21V9"/></svg>
+                                Book Now
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Hotel 3: Novotel -->
+            <article class="hotel-card" id="novotel">
+                <div class="hotel-card__header" onclick="toggleHotel(this)">
+                    <img src="assets/img/novotel.jpg" alt="Novotel Phuket City Phokeethra" class="hotel-card__image">
+                    <div class="hotel-card__info">
+                        <span class="hotel-card__badge">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>
+                            4★ Hotel • Premium
+                        </span>
+                        <h2 class="hotel-card__name">Novotel Phuket City Phokeethra</h2>
+                        <div class="hotel-card__meta">
+                            <span class="hotel-card__meta-item">
+                                <svg viewBox="0 0 24 24" fill="none"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="10" r="3" stroke="currentColor" stroke-width="2"/></svg>
+                                15 min drive from venue
+                            </span>
+                            <span class="hotel-card__meta-item">
+                                <svg viewBox="0 0 24 24" fill="none"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z" stroke="currentColor" stroke-width="2"/><path d="M12 6v6l4 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                                Shuttle included
+                            </span>
+                        </div>
+                    </div>
+                    <div class="hotel-card__price">
+                        <div class="hotel-card__price-label">From</div>
+                        <div class="hotel-card__price-value">£402</div>
+                        <svg class="hotel-card__expand-icon" viewBox="0 0 24 24" fill="none"><path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </div>
+                </div>
+                <div class="hotel-card__body">
+                    <div class="hotel-card__content">
+                        <p class="hotel-card__description">
+                            The premium choice for those who want luxury after the party. Novotel offers upscale accommodation with a rooftop pool, fitness centre, and premium dining. Perfect for recovering in style between festival days.
+                        </p>
+
+                        <div class="hotel-card__amenities">
+                            <span class="amenity-tag">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/><path d="M8 12l2 2 4-4"/></svg>
+                                Free WiFi
+                            </span>
+                            <span class="amenity-tag">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="12" rx="10" ry="6"/><path d="M2 12v4c0 3.31 4.48 6 10 6s10-2.69 10-6v-4"/></svg>
+                                Rooftop Pool
+                            </span>
+                            <span class="amenity-tag">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 4v16M18 4v16M6 12h12M6 8h2M6 16h2M16 8h2M16 16h2"/></svg>
+                                Fitness Centre
+                            </span>
+                            <span class="amenity-tag">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8h1a4 4 0 010 8h-1M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8zM6 1v3M10 1v3M14 1v3"/></svg>
+                                Breakfast Included
+                            </span>
+                            <span class="amenity-tag">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg>
+                                LCD TV
+                            </span>
+                            <span class="amenity-tag">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 7l-8 4-8-4"/><rect x="2" y="4" width="20" height="16" rx="2"/></svg>
+                                Restaurant & Bar
+                            </span>
+                        </div>
+
+                        <div class="hotel-card__rooms">
+                            <h3 class="hotel-card__rooms-title">Room Types</h3>
+
+                            <div class="room-type">
+                                <div class="room-type__info">
+                                    <div class="room-type__name">Superior King Room</div>
+                                    <div class="room-type__details">Modern decor with king bed, crisp cotton bedding, premium bathroom amenities, LCD TV with satellite channels.</div>
+                                    <div class="room-type__occupancy">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                                        Max 2 guests
+                                    </div>
+                                </div>
+                                <div class="room-type__price">
+                                    <div class="room-type__price-value">£402</div>
+                                    <div class="room-type__price-note">+ booking fee</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="hotel-card__cta">
+                            <a href="#" class="btn--book" data-hotel="novotel">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3h18v18H3zM3 9h18M9 21V9"/></svg>
+                                Book Now
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__social">
+                <a href="https://www.instagram.com/dnballstars/" target="_blank" class="social-link" aria-label="Instagram">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="2" y="2" width="20" height="20" rx="5" stroke="currentColor" stroke-width="2"/>
+                        <circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="2"/>
+                        <circle cx="18" cy="6" r="1.5" fill="currentColor"/>
+                    </svg>
+                </a>
+                <a href="https://www.facebook.com/dnballstars" target="_blank" class="social-link" aria-label="Facebook">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M18 2H15C13.6739 2 12.4021 2.52678 11.4645 3.46447C10.5268 4.40215 10 5.67392 10 7V10H7V14H10V22H14V14H17L18 10H14V7C14 6.73478 14.1054 6.48043 14.2929 6.29289C14.4804 6.10536 14.7348 6 15 6H18V2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </a>
+                <a href="https://twitter.com/dnballstars" target="_blank" class="social-link" aria-label="Twitter/X">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M4 4L10.5 12.5M20 20L13.5 11.5M10.5 12.5L4 20H8L13.5 11.5M10.5 12.5L16 4H20L13.5 11.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </a>
+                <a href="https://www.youtube.com/dnballstars" target="_blank" class="social-link" aria-label="YouTube">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M22.54 6.42C22.4212 5.94541 22.1793 5.51057 21.8386 5.15941C21.498 4.80824 21.0708 4.55318 20.6 4.42C18.88 4 12 4 12 4C12 4 5.12 4 3.4 4.46C2.92925 4.59318 2.50198 4.84824 2.16135 5.19941C1.82072 5.55057 1.57879 5.98541 1.46 6.46C1.14521 8.20556 0.991235 9.97631 1 11.75C0.988687 13.537 1.14266 15.3213 1.46 17.08C1.59096 17.5398 1.83831 17.9581 2.17814 18.2945C2.51798 18.6308 2.93882 18.8738 3.4 19C5.12 19.46 12 19.46 12 19.46C12 19.46 18.88 19.46 20.6 19C21.0708 18.8668 21.498 18.6118 21.8386 18.2606C22.1793 17.9094 22.4212 17.4746 22.54 17C22.8524 15.2676 23.0063 13.5103 23 11.75C23.0113 9.96295 22.8573 8.1787 22.54 6.42Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M9.75 15.02L15.5 11.75L9.75 8.48V15.02Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </a>
+            </div>
+
+            <div class="footer__links">
+                <a href="index.html">Home</a>
+                <a href="index.html#lineup">Lineup</a>
+                <a href="index.html#faq">FAQs</a>
+                <a href="#">Terms & Conditions</a>
+                <a href="#">Privacy Policy</a>
+            </div>
+            <p class="copyright">&copy; 2026 DnB Allstars. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Sticky Footer CTA -->
+    <div class="sticky-footer" id="stickyFooter">
+        <div class="sticky-footer__bg"></div>
+        <div class="sticky-footer__content">
+            <a href="https://fixr.co/event/dnb-allstars-thailand-tickets-927680847" target="_blank" class="sticky-footer__btn">BUY TICKETS</a>
+        </div>
+    </div>
+
+    <!-- WhatsApp Support Widget -->
+    <a href="https://wa.me/1234567890" target="_blank" class="whatsapp-widget" aria-label="Contact us on WhatsApp">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+        </svg>
+    </a>
+
+    <script src="assets/js/script.js"></script>
+    <script>
+        // Hotel card expand/collapse functionality
+        function toggleHotel(header) {
+            const card = header.closest('.hotel-card');
+            const wasExpanded = card.classList.contains('is-expanded');
+            
+            // Close all other cards
+            document.querySelectorAll('.hotel-card.is-expanded').forEach(c => {
+                if (c !== card) c.classList.remove('is-expanded');
+            });
+            
+            // Toggle this card
+            card.classList.toggle('is-expanded');
+            
+            // Scroll into view if expanding
+            if (!wasExpanded) {
+                setTimeout(() => {
+                    card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }, 100);
+            }
+        }
+
+        // Open card if URL has anchor
+        document.addEventListener('DOMContentLoaded', function() {
+            const hash = window.location.hash.substring(1);
+            if (hash) {
+                const card = document.getElementById(hash);
+                if (card && card.classList.contains('hotel-card')) {
+                    card.classList.add('is-expanded');
+                    setTimeout(() => {
+                        card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }, 300);
+                }
+            }
+        });
+    </script>
+</body>
+</html>
