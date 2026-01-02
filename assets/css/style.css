@@ -219,7 +219,8 @@ img {
     background: var(--gradient-primary);
     color: #ffffff;
     font-weight: 700;
-    padding: 14px 32px;
+    padding: 10px 20px;
+    font-size: 0.85rem;
     box-shadow: 0 4px 20px rgba(79, 132, 122, 0.3);
     border: none;
     transition: transform var(--transition), box-shadow var(--transition), color 0.15s ease;
@@ -228,14 +229,6 @@ img {
     z-index: 1;
 }
 
-/* Default: show full text, hide short text */
-.btn--tickets .btn-text-full {
-    display: inline;
-}
-
-.btn--tickets .btn-text-short {
-    display: none;
-}
 
 .btn--tickets::after {
     content: '';
@@ -2413,15 +2406,6 @@ img {
         padding: 8px 14px;
         font-size: 0.75rem;
         letter-spacing: 1px;
-    }
-
-    /* Hide full text, show short text on mobile */
-    .btn--tickets .btn-text-full {
-        display: none;
-    }
-
-    .btn--tickets .btn-text-short {
-        display: inline;
     }
 
     .section__title {
