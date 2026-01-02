@@ -499,6 +499,101 @@
             color: var(--color-text-muted);
         }
 
+        /* Sold Out State */
+        .room-type--sold-out {
+            opacity: 0.6;
+            position: relative;
+        }
+
+        .room-type--sold-out::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: var(--border-radius);
+            pointer-events: none;
+        }
+
+        .room-type__sold-out {
+            background: #dc3545;
+            color: #fff;
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            display: inline-block;
+        }
+
+        .room-type--sold-out .room-type__price-value {
+            text-decoration: line-through;
+            opacity: 0.5;
+        }
+
+        /* Room Details Expandable */
+        .room-type__details-toggle {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: var(--color-text-muted);
+            font-size: 0.7rem;
+            padding: 0.3rem 0.6rem;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 0.5rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .room-type__details-toggle:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: var(--color-accent);
+            color: var(--color-text);
+        }
+
+        .room-type__details-toggle svg {
+            width: 12px;
+            height: 12px;
+            transition: transform 0.3s ease;
+        }
+
+        .room-type.is-details-open .room-type__details-toggle svg {
+            transform: rotate(180deg);
+        }
+
+        .room-type__full-details {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease;
+            grid-column: 1 / -1;
+            padding: 0;
+        }
+
+        .room-type.is-details-open .room-type__full-details {
+            max-height: 300px;
+            padding-top: var(--spacing-md);
+        }
+
+        .room-type__full-details-content {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: var(--border-radius);
+            padding: var(--spacing-md);
+            font-size: 0.85rem;
+            line-height: 1.6;
+            color: var(--color-text-muted);
+        }
+
+        .room-type__full-details-content ul {
+            margin: 0;
+            padding-left: 1.2rem;
+        }
+
+        .room-type__full-details-content li {
+            margin-bottom: 0.3rem;
+        }
+
         /* Swipe hint */
         .rooms-section__hint {
             display: none;
@@ -689,7 +784,7 @@
                    Curated hotels for festival weekend — from walking distance to premium comfort.
                 </p>
                 <div class="includes-strip">
-                    <div class="includes-strip__item"><span>🌙</span> 3 Nights</div>
+                    <div class="includes-strip__item"><span>🌙</span> 4 Nights</div>
                     <div class="includes-strip__item"><span>☕</span> Breakfast</div>
                     <div class="includes-strip__item"><span>🚐</span> Shuttle</div>
                     <div class="includes-strip__item"><span>✓</span> All Taxes</div>
@@ -718,7 +813,7 @@
                         <div class="hotel-card__price-block">
                             <div class="hotel-card__price-label">From</div>
                             <div class="hotel-card__price">£265</div>
-                            <div class="hotel-card__price-note">3 nights</div>
+                            <div class="hotel-card__price-note">4 nights</div>
                         </div>
                     </div>
                     <div class="hotel-card__expand-hint">
@@ -755,49 +850,135 @@
                         <div class="rooms-section">
                             <h3 class="rooms-section__title">Choose Your Room</h3>
                             <div class="rooms-section__slider">
-                                <div class="room-type">
+                                <div class="room-type room-type--sold-out">
                                     <img src="assets/img/accommodation/hivetel/room-1.jpg" alt="Standard Double" class="room-type__image">
                                     <div class="room-type__info">
-                                        <div class="room-type__name">Standard Double</div>
+                                        <div class="room-type__name">Standard Double <span class="room-type__sold-out">SOLD OUT</span></div>
                                         <div class="room-type__details">Queen bed, smart TV, rain shower</div>
                                         <div class="room-type__features">
                                             <span class="room-type__feature">Queen Bed</span>
                                             <span class="room-type__feature">Max 2</span>
                                         </div>
+                                        <button class="room-type__details-toggle" onclick="toggleRoomDetails(this)">
+                                            Details <svg viewBox="0 0 24 24" fill="none"><path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                                        </button>
                                     </div>
                                     <div class="room-type__price">
                                         <div class="room-type__price-value">£265</div>
-                                        <div class="room-type__price-note">3 nights</div>
+                                        <div class="room-type__price-note">4 nights</div>
+                                    </div>
+                                    <div class="room-type__full-details">
+                                        <div class="room-type__full-details-content">
+                                            <ul>
+                                                <li>4 nights accommodation (22nd-26th Jan)</li>
+                                                <li>Daily breakfast included</li>
+                                                <li>Shuttle service to venue</li>
+                                                <li>Free WiFi</li>
+                                                <li>Air conditioning</li>
+                                                <li>Smart TV with international channels</li>
+                                                <li>Rain shower</li>
+                                                <li>All taxes included</li>
+                                            </ul>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="room-type">
+                                <div class="room-type room-type--sold-out">
+                                    <img src="assets/img/accommodation/hivetel/room-1.jpg" alt="Superior Double" class="room-type__image">
+                                    <div class="room-type__info">
+                                        <div class="room-type__name">Superior Double <span class="room-type__sold-out">SOLD OUT</span></div>
+                                        <div class="room-type__details">Larger room, queen bed, smart TV, rain shower, city view</div>
+                                        <div class="room-type__features">
+                                            <span class="room-type__feature">Queen Bed</span>
+                                            <span class="room-type__feature">Max 2</span>
+                                        </div>
+                                        <button class="room-type__details-toggle" onclick="toggleRoomDetails(this)">
+                                            Details <svg viewBox="0 0 24 24" fill="none"><path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                                        </button>
+                                    </div>
+                                    <div class="room-type__price">
+                                        <div class="room-type__price-value">£285.40</div>
+                                        <div class="room-type__price-note">4 nights</div>
+                                    </div>
+                                    <div class="room-type__full-details">
+                                        <div class="room-type__full-details-content">
+                                            <ul>
+                                                <li>4 nights accommodation (22nd-26th Jan)</li>
+                                                <li>Larger superior room with city view</li>
+                                                <li>Daily breakfast included</li>
+                                                <li>Shuttle service to venue</li>
+                                                <li>Free WiFi</li>
+                                                <li>Air conditioning</li>
+                                                <li>Smart TV with international channels</li>
+                                                <li>Rain shower</li>
+                                                <li>All taxes included</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="room-type room-type--sold-out">
                                     <img src="assets/img/accommodation/hivetel/room-2.jpg" alt="Standard Twin" class="room-type__image">
                                     <div class="room-type__info">
-                                        <div class="room-type__name">Standard Twin</div>
+                                        <div class="room-type__name">Standard Twin <span class="room-type__sold-out">SOLD OUT</span></div>
                                         <div class="room-type__details">Two single beds, smart TV, rain shower</div>
                                         <div class="room-type__features">
                                             <span class="room-type__feature">2 Beds</span>
                                             <span class="room-type__feature">Max 2</span>
                                         </div>
+                                        <button class="room-type__details-toggle" onclick="toggleRoomDetails(this)">
+                                            Details <svg viewBox="0 0 24 24" fill="none"><path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                                        </button>
                                     </div>
                                     <div class="room-type__price">
                                         <div class="room-type__price-value">£307</div>
-                                        <div class="room-type__price-note">3 nights</div>
+                                        <div class="room-type__price-note">4 nights</div>
+                                    </div>
+                                    <div class="room-type__full-details">
+                                        <div class="room-type__full-details-content">
+                                            <ul>
+                                                <li>4 nights accommodation (22nd-26th Jan)</li>
+                                                <li>Two single beds - perfect for friends</li>
+                                                <li>Daily breakfast included</li>
+                                                <li>Shuttle service to venue</li>
+                                                <li>Free WiFi</li>
+                                                <li>Air conditioning</li>
+                                                <li>Smart TV with international channels</li>
+                                                <li>Rain shower</li>
+                                                <li>All taxes included</li>
+                                            </ul>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="room-type">
+                                <div class="room-type room-type--sold-out">
                                     <img src="assets/img/accommodation/hivetel/room-3.jpg" alt="Dormitory" class="room-type__image">
                                     <div class="room-type__info">
-                                        <div class="room-type__name">Dormitory</div>
+                                        <div class="room-type__name">Dormitory (3 Singles) <span class="room-type__sold-out">SOLD OUT</span></div>
                                         <div class="room-type__details">3 beds, USB charging, perfect for groups</div>
                                         <div class="room-type__features">
                                             <span class="room-type__feature">3 Beds</span>
                                             <span class="room-type__feature">Max 3</span>
                                         </div>
+                                        <button class="room-type__details-toggle" onclick="toggleRoomDetails(this)">
+                                            Details <svg viewBox="0 0 24 24" fill="none"><path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                                        </button>
                                     </div>
                                     <div class="room-type__price">
                                         <div class="room-type__price-value">£339</div>
-                                        <div class="room-type__price-note">3 nights</div>
+                                        <div class="room-type__price-note">4 nights</div>
+                                    </div>
+                                    <div class="room-type__full-details">
+                                        <div class="room-type__full-details-content">
+                                            <ul>
+                                                <li>4 nights accommodation (22nd-26th Jan)</li>
+                                                <li>3 single beds - ideal for groups</li>
+                                                <li>USB charging points at each bed</li>
+                                                <li>Daily breakfast included</li>
+                                                <li>Shuttle service to venue</li>
+                                                <li>Free WiFi</li>
+                                                <li>Air conditioning</li>
+                                                <li>Shared bathroom facilities</li>
+                                                <li>All taxes included</li>
+                                            </ul>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -827,8 +1008,8 @@
                         </div>
                         <div class="hotel-card__price-block">
                             <div class="hotel-card__price-label">From</div>
-                            <div class="hotel-card__price">£402</div>
-                            <div class="hotel-card__price-note">3 nights</div>
+                            <div class="hotel-card__price">£402.60</div>
+                            <div class="hotel-card__price-note">4 nights</div>
                         </div>
                     </div>
                     <div class="hotel-card__expand-hint">
@@ -866,18 +1047,37 @@
                             <h3 class="rooms-section__title">Choose Your Room</h3>
                             <div class="rooms-section__slider">
                                 <div class="room-type">
-                                    <img src="assets/img/accommodation/novotel/room-1.jpg" alt="Superior King" class="room-type__image">
+                                    <img src="assets/img/accommodation/novotel/room-1.jpg" alt="Superior Room King" class="room-type__image">
                                     <div class="room-type__info">
-                                        <div class="room-type__name">Superior King</div>
-                                        <div class="room-type__details">King bed, premium amenities, LCD TV</div>
+                                        <div class="room-type__name">Superior Room King</div>
+                                        <div class="room-type__details">King bed, premium amenities, LCD TV, city view</div>
                                         <div class="room-type__features">
                                             <span class="room-type__feature">King Bed</span>
                                             <span class="room-type__feature">Max 2</span>
                                         </div>
+                                        <button class="room-type__details-toggle" onclick="toggleRoomDetails(this)">
+                                            Details <svg viewBox="0 0 24 24" fill="none"><path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                                        </button>
                                     </div>
                                     <div class="room-type__price">
-                                        <div class="room-type__price-value">£402</div>
-                                        <div class="room-type__price-note">3 nights</div>
+                                        <div class="room-type__price-value">£402.60</div>
+                                        <div class="room-type__price-note">4 nights</div>
+                                    </div>
+                                    <div class="room-type__full-details">
+                                        <div class="room-type__full-details-content">
+                                            <ul>
+                                                <li>4 nights accommodation (22nd-26th Jan)</li>
+                                                <li>Premium king-size bed</li>
+                                                <li>Daily breakfast at hotel restaurant</li>
+                                                <li>Shuttle service to venue</li>
+                                                <li>Access to rooftop pool & fitness centre</li>
+                                                <li>Free high-speed WiFi</li>
+                                                <li>Air conditioning</li>
+                                                <li>LCD TV with international channels</li>
+                                                <li>Mini bar and safe</li>
+                                                <li>All taxes included</li>
+                                            </ul>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -904,7 +1104,7 @@
                         <div class="hotel-card__price-block">
                             <div class="hotel-card__price-label">From</div>
                             <div class="hotel-card__price">£178</div>
-                            <div class="hotel-card__price-note">3 nights</div>
+                            <div class="hotel-card__price-note">4 nights</div>
                         </div>
                     </div>
                     <div class="hotel-card__expand-hint">
@@ -942,33 +1142,69 @@
                             <h3 class="rooms-section__title">Choose Your Room</h3>
                             <div class="rooms-section__slider">
                                 <div class="room-type">
-                                    <img src="assets/img/accommodation/ibis/double-1.jpg" alt="Standard Double" class="room-type__image">
+                                    <img src="assets/img/accommodation/ibis/double-1.jpg" alt="Double Bed" class="room-type__image">
                                     <div class="room-type__info">
-                                        <div class="room-type__name">Standard Double</div>
-                                        <div class="room-type__details">Queen bed, 20 sqm, ensuite</div>
+                                        <div class="room-type__name">Double Bed</div>
+                                        <div class="room-type__details">Double bed, 20 sqm, ensuite bathroom</div>
                                         <div class="room-type__features">
-                                            <span class="room-type__feature">Queen Bed</span>
+                                            <span class="room-type__feature">Double Bed</span>
                                             <span class="room-type__feature">Max 2</span>
                                         </div>
+                                        <button class="room-type__details-toggle" onclick="toggleRoomDetails(this)">
+                                            Details <svg viewBox="0 0 24 24" fill="none"><path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                                        </button>
                                     </div>
                                     <div class="room-type__price">
                                         <div class="room-type__price-value">£178</div>
-                                        <div class="room-type__price-note">3 nights</div>
+                                        <div class="room-type__price-note">4 nights</div>
+                                    </div>
+                                    <div class="room-type__full-details">
+                                        <div class="room-type__full-details-content">
+                                            <ul>
+                                                <li>4 nights accommodation (22nd-26th Jan)</li>
+                                                <li>Comfortable double bed</li>
+                                                <li>Daily breakfast included</li>
+                                                <li>Shuttle service to venue</li>
+                                                <li>Free WiFi</li>
+                                                <li>Air conditioning</li>
+                                                <li>TV with international channels</li>
+                                                <li>Ensuite bathroom</li>
+                                                <li>All taxes included</li>
+                                            </ul>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="room-type">
-                                    <img src="assets/img/accommodation/ibis/twin-1.jpg" alt="Standard Twin" class="room-type__image">
+                                    <img src="assets/img/accommodation/ibis/twin-1.jpg" alt="Twin Beds" class="room-type__image">
                                     <div class="room-type__info">
-                                        <div class="room-type__name">Standard Twin</div>
-                                        <div class="room-type__details">Two single beds, 20 sqm, ensuite</div>
+                                        <div class="room-type__name">Twin Beds</div>
+                                        <div class="room-type__details">Two single beds, 20 sqm, ensuite bathroom</div>
                                         <div class="room-type__features">
                                             <span class="room-type__feature">2 Beds</span>
                                             <span class="room-type__feature">Max 2</span>
                                         </div>
+                                        <button class="room-type__details-toggle" onclick="toggleRoomDetails(this)">
+                                            Details <svg viewBox="0 0 24 24" fill="none"><path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                                        </button>
                                     </div>
                                     <div class="room-type__price">
-                                        <div class="room-type__price-value">£178</div>
-                                        <div class="room-type__price-note">3 nights</div>
+                                        <div class="room-type__price-value">£178.60</div>
+                                        <div class="room-type__price-note">4 nights</div>
+                                    </div>
+                                    <div class="room-type__full-details">
+                                        <div class="room-type__full-details-content">
+                                            <ul>
+                                                <li>4 nights accommodation (22nd-26th Jan)</li>
+                                                <li>Two single beds - ideal for friends</li>
+                                                <li>Daily breakfast included</li>
+                                                <li>Shuttle service to venue</li>
+                                                <li>Free WiFi</li>
+                                                <li>Air conditioning</li>
+                                                <li>TV with international channels</li>
+                                                <li>Ensuite bathroom</li>
+                                                <li>All taxes included</li>
+                                            </ul>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -1047,6 +1283,11 @@
                 }
             }
         });
+
+        function toggleRoomDetails(btn) {
+            const roomType = btn.closest('.room-type');
+            roomType.classList.toggle('is-details-open');
+        }
     </script>
 </body>
 </html>
