@@ -210,89 +210,64 @@
             </div>
         </section>
 
-        <!-- Accommodation Section -->
-        <section class="section accommodation" id="accommodation">
-            <div class="container">
-                <h2 class="section__title" data-en="LAST ROOMS REMAINING" data-th="ห้องพักที่เหลืออยู่" data-ru="ПОСЛЕДНИЕ НОМЕРА">LAST ROOMS REMAINING</h2>
-                <div class="urgency-badge" data-en="⚠ 90% SOLD OUT" data-th="⚠ ขายแล้ว 90%" data-ru="⚠ 90% ПРОДАНО">⚠ 90% SOLD OUT</div>
-
-                <div class="carousel carousel--accommodation" id="accommodationCarousel">
-                    <div class="carousel__track-container">
-                        <div class="carousel__track">
-                            <!-- Hivetel -->
-                            <div class="carousel__slide">
-                                <div class="accommodation-card">
-                                    <div class="accommodation-card__image">
-                                        <img src="assets/img/hivetel.jpg" alt="Hivetel">
-                                        <div class="accommodation-card__overlay">
-                                            <a href="accommodation/hivetel.html" class="btn btn--view">VIEW</a>
-                                        </div>
-                                    </div>
-                                    <div class="accommodation-card__content">
-                                        <h3 class="accommodation-card__title">Hivetel</h3>
-                                        <p class="accommodation-card__subtitle">3★ Hotel – 1 Min Walk</p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Ibis Styles -->
-                            <div class="carousel__slide">
-                                <div class="accommodation-card">
-                                    <div class="accommodation-card__image">
-                                        <img src="assets/img/ibis.jpg" alt="ibis Styles Phuket City">
-                                        <div class="accommodation-card__overlay">
-                                            <a href="accommodation/ibis-styles.html" class="btn btn--view">VIEW</a>
-                                        </div>
-                                    </div>
-                                    <div class="accommodation-card__content">
-                                        <h3 class="accommodation-card__title">ibis Styles Phuket City</h3>
-                                        <p class="accommodation-card__subtitle">3★ Hotel – 15 Min Drive</p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Novotel -->
-                            <div class="carousel__slide">
-                                <div class="accommodation-card">
-                                    <div class="accommodation-card__image">
-                                        <img src="assets/img/novotel.jpg" alt="Novotel Phuket City Phokeethra">
-                                        <div class="accommodation-card__overlay">
-                                            <a href="accommodation/novotel.html" class="btn btn--view">VIEW</a>
-                                        </div>
-                                    </div>
-                                    <div class="accommodation-card__content">
-                                        <h3 class="accommodation-card__title">Novotel Phuket City Phokeethra</h3>
-                                        <p class="accommodation-card__subtitle">5★ Hotel – 25 Min Drive</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Navigation Arrows -->
-                    <button class="carousel__arrow carousel__arrow--left" aria-label="Previous hotel">
-                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                    </button>
-                    <button class="carousel__arrow carousel__arrow--right" aria-label="Next hotel">
-                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                    </button>
-
-                    <!-- Dot Navigation -->
-                    <div class="carousel__dots">
-                        <button class="carousel__dot active" aria-label="Go to slide 1"></button>
-                        <button class="carousel__dot" aria-label="Go to slide 2"></button>
-                        <button class="carousel__dot" aria-label="Go to slide 3"></button>
+        <!-- Accommodation Section - Fullscreen -->
+        <section class="section accommodation-hero" id="accommodation">
+            <div class="accommodation-slider" id="accommodationSlider">
+                <!-- Hivetel -->
+                <div class="accommodation-slide" style="background-image: url('assets/img/hivetel.jpg')">
+                    <div class="accommodation-slide__overlay"></div>
+                    <div class="accommodation-slide__content">
+                        <span class="accommodation-slide__badge" data-en="3★ Hotel" data-th="โรงแรม 3★" data-ru="Отель 3★">3★ Hotel</span>
+                        <h3 class="accommodation-slide__title">Hivetel</h3>
+                        <p class="accommodation-slide__distance" data-en="1 Min Walk from Venue" data-th="เดิน 1 นาทีจากสถานที่จัดงาน" data-ru="1 мин пешком от площадки">1 Min Walk from Venue</p>
+                        <a href="accommodation/hivetel.html" class="btn btn--explore" data-en="Explore" data-th="ดูรายละเอียด" data-ru="Подробнее">Explore</a>
                     </div>
                 </div>
 
-                <div class="accommodation__actions">
-                    <a href="accommodation.html" class="btn btn--primary" data-en="VIEW ALL ACCOMMODATION" data-th="ดูที่พักทั้งหมด" data-ru="ВСЕ ВАРИАНТЫ ПРОЖИВАНИЯ">VIEW ALL ACCOMMODATION</a>
+                <!-- Ibis Styles -->
+                <div class="accommodation-slide" style="background-image: url('assets/img/ibis.jpg')">
+                    <div class="accommodation-slide__overlay"></div>
+                    <div class="accommodation-slide__content">
+                        <span class="accommodation-slide__badge" data-en="3★ Hotel" data-th="โรงแรม 3★" data-ru="Отель 3★">3★ Hotel</span>
+                        <h3 class="accommodation-slide__title">ibis Styles Phuket City</h3>
+                        <p class="accommodation-slide__distance" data-en="15 Min Drive from Venue" data-th="ขับรถ 15 นาทีจากสถานที่จัดงาน" data-ru="15 мин на машине">15 Min Drive from Venue</p>
+                        <a href="accommodation/ibis-styles.html" class="btn btn--explore" data-en="Explore" data-th="ดูรายละเอียด" data-ru="Подробнее">Explore</a>
+                    </div>
+                </div>
+
+                <!-- Novotel -->
+                <div class="accommodation-slide" style="background-image: url('assets/img/novotel.jpg')">
+                    <div class="accommodation-slide__overlay"></div>
+                    <div class="accommodation-slide__content">
+                        <span class="accommodation-slide__badge accommodation-slide__badge--premium" data-en="5★ Hotel" data-th="โรงแรม 5★" data-ru="Отель 5★">5★ Hotel</span>
+                        <h3 class="accommodation-slide__title">Novotel Phuket City Phokeethra</h3>
+                        <p class="accommodation-slide__distance" data-en="25 Min Drive from Venue" data-th="ขับรถ 25 นาทีจากสถานที่จัดงาน" data-ru="25 мин на машине">25 Min Drive from Venue</p>
+                        <a href="accommodation/novotel.html" class="btn btn--explore" data-en="Explore" data-th="ดูรายละเอียด" data-ru="Подробнее">Explore</a>
+                    </div>
                 </div>
             </div>
+
+            <!-- Navigation -->
+            <div class="accommodation-nav">
+                <button class="accommodation-nav__arrow accommodation-nav__arrow--prev" aria-label="Previous hotel">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+                <div class="accommodation-nav__dots">
+                    <button class="accommodation-nav__dot active" aria-label="Hotel 1"></button>
+                    <button class="accommodation-nav__dot" aria-label="Hotel 2"></button>
+                    <button class="accommodation-nav__dot" aria-label="Hotel 3"></button>
+                </div>
+                <button class="accommodation-nav__arrow accommodation-nav__arrow--next" aria-label="Next hotel">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- View All Link -->
+            <a href="accommodation.html" class="accommodation-hero__view-all" data-en="View All Hotels" data-th="ดูโรงแรมทั้งหมด" data-ru="Все отели">View All Hotels</a>
         </section>
 
         <!-- The Numbers Section -->

@@ -830,16 +830,63 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Accommodation Carousel (single slide with dots)
-    const accommodationCarousel = document.getElementById('accommodationCarousel');
-    if (accommodationCarousel) {
-        new Carousel(accommodationCarousel, {
-            slidesToShow: 1,
-            slidesToShowTablet: 1,
-            slidesToShowMobile: 1,
-            loop: true,
-            autoplay: true,
-            autoplaySpeed: 5000
+    // ================================
+    // ACCOMMODATION FULLSCREEN SLIDER
+    // ================================
+    const accommodationSlider = document.getElementById('accommodationSlider');
+    if (accommodationSlider) {
+        const slides = accommodationSlider.querySelectorAll('.accommodation-slide');
+        const dots = document.querySelectorAll('.accommodation-nav__dot');
+        const prevBtn = document.querySelector('.accommodation-nav__arrow--prev');
+        const nextBtn = document.querySelector('.accommodation-nav__arrow--next');
+        let currentSlide = 0;
+        const totalSlides = slides.length;
+
+        const goToSlide = (index) => {
+            if (index < 0) index = totalSlides - 1;
+            if (index >= totalSlides) index = 0;
+            currentSlide = index;
+
+            // Slide the container
+            accommodationSlider.style.transform = `translateX(-${currentSlide * 100}%)`;
+
+            // Update dots
+            dots.forEach((dot, i) => {
+                dot.classList.toggle('active', i === currentSlide);
+            });
+        };
+
+        // Arrow navigation
+        if (prevBtn) {
+            prevBtn.addEventListener('click', () => goToSlide(currentSlide - 1));
+        }
+        if (nextBtn) {
+            nextBtn.addEventListener('click', () => goToSlide(currentSlide + 1));
+        }
+
+        // Dot navigation
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => goToSlide(index));
         });
+
+        // Touch/swipe support
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        accommodationSlider.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, { passive: true });
+
+        accommodationSlider.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            const diff = touchStartX - touchEndX;
+            if (Math.abs(diff) > 50) {
+                if (diff > 0) {
+                    goToSlide(currentSlide + 1); // Swipe left = next
+                } else {
+                    goToSlide(currentSlide - 1); // Swipe right = prev
+                }
+            }
+        }, { passive: true });
     }
 });
