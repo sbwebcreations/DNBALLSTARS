@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DnB Allstars: Thailand 2026</title>
+    <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Teko:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+    <!-- Header with Wipe Effect -->
+    <header class="header">
+        <!-- Orange background that wipes away -->
+        <div class="header__bg"></div>
+
+        <!-- Bottom layer: Orange elements (visible when bg is gone) -->
+        <div class="header__elements header__elements--scrolled">
+            <div class="header__container">
+                <div class="header__left">
+                    <div class="burger-placeholder" aria-hidden="true">
+                        <svg width="24" height="18" viewBox="0 0 24 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M0 1H24" stroke="#cf350e" stroke-width="2"/>
+                            <path d="M0 9H24" stroke="#cf350e" stroke-width="2"/>
+                            <path d="M0 17H24" stroke="#cf350e" stroke-width="2"/>
+                        </svg>
+                    </div>
+                </div>
+                <a href="index.html" class="logo">
+                    <img src="assets/img/logo.png" alt="DnB Allstars: Thailand 2026">
+                </a>
+                <div class="header__right">
+                    <span class="btn btn--tickets btn--tickets-orange">TICKETS</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Top layer: White elements on orange (clips away with bg) -->
+        <div class="header__elements header__elements--default">
+            <div class="header__container">
+                <div class="header__left">
+                    <button class="burger" aria-label="Menu" aria-expanded="false">
+                        <svg width="24" height="18" viewBox="0 0 24 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M0 1H24" stroke="white" stroke-width="2"/>
+                            <path d="M0 9H24" stroke="white" stroke-width="2"/>
+                            <path d="M0 17H24" stroke="white" stroke-width="2"/>
+                        </svg>
+                    </button>
+                </div>
+                <a href="index.html" class="logo">
+                    <img src="assets/img/logo.png" alt="DnB Allstars: Thailand 2026">
+                </a>
+                <div class="header__right">
+                    <a href="https://fixr.co/event/dnb-allstars-thailand-tickets-927680847" target="_blank" class="btn btn--tickets">TICKETS</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Overlay -->
+        <div class="mobile-menu">
+            <nav class="mobile-menu__nav">
+                <ul class="mobile-menu__list">
+                    <li><a href="index.html" class="mobile-menu__link active">HOME</a></li>
+                    <li><a href="#lineup" class="mobile-menu__link">LINEUP</a></li>
+                    <li><a href="#accommodation" class="mobile-menu__link">ACCOMMODATION</a></li>
+                    <li><a href="#faq" class="mobile-menu__link">FAQ</a></li>
+                </ul>
+                <div class="mobile-menu__lang">
+                    <button class="lang-btn active" data-lang="en">EN</button>
+                    <span class="lang-divider">|</span>
+                    <button class="lang-btn" data-lang="th">TH</button>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero__background">
+            <img src="assets/img/hero-bg.jpg" alt="DnB Allstars Thailand" class="hero__image">
+            <div class="hero__overlay"></div>
+        </div>
+
+        <div class="hero__content">
+            <!-- Countdown Timer positioned at bottom -->
+            <div class="countdown" id="countdown">
+                <div class="countdown__item">
+                    <span class="countdown__number" id="days">00</span>
+                    <span class="countdown__label">Days</span>
+                </div>
+                <div class="countdown__separator">:</div>
+                <div class="countdown__item">
+                    <span class="countdown__number" id="hours">00</span>
+                    <span class="countdown__label">Hours</span>
+                </div>
+                <div class="countdown__separator">:</div>
+                <div class="countdown__item">
+                    <span class="countdown__number" id="minutes">00</span>
+                    <span class="countdown__label">Mins</span>
+                </div>
+                <div class="countdown__separator">:</div>
+                <div class="countdown__item">
+                    <span class="countdown__number" id="seconds">00</span>
+                    <span class="countdown__label">Secs</span>
+                </div>
+            </div>
+
+            <div class="hero__cta">
+                <a href="https://fixr.co/event/dnb-allstars-thailand-tickets-927680847" target="_blank" class="btn btn--hero" data-en="BUY FINAL RELEASE TICKETS" data-th="ซื้อตั๋วรอบสุดท้าย">BUY FINAL RELEASE TICKETS</a>
+                <span class="hero__urgency" data-en="FINAL TIER RUNNING LOW" data-th="ตั๋วรอบสุดท้ายใกล้หมด">FINAL TIER RUNNING LOW</span>
+            </div>
+        </div>
+
+        <!-- Scroll Indicator -->
+        <div class="scroll-indicator">
+            <span class="scroll-indicator__text">SCROLL</span>
+            <div class="scroll-indicator__line"></div>
+        </div>
+    </section>
+
+    <main>
+        <!-- About Section -->
+        <section class="section about">
+            <div class="container">
+                <div class="about__content">
+                    <p data-en="For the very first time in South East Asia, we land in Phuket with full festival vibes. Get ready for three days of high-energy drum & bass, stunning beachside views, and an unforgettable party in paradise." data-th="เป็นครั้งแรกในเอเชียตะวันออกเฉียงใต้ เราลงจอดที่ภูเก็ตพร้อมบรรยากาศเทศกาลเต็มรูปแบบ เตรียมพร้อมสำหรับสามวันของดรัมแอนด์เบสพลังสูง วิวทะเลสวยงาม และปาร์ตี้ที่ไม่มีวันลืมในสวรรค์">For the very first time in South East Asia, we land in Phuket with full festival vibes. Get ready for three days of high-energy drum & bass, stunning beachside views, and an unforgettable party in paradise.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- The Numbers Section -->
+        <section class="section numbers">
+            <div class="container">
+                <h2 class="section__title" data-en="THE NUMBERS" data-th="ตัวเลข">THE NUMBERS</h2>
+                <div class="numbers__grid">
+                    <div class="numbers__item">
+                        <div class="numbers__icon">
+                            <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect x="6" y="10" width="36" height="28" rx="2" stroke="currentColor" stroke-width="2"/>
+                                <path d="M6 18H42" stroke="currentColor" stroke-width="2"/>
+                                <path d="M14 10V6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                <path d="M34 10V6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                <path d="M16 26H20" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                <path d="M28 26H32" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                <path d="M16 32H20" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                            </svg>
+                        </div>
+                        <span class="numbers__value" data-count="3" data-suffix=" DAYS">3 DAYS</span>
+                        <span class="numbers__label">OF DNB</span>
+                    </div>
+                    <div class="numbers__item">
+                        <div class="numbers__icon">
+                            <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="24" cy="14" r="6" stroke="currentColor" stroke-width="2"/>
+                                <path d="M12 40V36C12 32 16 28 24 28C32 28 36 32 36 36V40" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                <circle cx="38" cy="16" r="4" stroke="currentColor" stroke-width="2"/>
+                                <path d="M42 32V30C42 28 40 26 38 26" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                <circle cx="10" cy="16" r="4" stroke="currentColor" stroke-width="2"/>
+                                <path d="M6 32V30C6 28 8 26 10 26" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                            </svg>
+                        </div>
+                        <span class="numbers__value" data-count="50" data-suffix="+">50+</span>
+                        <span class="numbers__label">INTERNATIONAL ARTISTS</span>
+                    </div>
+                    <div class="numbers__item">
+                        <div class="numbers__icon">
+                            <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M8 40L24 8L40 40H8Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                                <path d="M14 40L24 20L34 40" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                                <path d="M4 40H44" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                            </svg>
+                        </div>
+                        <span class="numbers__value" data-count="2" data-suffix=" STAGES">2 STAGES</span>
+                        <span class="numbers__label">WORLD-CLASS PRODUCTION</span>
+                    </div>
+                    <div class="numbers__item">
+                        <div class="numbers__icon">
+                            <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="24" cy="24" r="18" stroke="currentColor" stroke-width="2"/>
+                                <path d="M24 12V24L32 32" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                            </svg>
+                        </div>
+                        <span class="numbers__value" data-count="72" data-suffix=" HRS">72 HRS</span>
+                        <span class="numbers__label">NON-STOP MUSIC</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Accommodation Section -->
+        <section class="section accommodation" id="accommodation">
+            <div class="container">
+                <h2 class="section__title" data-en="LAST ROOMS REMAINING" data-th="ห้องพักที่เหลืออยู่">LAST ROOMS REMAINING</h2>
+                <div class="urgency-badge" data-en="⚠ 90% SOLD OUT" data-th="⚠ ขายแล้ว 90%">⚠ 90% SOLD OUT</div>
+
+                <div class="carousel carousel--accommodation" id="accommodationCarousel">
+                    <div class="carousel__track-container">
+                        <div class="carousel__track">
+                            <!-- Hivetel -->
+                            <div class="carousel__slide">
+                                <div class="accommodation-card">
+                                    <div class="accommodation-card__image">
+                                        <img src="assets/img/hivetel.jpg" alt="Hivetel">
+                                        <div class="accommodation-card__overlay">
+                                            <a href="accommodation/hivetel.html" class="btn btn--view">VIEW</a>
+                                        </div>
+                                    </div>
+                                    <div class="accommodation-card__content">
+                                        <h3 class="accommodation-card__title">Hivetel</h3>
+                                        <p class="accommodation-card__subtitle">3★ Hotel – 1 Min Walk</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Ibis Styles -->
+                            <div class="carousel__slide">
+                                <div class="accommodation-card">
+                                    <div class="accommodation-card__image">
+                                        <img src="assets/img/ibis.jpg" alt="ibis Styles Phuket City">
+                                        <div class="accommodation-card__overlay">
+                                            <a href="accommodation/ibis-styles.html" class="btn btn--view">VIEW</a>
+                                        </div>
+                                    </div>
+                                    <div class="accommodation-card__content">
+                                        <h3 class="accommodation-card__title">ibis Styles Phuket City</h3>
+                                        <p class="accommodation-card__subtitle">3★ Hotel – 15 Min Drive</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Novotel -->
+                            <div class="carousel__slide">
+                                <div class="accommodation-card">
+                                    <div class="accommodation-card__image">
+                                        <img src="assets/img/novotel.jpg" alt="Novotel Phuket City Phokeethra">
+                                        <div class="accommodation-card__overlay">
+                                            <a href="accommodation/novotel.html" class="btn btn--view">VIEW</a>
+                                        </div>
+                                    </div>
+                                    <div class="accommodation-card__content">
+                                        <h3 class="accommodation-card__title">Novotel Phuket City Phokeethra</h3>
+                                        <p class="accommodation-card__subtitle">5★ Hotel – 25 Min Drive</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Navigation Arrows -->
+                    <button class="carousel__arrow carousel__arrow--left" aria-label="Previous hotel">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                    <button class="carousel__arrow carousel__arrow--right" aria-label="Next hotel">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+
+                    <!-- Dot Navigation -->
+                    <div class="carousel__dots">
+                        <button class="carousel__dot active" aria-label="Go to slide 1"></button>
+                        <button class="carousel__dot" aria-label="Go to slide 2"></button>
+                        <button class="carousel__dot" aria-label="Go to slide 3"></button>
+                    </div>
+                </div>
+
+                <div class="accommodation__actions">
+                    <a href="accommodation.html" class="btn btn--primary">VIEW ALL ACCOMMODATION</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Lineup Section -->
+        <section class="section lineup" id="lineup">
+            <div class="container">
+                <h2 class="section__title" data-en="THE LINEUP" data-th="ไลน์อัพ">THE LINEUP</h2>
+
+                <div class="carousel carousel--headliners" id="headlinersCarousel">
+                    <div class="carousel__track-container">
+                        <div class="carousel__track">
+                            <div class="carousel__slide">
+                                <div class="headliner-card">
+                                    <div class="headliner-card__image"></div>
+                                    <h3 class="headliner-card__name">ARTIST NAME</h3>
+                                </div>
+                            </div>
+                            <div class="carousel__slide">
+                                <div class="headliner-card">
+                                    <div class="headliner-card__image"></div>
+                                    <h3 class="headliner-card__name">ARTIST NAME</h3>
+                                </div>
+                            </div>
+                            <div class="carousel__slide">
+                                <div class="headliner-card">
+                                    <div class="headliner-card__image"></div>
+                                    <h3 class="headliner-card__name">ARTIST NAME</h3>
+                                </div>
+                            </div>
+                            <div class="carousel__slide">
+                                <div class="headliner-card">
+                                    <div class="headliner-card__image"></div>
+                                    <h3 class="headliner-card__name">ARTIST NAME</h3>
+                                </div>
+                            </div>
+                            <div class="carousel__slide">
+                                <div class="headliner-card">
+                                    <div class="headliner-card__image"></div>
+                                    <h3 class="headliner-card__name">ARTIST NAME</h3>
+                                </div>
+                            </div>
+                            <div class="carousel__slide">
+                                <div class="headliner-card">
+                                    <div class="headliner-card__image"></div>
+                                    <h3 class="headliner-card__name">ARTIST NAME</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Left & Right Arrows -->
+                    <button class="carousel__arrow carousel__arrow--left" aria-label="Previous slide">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                    <button class="carousel__arrow carousel__arrow--right" aria-label="Next slide">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+
+                    <!-- Dot Indicators -->
+                    <div class="carousel__dots">
+                        <button class="carousel__dot active" aria-label="Slide 1"></button>
+                        <button class="carousel__dot" aria-label="Slide 2"></button>
+                        <button class="carousel__dot" aria-label="Slide 3"></button>
+                        <button class="carousel__dot" aria-label="Slide 4"></button>
+                        <button class="carousel__dot" aria-label="Slide 5"></button>
+                        <button class="carousel__dot" aria-label="Slide 6"></button>
+                    </div>
+                </div>
+
+                <div class="lineup__actions">
+                    <a href="#" class="btn btn--outline">VIEW FULL LINEUP POSTER</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Experience Section -->
+        <section class="section experience">
+            <div class="container">
+                <h2 class="section__title">THE EXPERIENCE</h2>
+                <p class="experience__subtitle">Three days of world-class drum & bass in tropical paradise</p>
+                <div class="experience__video">
+                    <div class="experience__video-placeholder">
+                        <div class="experience__play-btn">
+                            <svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="30" cy="30" r="29" stroke="white" stroke-width="2"/>
+                                <path d="M24 20L44 30L24 40V20Z" fill="white"/>
+                            </svg>
+                        </div>
+                        <span class="experience__video-text">PROMO VIDEO COMING SOON</span>
+                    </div>
+                </div>
+                <div class="experience__features">
+                    <div class="experience__feature">
+                        <div class="experience__feature-icon">
+                            <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="20" cy="20" r="18" stroke="currentColor" stroke-width="2"/>
+                                <path d="M20 10V20L28 28" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                            </svg>
+                        </div>
+                        <h4>3PM - 3AM</h4>
+                        <p>Daily Schedule</p>
+                    </div>
+                    <div class="experience__feature">
+                        <div class="experience__feature-icon">
+                            <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M20 4L24 12H32L26 18L30 26L20 20L10 26L14 18L8 12H16L20 4Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <h4>VIP AREAS</h4>
+                        <p>Premium Experience</p>
+                    </div>
+                    <div class="experience__feature">
+                        <div class="experience__feature-icon">
+                            <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect x="4" y="8" width="32" height="24" rx="2" stroke="currentColor" stroke-width="2"/>
+                                <path d="M12 20H28" stroke="currentColor" stroke-width="2"/>
+                                <path d="M12 26H20" stroke="currentColor" stroke-width="2"/>
+                            </svg>
+                        </div>
+                        <h4>CASHLESS</h4>
+                        <p>Card Payments Only</p>
+                    </div>
+                    <div class="experience__feature">
+                        <div class="experience__feature-icon">
+                            <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M20 4C12 4 6 10 6 18C6 28 20 36 20 36C20 36 34 28 34 18C34 10 28 4 20 4Z" stroke="currentColor" stroke-width="2"/>
+                                <circle cx="20" cy="18" r="4" stroke="currentColor" stroke-width="2"/>
+                            </svg>
+                        </div>
+                        <h4>PHUKET</h4>
+                        <p>Thailand</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    <!-- FAQ Section -->
+        <section class="section faq" id="faq">
+            <div class="container">
+                <h2 class="section__title" data-en="FREQUENTLY ASKED QUESTIONS" data-th="คำถามที่พบบ่อย">FREQUENTLY ASKED QUESTIONS</h2>
+
+                <!-- General -->
+                <div class="faq__category">
+                    <button class="faq__category-title">
+                        <span>General</span>
+                        <svg class="faq__category-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </button>
+                    <div class="faq__list">
+                        <div class="faq__item">
+                            <button class="faq__question">
+                                <span>When is it?</span>
+                                <svg class="faq__icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            </button>
+                            <div class="faq__answer"><p>The event will take place across three days: Friday 23rd, Saturday 24th, and Sunday 25th January 2026.</p></div>
+                        </div>
+                        <div class="faq__item">
+                            <button class="faq__question">
+                                <span>Where is the event?</span>
+                                <svg class="faq__icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            </button>
+                            <div class="faq__answer"><p>DnB Allstars Thailand will take place in Chalong, Phuket. Full details of the venue and how to get there will be provided closer to the event.</p></div>
+                        </div>
+                        <div class="faq__item">
+                            <button class="faq__question">
+                                <span>How do I get tickets?</span>
+                                <svg class="faq__icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            </button>
+                            <div class="faq__answer"><p>Tickets and accommodation packages are available now via our official ticket partner FIXR. Tickets will also be listed on TicketFairy and Skiddle.</p></div>
+                        </div>
+                        <div class="faq__item">
+                            <button class="faq__question">
+                                <span>Is there a cloakroom or lockers?</span>
+                                <svg class="faq__icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            </button>
+                            <div class="faq__answer"><p>No, there will be no cloakroom or locker facilities on site. Please only bring essentials with you.</p></div>
+                        </div>
+                        <div class="faq__item">
+                            <button class="faq__question">
+                                <span>Will set times be posted in advance?</span>
+                                <svg class="faq__icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            </button>
+                            <div class="faq__answer"><p>Yes, full set times will be shared via our social media channels before the event.</p></div>
+                        </div>
+                        <div class="faq__item">
+                            <button class="faq__question">
+                                <span>Can I bring food and drink into the event?</span>
+                                <svg class="faq__icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            </button>
+                            <div class="faq__answer"><p>No outside food or drink is permitted.</p></div>
+                        </div>
+                        <div class="faq__item">
+                            <button class="faq__question">
+                                <span>Will food be available inside the venue?</span>
+                                <svg class="faq__icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            </button>
+                            <div class="faq__answer"><p>Yes, a variety of food traders will be available, catering for different dietary requirements.</p></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Entry Policy -->
+                <div class="faq__category">
+                    <button class="faq__category-title">
+                        <span>Entry Policy</span>
+                        <svg class="faq__category-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </button>
+                    <div class="faq__list">
+                        <div class="faq__item">
+                            <button class="faq__question">
+                                <span>Do I need ID to enter?</span>
+                                <svg class="faq__icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            </button>
+                            <div class="faq__answer"><p>Yes. This is an 18+ event and valid photo ID will be required on entry.</p></div>
+                        </div>
+                        <div class="faq__item">
+                            <button class="faq__question">
+                                <span>Will there be bag searches?</span>
+                                <svg class="faq__icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            </button>
+                            <div class="faq__answer"><p>Yes. All bags will be searched on arrival for security reasons.</p></div>
+                        </div>
+                        <div class="faq__item">
+                            <button class="faq__question">
+                                <span>What is the drug policy?</span>
+                                <svg class="faq__icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            </button>
+                            <div class="faq__answer"><p>We operate a strict zero-tolerance drug policy. Anyone found with illegal substances will be removed from the site.</p></div>
+                        </div>
+                        <div class="faq__item">
+                            <button class="faq__question">
+                                <span>Can I re-enter the event after leaving?</span>
+                                <svg class="faq__icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            </button>
+                            <div class="faq__answer"><p>Re-entry will be permitted, but exact re-entry times and conditions will be confirmed closer to the event.</p></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tickets -->
+                <div class="faq__category">
+                    <button class="faq__category-title">
+                        <span>Tickets</span>
+                        <svg class="faq__category-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </button>
+                    <div class="faq__list">
+                        <div class="faq__item">
+                            <button class="faq__question">
+                                <span>Where can I buy tickets?</span>
+                                <svg class="faq__icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            </button>
+                            <div class="faq__answer"><p>Tickets are available via our official partners FIXR and TicketFairy. Do not purchase tickets from unofficial sources such as Facebook groups or resale pages.</p></div>
+                        </div>
+                        <div class="faq__item">
+                            <button class="faq__question">
+                                <span>What ticket types are available?</span>
+                                <svg class="faq__icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            </button>
+                            <div class="faq__answer"><p>Weekend General Admission – from £129 + booking fee<br>Weekend VIP Admission – from £249 + booking fee</p></div>
+                        </div>
+                        <div class="faq__item">
+                            <button class="faq__question">
+                                <span>What's included with VIP tickets?</span>
+                                <svg class="faq__icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            </button>
+                            <div class="faq__answer"><p>VIP includes access to an exclusive VIP area, faster entry lanes, and premium viewing areas. Full details will be announced closer to the event.</p></div>
+                        </div>
+                        <div class="faq__item">
+                            <button class="faq__question">
+                                <span>Are local resident tickets available?</span>
+                                <svg class="faq__icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            </button>
+                            <div class="faq__answer"><p>Yes. We are offering a Local Resident Ticket at 50% of the standard ticket price. These tickets must be purchased in Thai Baht (THB), require valid Thai ID upon entry, and are available by request — please email us at thailand@dnballstars.com to enquire.</p></div>
+                        </div>
+                        <div class="faq__item">
+                            <button class="faq__question">
+                                <span>Do you offer refunds?</span>
+                                <svg class="faq__icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            </button>
+                            <div class="faq__answer"><p>All tickets are non-refundable. If you can no longer attend, please refer to the resale policies on FIXR or TicketFairy.</p></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Accommodation -->
+                <div class="faq__category">
+                    <button class="faq__category-title">
+                        <span>Accommodation</span>
+                        <svg class="faq__category-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </button>
+                    <div class="faq__list">
+                        <div class="faq__item">
+                            <button class="faq__question">
+                                <span>Do you provide accommodation packages?</span>
+                                <svg class="faq__icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            </button>
+                            <div class="faq__answer"><p>Yes. Official accommodation packages are available exclusively through FIXR.</p></div>
+                        </div>
+                        <div class="faq__item">
+                            <button class="faq__question">
+                                <span>Which hotels are included in the packages?</span>
+                                <svg class="faq__icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            </button>
+                            <div class="faq__answer"><p><strong>Hivetel (3★):</strong> Just a 1–2 minute walk from the event site in Chalong.<br><strong>Novotel Phuket City Phokeethra (5★):</strong> Premium 5★ comfort located in Phuket City, about 15 minutes' drive to the event site.<br><strong>ibis Styles Phuket City (3★):</strong> A mid-range option in the heart of Phuket City, similarly about 15 minutes' drive to the venue.</p></div>
+                        </div>
+                        <div class="faq__item">
+                            <button class="faq__question">
+                                <span>What's included in the packages?</span>
+                                <svg class="faq__icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            </button>
+                            <div class="faq__answer"><p>All hotel packages include 4 nights accommodation (22–26 January 2026), 10% service charge & 7% tax. Buffet breakfast is included in the Novotel and ibis Styles accommodation packages.</p></div>
+                        </div>
+                        <div class="faq__item">
+                            <button class="faq__question">
+                                <span>When can I check in and out?</span>
+                                <svg class="faq__icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            </button>
+                            <div class="faq__answer"><p>All accommodation packages include check-in on Thursday 22nd January 2026 and check-out on Monday 26th January 2026.</p></div>
+                        </div>
+                        <div class="faq__item">
+                            <button class="faq__question">
+                                <span>Can I book accommodation separately from tickets?</span>
+                                <svg class="faq__icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            </button>
+                            <div class="faq__answer"><p>Yes. You can book tickets only, accommodation only, or combined packages directly through FIXR.</p></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Transport -->
+                <div class="faq__category">
+                    <button class="faq__category-title">
+                        <span>Transport</span>
+                        <svg class="faq__category-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </button>
+                    <div class="faq__list">
+                        <div class="faq__item">
+                            <button class="faq__question">
+                                <span>Which airport should I fly into?</span>
+                                <svg class="faq__icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            </button>
+                            <div class="faq__answer"><p>The closest airport is Phuket International Airport (HKT), which is around a 1-hour drive to Chalong, where the event takes place.</p></div>
+                        </div>
+                        <div class="faq__item">
+                            <button class="faq__question">
+                                <span>How do I get from the airport to my hotel?</span>
+                                <svg class="faq__icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            </button>
+                            <div class="faq__answer"><p>Taxis are readily available at the airport, with fixed fares depending on destination. App-based transport (Grab) operates in Phuket and is often cheaper and more convenient. Private transfers can also be arranged in advance through many hotels.</p></div>
+                        </div>
+                        <div class="faq__item">
+                            <button class="faq__question">
+                                <span>Is there parking available?</span>
+                                <svg class="faq__icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            </button>
+                            <div class="faq__answer"><p>No, there is no parking at the event site.</p></div>
+                        </div>
+                        <div class="faq__item">
+                            <button class="faq__question">
+                                <span>What's the best way to get around Phuket?</span>
+                                <svg class="faq__icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            </button>
+                            <div class="faq__answer"><p>Taxis and Grab are the easiest options. Tuk-tuks are also available, but prices can vary, so we recommend agreeing on a fare before travelling. Scooter rentals are common in Phuket but should only be used if you are experienced and comfortable riding.</p></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Payments & On-Site -->
+                <div class="faq__category">
+                    <button class="faq__category-title">
+                        <span>Payments & On-Site</span>
+                        <svg class="faq__category-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </button>
+                    <div class="faq__list">
+                        <div class="faq__item">
+                            <button class="faq__question">
+                                <span>What currency is used on site?</span>
+                                <svg class="faq__icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            </button>
+                            <div class="faq__answer"><p>All on-site transactions will be made in Thai Baht (THB).</p></div>
+                        </div>
+                        <div class="faq__item">
+                            <button class="faq__question">
+                                <span>Can I pay with cash?</span>
+                                <svg class="faq__icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            </button>
+                            <div class="faq__answer"><p>No. The event will be fully cashless. Only contactless and card payments will be accepted.</p></div>
+                        </div>
+                        <div class="faq__item">
+                            <button class="faq__question">
+                                <span>Are there ATMs on site?</span>
+                                <svg class="faq__icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            </button>
+                            <div class="faq__answer"><p>No, there will be no ATMs on site. Please ensure your card or device is set up for contactless payments before arriving.</p></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Accessibility -->
+                <div class="faq__category">
+                    <button class="faq__category-title">
+                        <span>Accessibility</span>
+                        <svg class="faq__category-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </button>
+                    <div class="faq__list">
+                        <div class="faq__item">
+                            <button class="faq__question">
+                                <span>Do you provide accessible facilities?</span>
+                                <svg class="faq__icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            </button>
+                            <div class="faq__answer"><p>Yes. We are committed to making DnB Allstars Thailand as inclusive as possible. Accessible toilets and entry lanes will be provided on site.</p></div>
+                        </div>
+                        <div class="faq__item">
+                            <button class="faq__question">
+                                <span>Is the event wheelchair accessible?</span>
+                                <svg class="faq__icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            </button>
+                            <div class="faq__answer"><p>The venue has mixed terrain. Some areas are concrete, but the main stage area is grassland which may be uneven. While we will do our best to make the site accessible, please be aware of this when planning your visit.</p></div>
+                        </div>
+                        <div class="faq__item">
+                            <button class="faq__question">
+                                <span>Can I bring my carer/personal assistant?</span>
+                                <svg class="faq__icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            </button>
+                            <div class="faq__answer"><p>Yes. We operate a Personal Assistant (PA) ticket scheme to support those with accessibility requirements. Please email thailand@dnballstars.com with proof of eligibility to arrange this in advance.</p></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Travel Tips -->
+                <div class="faq__category">
+                    <button class="faq__category-title">
+                        <span>Travel Tips</span>
+                        <svg class="faq__category-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </button>
+                    <div class="faq__list">
+                        <div class="faq__item">
+                            <button class="faq__question">
+                                <span>What is the weather like in Phuket in January?</span>
+                                <svg class="faq__icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            </button>
+                            <div class="faq__answer"><p>January is one of the best times to visit Phuket. Expect average daytime temperatures of 24°C – 32°C, slightly cooler evenings, very low rainfall (January is in Phuket's dry season), and moderate humidity. Overall, you can expect hot, sunny days and warm nights – perfect for an outdoor festival.</p></div>
+                        </div>
+                        <div class="faq__item">
+                            <button class="faq__question">
+                                <span>What should I pack for the event?</span>
+                                <svg class="faq__icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            </button>
+                            <div class="faq__answer"><p>Lightweight clothing suitable for tropical weather, comfortable footwear (part of the site is grassland, part concrete), sunscreen, sunglasses, and a hat for daytime sets, a light jacket or cover-up for evenings, swimwear if you're planning to enjoy Phuket's beaches or hotel pools, a reusable water bottle (empty on entry) to refill at water stations, a portable power bank for your phone, and valid photo ID (required for entry).</p></div>
+                        </div>
+                        <div class="faq__item">
+                            <button class="faq__question">
+                                <span>Do I need a visa to travel to Thailand?</span>
+                                <svg class="faq__icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            </button>
+                            <div class="faq__answer"><p>Visa requirements vary depending on your nationality. Many countries qualify for visa exemption or visa-on-arrival for short stays. Please check the official Thai government website or contact your local embassy before travelling.</p></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Partners Section -->
+        <section class="section partners">
+            <div class="container">
+                <h2 class="section__title">OFFICIAL PARTNERS</h2>
+                <div class="partners__grid">
+                    <div class="partner-logo">
+                        <span>FIXR</span>
+                    </div>
+                    <div class="partner-logo">
+                        <span>TICKETFAIRY</span>
+                    </div>
+                    <div class="partner-logo">
+                        <span>SKIDDLE</span>
+                    </div>
+                    <div class="partner-logo">
+                        <span>HIVETEL</span>
+                    </div>
+                    <div class="partner-logo">
+                        <span>NOVOTEL</span>
+                    </div>
+                    <div class="partner-logo">
+                        <span>IBIS</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Newsletter Section -->
+        <section class="section newsletter">
+            <div class="container">
+                <div class="newsletter__content">
+                    <h2 class="newsletter__title">STAY IN THE LOOP</h2>
+                    <p class="newsletter__text">Get exclusive updates, artist announcements, and early access to tickets.</p>
+                    <form class="newsletter__form" id="newsletterForm">
+                        <input type="email" placeholder="Enter your email" required>
+                        <button type="submit" class="btn btn--primary">SUBSCRIBE</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Back to Top Button -->
+    <button class="back-to-top" id="backToTop" aria-label="Back to top">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M18 15L12 9L6 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+    </button>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <!-- Social Links -->
+            <div class="footer__social">
+                <a href="https://www.instagram.com/dnballstars/" target="_blank" class="social-link" aria-label="Instagram">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="2" y="2" width="20" height="20" rx="5" stroke="currentColor" stroke-width="2"/>
+                        <circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="2"/>
+                        <circle cx="18" cy="6" r="1.5" fill="currentColor"/>
+                    </svg>
+                </a>
+                <a href="https://www.facebook.com/dnballstars" target="_blank" class="social-link" aria-label="Facebook">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M18 2H15C13.6739 2 12.4021 2.52678 11.4645 3.46447C10.5268 4.40215 10 5.67392 10 7V10H7V14H10V22H14V14H17L18 10H14V7C14 6.73478 14.1054 6.48043 14.2929 6.29289C14.4804 6.10536 14.7348 6 15 6H18V2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </a>
+                <a href="https://twitter.com/dnballstars" target="_blank" class="social-link" aria-label="Twitter/X">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M4 4L10.5 12.5M20 20L13.5 11.5M10.5 12.5L4 20H8L13.5 11.5M10.5 12.5L16 4H20L13.5 11.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </a>
+                <a href="https://www.youtube.com/dnballstars" target="_blank" class="social-link" aria-label="YouTube">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M22.54 6.42C22.4212 5.94541 22.1793 5.51057 21.8386 5.15941C21.498 4.80824 21.0708 4.55318 20.6 4.42C18.88 4 12 4 12 4C12 4 5.12 4 3.4 4.46C2.92925 4.59318 2.50198 4.84824 2.16135 5.19941C1.82072 5.55057 1.57879 5.98541 1.46 6.46C1.14521 8.20556 0.991235 9.97631 1 11.75C0.988687 13.537 1.14266 15.3213 1.46 17.08C1.59096 17.5398 1.83831 17.9581 2.17814 18.2945C2.51798 18.6308 2.93882 18.8738 3.4 19C5.12 19.46 12 19.46 12 19.46C12 19.46 18.88 19.46 20.6 19C21.0708 18.8668 21.498 18.6118 21.8386 18.2606C22.1793 17.9094 22.4212 17.4746 22.54 17C22.8524 15.2676 23.0063 13.5103 23 11.75C23.0113 9.96295 22.8573 8.1787 22.54 6.42Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M9.75 15.02L15.5 11.75L9.75 8.48V15.02Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </a>
+                <a href="https://soundcloud.com/dnballstars" target="_blank" class="social-link" aria-label="SoundCloud">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M3 15V11M7 15V9M11 15V7M15 15V10M19 15C20.6569 15 22 13.6569 22 12C22 10.3431 20.6569 9 19 9C18.6494 9 18.3128 9.05919 18 9.16853C17.3407 7.3114 15.5726 6 13.5 6C11.0147 6 9 8.01472 9 10.5V15H19Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </a>
+            </div>
+
+            <!-- Payment & Trust Icons -->
+            <div class="footer__trust">
+                <div class="trust-badges">
+                    <svg class="trust-icon" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="5" y="12" width="40" height="26" rx="3" stroke="currentColor" stroke-width="2"/>
+                        <path d="M5 20H45" stroke="currentColor" stroke-width="2"/>
+                        <circle cx="15" cy="30" r="4" stroke="currentColor" stroke-width="2"/>
+                        <circle cx="22" cy="30" r="4" stroke="currentColor" stroke-width="2"/>
+                    </svg>
+                    <svg class="trust-icon" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="5" y="12" width="40" height="26" rx="3" stroke="currentColor" stroke-width="2"/>
+                        <path d="M5 20H45" stroke="currentColor" stroke-width="2"/>
+                        <path d="M12 30H22" stroke="currentColor" stroke-width="2"/>
+                        <path d="M28 30H38" stroke="currentColor" stroke-width="2"/>
+                    </svg>
+                    <svg class="trust-icon" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M25 5L40 12V22C40 32 33 40 25 45C17 40 10 32 10 22V12L25 5Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                        <path d="M18 25L23 30L33 20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                <span class="trust-text">Secure Checkout</span>
+            </div>
+
+            <div class="footer__links">
+                <a href="https://fixr.co/event/dnb-allstars-thailand-local-resident-tickets-938277701" target="_blank">Resident Tickets</a>
+                <a href="#faq">FAQs</a>
+                <a href="#" class="footer__legal">Terms & Conditions</a>
+                <a href="#" class="footer__legal">Privacy Policy</a>
+                <a href="#" class="footer__legal">Refund Policy</a>
+            </div>
+            <p class="copyright">&copy; 2026 DnB Allstars. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Sticky Footer CTA with Wipe Effect -->
+    <div class="sticky-footer" id="stickyFooter">
+        <div class="sticky-footer__bg"></div>
+        <div class="sticky-footer__content">
+            <a href="https://fixr.co/event/dnb-allstars-thailand-tickets-927680847" target="_blank" class="sticky-footer__btn">BUY TICKETS</a>
+        </div>
+    </div>
+
+    <!-- WhatsApp Support Widget -->
+    <a href="https://wa.me/1234567890" target="_blank" class="whatsapp-widget" aria-label="Contact us on WhatsApp">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+        </svg>
+    </a>
+
+    <!-- Cookie Consent Banner -->
+    <div class="cookie-consent" id="cookieConsent">
+        <div class="cookie-consent__content">
+            <p>We use cookies to enhance your experience. By continuing to visit this site you agree to our use of cookies.</p>
+            <div class="cookie-consent__actions">
+                <button class="btn btn--primary" id="cookieAccept">ACCEPT</button>
+                <a href="#" class="cookie-consent__link">Learn More</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="assets/js/script.js"></script>
+</body>
+</html>
